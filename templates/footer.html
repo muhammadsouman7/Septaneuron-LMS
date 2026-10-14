@@ -1,0 +1,63 @@
+<footer class="sn-footer" id="snFooter">
+    <div class="sn-footer__particles"></div>
+
+    <div class="sn-footer__top sn-footer__top--links">
+        <div class="sn-footer__col">
+            <h4>Explore</h4>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('services') }}">Services</a></li>
+                <li><a href="{{ url_for('portfolio') }}">Work</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                <li><a href="{{ url_for('lms.login') }}">Intern Portal</a></li>
+            </ul>
+        </div>
+
+        <div class="sn-footer__col">
+            <h4>Services</h4>
+            <ul>
+                <li><a href="{{ url_for('service_ai_ml') }}">AI &amp; Machine Learning</a></li>
+                <li><a href="{{ url_for('service_web_development') }}">Web &amp; Product Development</a></li>
+                <li><a href="{{ url_for('service_automation') }}">Workflow Automation</a></li>
+                <li><a href="{{ url_for('service_digital_growth') }}">Digital Growth &amp; Content</a></li>
+            </ul>
+        </div>
+
+        <div class="sn-footer__col">
+            <h4>Case studies</h4>
+            <ul>
+                <li><a href="{{ url_for('case_study_deepfake_detection') }}">XAI-Powered DeepFake Detection</a></li>
+                <li><a href="{{ url_for('case_study_cartoon_face_emotion_detection') }}">Cartoon Face and Emotion Detection</a></li>
+                <li><a href="{{ url_for('case_study_bake_bliss_hub') }}">Bake Bliss Hub</a></li>
+                <li><a href="{{ url_for('case_study_kidney_stone_detection') }}">Kidney Stone Detection</a></li>
+                <li><a href="{{ url_for('case_study_face_recognition_attendance_system') }}">Face Recognition Attendance System</a></li>
+                <li><a href="{{ url_for('case_study_al_wahad_traders') }}">Al-Wahad Traders</a></li>
+                <li><a href="{{ url_for('case_study_hr_recruitment_workflow') }}">HR Recruitment Workflow</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="sn-footer__connect">
+        <div class="sn-footer__social sn-footer__social--icons">
+            <a href="https://www.instagram.com/septaneuron/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.facebook.com/septaneuron/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.linkedin.com/in/septaneuron/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="mailto:hello@septaneuron.com" aria-label="Email hello@septaneuron.com" title="hello@septaneuron.com"><i class="fa-solid fa-envelope"></i></a>
+            <a href="https://wa.me/923349593578?text=Hi%20Septaneuron%2C%20I%20would%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+    </div>
+
+    <div class="sn-footer__wordmark">
+        <img class="sn-footer__mark" src="{{ url_for('static', filename='assets/imgs/septaneuron.png') }}" alt="Septaneuron logo">
+        <span class="sn-footer__text is-shimmering">SEPTANEURON</span>
+    </div>
+
+    <div class="sn-footer__bottom">
+        <div class="sn-footer__legal">
+            <a href="{{ url_for('privacy_policy') }}">Privacy policy</a>
+            <a href="{{ url_for('terms_and_conditions') }}">Terms &amp; Conditions</a>
+        </div>
+    </div>
+    <p class="sn-footer__copyright">&copy; <span id="snYear"></span> Septaneuron. All rights reserved.</p>
+</footer>

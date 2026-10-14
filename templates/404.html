@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}404 - Page Not Found | Septaneuron{% endblock %}
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/error-404.css') }}">{% endblock %}
+{% block content %}
+<div class="e404-ambient" aria-hidden="true">
+    <div class="e404-grid"></div>
+    <div class="e404-orb e404-orb--a"></div>
+    <div class="e404-orb e404-orb--b"></div>
+</div>
+
+<main class="e404" id="e404">
+    <div class="e404__eyes" data-eyes aria-hidden="true">
+        <div class="e404__eye" data-eye>
+            <div class="e404__pupil" data-pupil></div>
+        </div>
+        <div class="e404__eye e404__eye--low" data-eye>
+            <div class="e404__pupil" data-pupil></div>
+        </div>
+    </div>
+
+    <div class="e404__content">
+        <span class="e404__kicker">Error / 404</span>
+        <h1 class="e404__title">404, page <em>not found.</em></h1>
+        <p class="e404__text">
+            The page you're looking for doesn't exist, was moved, or the link is broken.
+            Don't worry, we're still watching.
+        </p>
+
+        <div class="e404__actions">
+            <a class="e404__btn e404__btn--primary" href="{{ url_for('home') }}">Please take me home <span>&rarr;</span></a>
+            <button class="e404__btn e404__btn--ghost" type="button" data-go-back>Go back</button>
+        </div>
+
+        <nav class="e404__links" aria-label="Helpful pages">
+            <a href="{{ url_for('services') }}">Services</a>
+            <a href="{{ url_for('portfolio') }}">Portfolio</a>
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('contact') }}">Contact</a>
+        </nav>
+    </div>
+</main>
+{% endblock %}
+{% block page_scripts %}
+<script src="{{ url_for('static', filename='assets/js/error-404.js') }}"></script>{% endblock %}

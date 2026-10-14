@@ -1,0 +1,915 @@
+{% extends "base.html" %} {# ============================================================ SEO VARIABLES ============================================================ #} {% set seo_title = project_title|default( 'AI Kidney Stone Detection from CT Scans
+| KidneyAI', true ) %} {% set seo_description = project_meta_description|default( 'Medical AI computer vision case study: KidneyAI uses a custom-trained YOLO model for kidney stone detection from CT scans, with history and PDF reports.', true ) %} {%
+set seo_canonical = request.base_url %} {# Recommended OG image: static/assets/imgs/casestudyImgs/kidney-stone-gallery-img-01.png Ideally create a 1200x630 image for social sharing. #} {% set seo_image = project_og_image|default( url_for( 'static', filename='assets/imgs/casestudyImgs/kidney-stone-gallery-img-01.png',
+_external=true ), true ) %} {% set seo_author = project_author|default('Septaneuron', true) %} {% set seo_github = github_url|default( 'https://github.com/AnasWaqas/KidneyAI', true ) %} {# ============================================================ PAGE
+TITLE ============================================================ #} {% block title %} {{ seo_title }} {% endblock %} {# ============================================================ SEO / SOCIAL META TAGS / STRUCTURED DATA ============================================================
+#} {% block page_meta %}
+
+<!-- Primary SEO -->
+<meta name="description" content="{{ seo_description }}">
+
+<meta name="keywords" content="AI kidney stone detection from CT scans, medical AI computer vision case study, YOLO object detection healthcare, AI diagnostic PDF report generation, Flask and React medical AI application">
+
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+<meta name="author" content="{{ seo_author }}">
+
+<link rel="canonical" href="{{ seo_canonical }}">
+
+
+<!--
+        OPTIONAL:
+        Use this only if your whole website supports English as its
+        primary language. The actual <html lang="en"> should ideally
+        exist in base.html.
+    -->
+<meta name="language" content="English">
+
+
+<!-- ========================================================
+         OPEN GRAPH / FACEBOOK / LINKEDIN
+         ======================================================== -->
+
+<meta property="og:type" content="article">
+
+<meta property="og:title" content="{{ seo_title }}">
+
+<meta property="og:description" content="{{ seo_description }}">
+
+<meta property="og:url" content="{{ seo_canonical }}">
+
+<meta property="og:site_name" content="Septaneuron">
+
+<meta property="og:image" content="{{ seo_image }}">
+
+<meta property="og:image:alt" content="KidneyAI AI-powered kidney stone detection system dashboard">
+
+<meta property="og:image:type" content="image/jpeg">
+
+<meta property="og:locale" content="en_US">
+
+<meta property="article:author" content="{{ seo_author }}">
+
+<meta property="article:section" content="Artificial Intelligence / Computer Vision">
+
+
+<!-- ========================================================
+         TWITTER / X CARD
+         ======================================================== -->
+
+<meta name="twitter:card" content="summary_large_image">
+
+<meta name="twitter:title" content="{{ seo_title }}">
+
+<meta name="twitter:description" content="{{ seo_description }}">
+
+<meta name="twitter:image" content="{{ seo_image }}">
+
+<meta name="twitter:image:alt" content="KidneyAI AI-powered kidney stone detection system dashboard">
+
+
+<!-- ========================================================
+         STRUCTURED DATA — ARTICLE / CASE STUDY
+         ======================================================== -->
+
+<script type="application/ld+json">
+    {
+        {
+            {
+                "@context": "https://schema.org",
+                "@type": "Article",
+
+                "headline": project_title |
+                    default ("KidneyAI: Real-Time AI-Assisted Kidney Stone Detection from CT Scans", true),
+
+                "description": seo_description,
+
+                "url": seo_canonical,
+
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": seo_canonical
+                },
+
+                "image": [seo_image],
+
+                "author": {
+                    "@type": "Person",
+                    "name": seo_author,
+                    "sameAs": [seo_github]
+                },
+
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Septaneuron"
+                },
+
+                "articleSection": "Artificial Intelligence / Computer Vision",
+
+                "keywords": [
+                    "AI kidney stone detection from CT scans",
+                    "medical AI computer vision case study",
+                    "YOLO object detection healthcare",
+                    "AI diagnostic PDF report generation",
+                    "Flask and React medical AI application",
+                    "CT scan analysis",
+                    "Python",
+                    "Flask",
+                    "OpenCV",
+                    "Ultralytics YOLO",
+                    "SQLite",
+                    "Septaneuron"
+                ]
+            } | tojson
+        }
+    }
+</script>
+
+
+<!-- ========================================================
+         BREADCRUMB STRUCTURED DATA
+         ======================================================== -->
+
+<script type="application/ld+json">
+    {
+        {
+            {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+
+                "itemListElement": [{
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Portfolio",
+                    "item": url_for('portfolio', _external = true)
+                }, {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": project_title |
+                        default ("KidneyAI", true),
+                    "item": seo_canonical
+                }]
+            } | tojson
+        }
+    }
+</script>
+
+{% endblock %} {# ============================================================ PAGE CSS ============================================================ #} {% block page_css %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/case-studies.css') }}"> {% endblock %} {# ============================================================ PAGE CONTENT ============================================================ #} {% block content %}
+
+<div class="cs-ambient" aria-hidden="true">
+    <div class="cs-grid"></div>
+    <div class="cs-orb cs-orb--a"></div>
+    <div class="cs-orb cs-orb--b"></div>
+</div>
+
+
+<!-- ==========================================================
+     HERO
+     ========================================================== -->
+
+<section class="cs-hero" id="top" aria-labelledby="project-title">
+
+    <canvas class="thread-canvas" id="threadCanvas" aria-hidden="true"></canvas>
+
+    <div class="hero-scrim" aria-hidden="true"></div>
+
+
+    <div class="cs-hero__content">
+
+        <a class="cs-back" href="{{ url_for('portfolio') }}" aria-label="Back to selected work portfolio">
+            ← Back to selected work
+        </a>
+
+
+        <div class="cs-hero__copy">
+
+            <span class="cs-kicker">
+                {{ project_category|default(
+                    'AI / HEALTHCARE COMPUTER VISION',
+                    true
+                ) }}
+            </span>
+
+
+            <h1 id="project-title">
+
+                {{ project_title|default( 'KidneyAI: Real-Time AI-Assisted Kidney Stone Detection from CT Scans', true ) }}
+
+            </h1>
+
+
+            <p>
+                {{ project_summary|default( 'An end-to-end medical AI application that processes abdominal CT images using a custom-trained YOLO model to detect kidney stones, overlay confidence bounding boxes, track historical scans via SQLite, and export diagnostic
+                PDF reports.', true ) }}
+            </p>
+
+
+            <div class="cs-hero__meta">
+
+                <span>
+                    {{ project_client|default(
+                        'Clinical Signal Lab / Research & Demo',
+                        true
+                    ) }}
+                </span>
+
+                <span>
+                    {{ project_year|default('2026', true) }}
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="cs-hero__visual" aria-label="KidneyAI computer vision system visualization">
+
+            <div class="cs-system-orbit">
+                <i></i>
+                <i></i>
+                <i></i>
+
+                <b style="text-align:center;">KIDNEY<br>STONE<br>DETECTION</b>
+            </div>
+            <br>
+            <span>
+                MODEL PIPELINE / ONLINE
+            </span>
+
+        </div>
+    </div>
+
+</section>
+
+
+<!-- ==========================================================
+     MAIN CONTENT
+     ========================================================== -->
+
+<main class="cs-main">
+
+    <!-- ======================================================
+         01 / INTRODUCTION
+         ====================================================== -->
+
+    <section class="cs-section cs-intro" id="introduction" aria-labelledby="introduction-heading">
+
+        <div class="cs-section-heading cs-reveal">
+
+            <span class="cs-kicker">
+                01 / Introduction
+            </span>
+
+            <h2 id="introduction-heading">
+
+                {{ introduction_heading|default( 'A full-stack diagnostic interface bridging computer vision and clinical workflows.', true ) }}
+
+            </h2>
+
+        </div>
+
+
+        <div class="cs-editorial">
+
+            <p class="cs-lead cs-reveal">
+
+                {{ introduction_text|default( 'KidneyAI is a web-based AI assistant designed to streamline the identification of kidney stones in CT scan imagery. By replacing fragmented evaluation steps with an automated inference pipeline, it provides medical researchers
+                and clinicians with accurate visual signals and instant report generation.', true ) }}
+
+            </p>
+
+
+            <p class="cs-reveal">
+
+                {{ introduction_text_two|default( 'The system combines a lightweight React & TypeScript front end with a robust Flask back end, driving deep learning object detection (YOLO), persistent SQLite record archiving, and automated PDF document generation.',
+                true ) }}
+
+            </p>
+
+        </div>
+
+        <figure class="cs-image cs-reveal">
+            <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/kidney-stone-gallery-img-01.png') }}" alt="Introduction project view">
+        </figure>
+
+    </section>
+
+
+    <!-- ======================================================
+         02 / PROBLEM
+         ====================================================== -->
+
+    <section class="cs-section cs-story" id="problem" aria-labelledby="problem-heading">
+
+        <div class="cs-story__label cs-reveal">
+
+            <span class="cs-kicker">
+                02 / The problem
+            </span>
+
+            <span class="cs-line" aria-hidden="true"></span>
+
+        </div>
+
+
+        <div class="cs-story__body cs-reveal">
+
+            <h2 id="problem-heading">
+
+                {{ problem_heading|default( 'Manual scan reviews are time-intensive and prone to reader fatigue.', true ) }}
+
+            </h2>
+
+
+            <p>
+
+                {{ problem_text|default( 'Interpreting abdominal CT scans for small or subtle kidney stones requires meticulous manual review. Medical professionals often need to cross-examine multiple slices, record coordinates, log patient history, and generate diagnostic
+                summaries across disconnected tools.', true ) }}
+
+            </p>
+
+
+            <p>
+
+                {{ problem_text_two|default( 'The goal was to build an integrated pipeline that accelerates object identification, standardizes confidence metrics, and instantly consolidates findings into exportable reports without friction.', true ) }}
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ======================================================
+         03 / SOLUTION
+         ====================================================== -->
+
+    <section class="cs-section cs-solution" id="solution" aria-labelledby="solution-heading">
+
+        <div class="cs-section-heading cs-reveal">
+
+            <span class="cs-kicker">
+                03 / The solution
+            </span>
+
+
+            <h2 id="solution-heading">
+
+                {{ solution_heading|default( 'Automated inference, persistent storage, and clinical PDF output.', true ) }}
+
+            </h2>
+
+
+            <p>
+
+                {{ solution_text|default( 'KidneyAI delivers an end-to-end workflow: CT images are validated, passed to a custom YOLO object detection network, rendered with bounding box overlays, saved to a SQLite database, and made downloadable as structured PDF reports.',
+                true ) }}
+
+            </p>
+
+        </div>
+
+
+        <div class="cs-solution-grid">
+
+            <article class="cs-approach-card cs-reveal">
+
+                <span>01</span>
+
+                <h3>
+                    {{ solution_one_title|default( 'Inference Engine', true ) }}
+                </h3>
+
+                <p>
+                    {{ solution_one_text|default( 'Upload CT scans (JPG, PNG, BMP, WEBP) to run high-speed YOLO detection tuned to an 896x896 resolution and 0.25 confidence threshold.', true ) }}
+                </p>
+
+            </article>
+
+
+            <article class="cs-approach-card cs-reveal">
+
+                <span>02</span>
+
+                <h3>
+                    {{ solution_two_title|default( 'Analysis History', true ) }}
+                </h3>
+
+                <p>
+                    {{ solution_two_text|default( 'Persist detection metrics, stone counts, bounding box coordinates, and base64-encoded annotated images inside an SQLite database.', true ) }}
+                </p>
+
+            </article>
+
+
+            <article class="cs-approach-card cs-reveal">
+
+                <span>03</span>
+
+                <h3>
+                    {{ solution_three_title|default( 'Report Output', true ) }}
+                </h3>
+
+                <p>
+                    {{ solution_three_text|default( 'Generate professional A4 PDF reports via ReportLab containing scan images, confidence breakdowns, and diagnostic disclaimers.', true ) }}
+                </p>
+
+            </article>
+
+        </div>
+
+
+        <figure class="cs-image cs-image--wide cs-reveal">
+
+            {% if solution_image|default('', true) %}
+
+            <img src="{{ solution_image }}" alt="{{ solution_image_alt|default(
+                        'KidneyAI system architecture showing CT image upload, YOLO inference, SQLite storage, and PDF report generation',
+                        true
+                    ) }}" loading="lazy" decoding="async"> {% else %}
+
+            <div class="cs-image__placeholder cs-image__placeholder--solution" role="img" aria-label="KidneyAI system architecture map">
+
+                <span>
+                        SOLUTION / ARCHITECTURE MAP
+                    </span>
+
+                <b>
+                        UPLOAD → YOLO INFERENCE → SQLITE → PDF REPORT
+                    </b>
+
+            </div>
+
+            {% endif %}
+
+        </figure>
+
+    </section>
+
+
+    <!-- ======================================================
+         04 / MODEL ARCHITECTURE
+         ====================================================== -->
+
+    <section class="cs-section cs-research" id="research" aria-labelledby="research-heading">
+
+        <div class="cs-section-heading cs-reveal">
+
+            <span class="cs-kicker">
+                04 / Model Architecture & Setup
+            </span>
+
+
+            <h2 id="research-heading">
+
+                {{ research_heading|default( 'Optimized computer vision fine-tuned for high precision.', true ) }}
+
+            </h2>
+
+        </div>
+
+
+        <div class="cs-research-grid">
+
+            <article class="cs-build-item cs-reveal">
+
+                <span>
+                    MODEL TRAINING
+                </span>
+
+                <h3>
+                    {{ persona_title|default( 'Custom-Trained YOLO Network', true ) }}
+                </h3>
+
+                <p>
+                    {{ persona_text|default( 'Trained up to 100 epochs (converging at epoch 82) with an early-stopping patience of 20, optimized for CT slice contrast and feature extraction.', true ) }}
+                </p>
+
+            </article>
+
+
+            <article class="cs-build-item cs-reveal">
+
+                <span>
+                    IMAGE PROCESSING
+                </span>
+
+                <h3>
+                    {{ interview_title|default( 'OpenCV Dynamic Rendering', true ) }}
+                </h3>
+
+                <p>
+                    {{ interview_text|default( 'Automated image preprocessing scales CT inputs to 896×896, draws dynamic bounding boxes with confidence scores, and outputs MIME-formatted streams.', true ) }}
+                </p>
+
+            </article>
+
+
+            <article class="cs-build-item cs-reveal">
+
+                <span>
+                    HARDWARE ACCELERATION
+                </span>
+
+                <h3>
+                    {{ insight_title|default( 'CUDA + CPU Fallback', true ) }}
+                </h3>
+
+                <p>
+                    {{ insight_text|default( 'Seamless execution across environments with automatic hardware detection—leveraging CUDA GPU acceleration when available, with automatic CPU fallback.', true ) }}
+                </p>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- ======================================================
+         05 / APPLICATION WORKFLOW
+         ====================================================== -->
+
+    <section class="cs-section cs-design" id="design-process" aria-labelledby="workflow-heading">
+
+        <div class="cs-section-heading cs-reveal">
+
+            <span class="cs-kicker">
+                05 / Application Workflow
+            </span>
+
+            <h2 id="workflow-heading">
+
+                {{ design_heading|default( 'From raw CT slice upload to saved clinical signal.', true ) }}
+
+            </h2>
+
+        </div>
+
+
+        <div class="cs-flow cs-reveal">
+
+            <div>
+                <small>01</small>
+
+                <strong>
+                    CT Upload
+                </strong>
+
+                <span>
+                    {{ ideation_text|default(
+                        'User drags & drops scan image onto the React/Vite web interface.',
+                        true
+                    ) }}
+                </span>
+            </div>
+
+
+            <i aria-hidden="true">→</i>
+
+
+            <div>
+                <small>02</small>
+
+                <strong>
+                    YOLO Inference
+                </strong>
+
+                <span>
+                    {{ sketching_text|default(
+                        'Flask backend processes slice through best.pt model weights.',
+                        true
+                    ) }}
+                </span>
+            </div>
+
+
+            <i aria-hidden="true">→</i>
+
+
+            <div>
+                <small>03</small>
+
+                <strong>
+                    Database Logging
+                </strong>
+
+                <span>
+                    {{ wireframing_text|default(
+                        'Record, stone count, & confidence stored in SQLite.',
+                        true
+                    ) }}
+                </span>
+            </div>
+
+
+            <i aria-hidden="true">→</i>
+
+
+            <div>
+                <small>04</small>
+
+                <strong>
+                    PDF Report
+                </strong>
+
+                <span>
+                    {{ prototype_text|default(
+                        'ReportLab compiles structured summary ready for download.',
+                        true
+                    ) }}
+                </span>
+            </div>
+
+        </div>
+
+
+        <figure class="cs-image cs-image--wide cs-reveal">
+
+            {% if design_image|default('', true) %}
+
+            <img src="{{ design_image }}" alt="{{ design_image_alt|default(
+                        'KidneyAI application workflow from CT scan upload to YOLO prediction, database storage, and PDF report',
+                        true
+                    ) }}" loading="lazy" decoding="async"> {% else %}
+
+            <div class="cs-image__placeholder cs-image__placeholder--design" role="img" aria-label="KidneyAI workflow diagram">
+
+                <span>
+                        SYSTEM FLOW / WORKFLOW DIAGRAM
+                    </span>
+
+                <b>
+                        DASHBOARD → PREDICT → SAVE → REPORT
+                    </b>
+
+            </div>
+
+            {% endif %}
+
+        </figure>
+
+    </section>
+
+
+    <!-- ======================================================
+         06 / APPLICATION MODULES
+         ====================================================== -->
+
+    <section class="cs-section cs-final-designs" id="final-designs" aria-labelledby="modules-heading">
+
+        <div class="cs-section-heading cs-reveal">
+
+            <span class="cs-kicker">
+                06 / Application Modules
+            </span>
+
+
+            <h2 id="modules-heading">
+
+                {{ final_designs_heading|default( 'Clean medical-grade UI with light and dark theme support.', true ) }}
+
+            </h2>
+
+
+            <p>
+
+                {{ final_designs_text|default( 'Designed using Tailwind CSS, TypeScript, and Lucide icons to present complex detection telemetry through intuitive dashboards, side-by-side scan reviews, and searchable history logs.', true ) }}
+
+            </p>
+
+        </div>
+
+
+        <div class="cs-gallery">
+            <figure class="cs-gallery__item cs-reveal">
+                <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/kidney-stone-gallery-img-01.png') }}" alt="Final design screen one">
+            </figure>
+            <figure class="cs-gallery__item cs-reveal">
+                <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/kidney-stone-gallery-img-02.png') }}" alt="Final design screen two">
+            </figure>
+            <figure class="cs-gallery__item cs-reveal">
+                <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/kidney-stone-gallery-img-03.png') }}" alt="Final design screen three">
+            </figure>
+        </div>
+
+    </section>
+
+
+    <!-- ======================================================
+         07 / SYSTEM INTEGRITY
+         ====================================================== -->
+
+    <section class="cs-section cs-accessibility" id="accessibility" aria-labelledby="integrity-heading">
+
+        <div class="cs-section-heading cs-reveal">
+
+            <span class="cs-kicker">
+                07 / System Integrity & Standards
+            </span>
+
+
+            <h2 id="integrity-heading">
+
+                {{ accessibility_heading|default( 'Built for clarity, validation, and reliable performance.', true ) }}
+
+            </h2>
+
+        </div>
+
+
+        <div class="cs-accessibility-grid">
+
+            <article class="cs-build-item cs-reveal">
+
+                <span>
+                    VALIDATION
+                </span>
+
+                <h3>
+                    Secure File Handling
+                </h3>
+
+                <p>
+                    {{ accessibility_language|default( 'Strict payload checks limit file uploads to 10 MB and validate extensions (JPG, PNG, BMP, WEBP) before OpenCV execution.', true ) }}
+                </p>
+
+            </article>
+
+
+            <article class="cs-build-item cs-reveal">
+
+                <span>
+                    API REST ARCHITECTURE
+                </span>
+
+                <h3>
+                    Decoupled Backend
+                </h3>
+
+                <p>
+                    {{ accessibility_interaction|default( 'Clean REST APIs (/predict, /history, /stats, /health) allow independent scaling of the Flask inferencing backend.', true ) }}
+                </p>
+
+            </article>
+
+
+            <article class="cs-build-item cs-reveal">
+
+                <span>
+                    DISCLAIMER & SAFETY
+                </span>
+
+                <h3>
+                    Clinical Signal Guidance
+                </h3>
+
+                <p>
+                    {{ accessibility_flexibility|default( 'Built-in research disclaimers explicitly clarify AI detection limits for educational and demonstration purposes.', true ) }}
+                </p>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- ======================================================
+         08 / OUTCOMES
+         ====================================================== -->
+
+    <section class="cs-section cs-outcomes" id="outcomes" aria-labelledby="outcomes-heading">
+
+        <div class="cs-results__copy cs-reveal">
+
+            <span class="cs-kicker">
+                08 / Key Results & Outcomes
+            </span>
+
+
+            <h2 id="outcomes-heading">
+
+                {{ outcomes_heading|default( 'Accurate inference paired with seamless clinical workflow.', true ) }}
+
+            </h2>
+
+
+            <p>
+
+                {{ outcomes_text|default( 'KidneyAI successfully demonstrates how computer vision models can be packaged into an intuitive application. The platform accelerates scan review cycles, automates record archiving in SQLite, and enables one-click PDF report
+                generation.', true ) }}
+
+            </p>
+
+
+            <p>
+
+                {{ reflection_text|default( 'Key takeaway: Combining fast deep-learning models (YOLO) with clean UI hierarchy creates an effective assistive tool for medical image evaluation.', true ) }}
+
+            </p>
+
+        </div>
+
+
+        <figure class="cs-results__visual cs-reveal">
+            <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/kidney-stone-gallery-img-02.png') }}" alt="Outcomes and verdict visual evidence">
+        </figure>
+
+    </section>
+
+
+    <!-- ======================================================
+         PROJECT DETAILS
+         ====================================================== -->
+
+    <section class="cs-section cs-stack" aria-labelledby="project-details-heading">
+
+        <div class="cs-section-heading cs-reveal">
+
+            <span class="cs-kicker">
+                Project details
+            </span>
+
+
+            <h2 id="project-details-heading">
+                Built by Septaneuron· Code available on GitHub.
+            </h2>
+
+        </div>
+
+
+        <div class="cs-stack-list cs-reveal">
+
+            <span>
+                {{ stack_one|default('Python', true) }}
+            </span>
+
+            <span>
+                {{ stack_two|default('Flask', true) }}
+            </span>
+
+            <span>
+                {{ stack_three|default('Ultralytics YOLO', true) }}
+            </span>
+
+            <span>
+                {{ stack_four|default('OpenCV', true) }}
+            </span>
+
+            <span>
+                {{ stack_five|default('React / TypeScript', true) }}
+            </span>
+
+            <span>
+                {{ stack_six|default('SQLite', true) }}
+            </span>
+
+        </div>
+
+
+        <a class="cs-github-button cs-reveal" href="{{ seo_github }}" target="_blank" rel="noopener noreferrer" aria-label="View KidneyAI project source code on GitHub">
+            View the project on GitHub
+            <span aria-hidden="true">↗</span>
+        </a>
+
+    </section>
+
+
+    <!-- ======================================================
+         CONTACT / CTA
+         ====================================================== -->
+
+    <section class="cs-next" id="contact" aria-labelledby="contact-heading">
+
+        <span class="cs-kicker">
+            Have a similar AI or Computer Vision problem?
+        </span>
+
+
+        <h2 id="contact-heading">
+            Let’s build the <em>next system.</em>
+        </h2>
+
+
+        <p>
+            Tell us what you are trying to make clearer, faster, or more capable.
+        </p>
+
+
+        <a class="cs-button" href="{{ url_for('contact') }}">
+            Start a conversation
+            <span aria-hidden="true">↗</span>
+        </a>
+
+    </section>
+
+</main>
+
+{% endblock %} {# ============================================================ PAGE JAVASCRIPT ============================================================ #} {% block page_scripts %}
+
+<script src="{{ url_for('static', filename='assets/js/case-studies.js') }}" defer></script>
+
+{% endblock %}

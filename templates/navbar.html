@@ -1,0 +1,45 @@
+<header class="sn-nav" id="snNav">
+    <a class="sn-nav__brand" href="{{ url_for('home') }}">
+        <!-- <img class="sn-nav__mark" src="{{ url_for('static', filename='assets/imgs/septaneuron.png') }}" alt="Septaneuron logo"> -->
+        <!-- <img class="sn-nav__logo" src="{{ url_for('static', filename='assets/imgs/logo/logo.svg') }}" alt="Septaneuron"> -->
+        <span class="sn-nav__name">Septaneuron</span>
+    </a>
+    <div class="sn-dock">
+        <a class="sn-dock__item {% if request.endpoint == 'home' %}is-active{% endif %}" data-target="home" aria-current="{% if request.endpoint == 'home' %}page{% endif %}" href="{{ url_for('home') }}"><span class="sn-dock__icon-slot"><svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.5 20v-6h5v6"/></svg></span><span class="sn-dock__label">Home</span></a>
+        <a class="sn-dock__item {% if request.endpoint == 'services' %}is-active{% endif %}" data-target="services" href="{{ url_for('services') }}"><span class="sn-dock__icon-slot"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></span><span class="sn-dock__label">Services</span></a>
+        <a class="sn-dock__item
+            {% if request.endpoint in [
+                'portfolio',
+                'ai_projects',
+                'frontend_projects',
+                'fullstack_projects'
+            ] or (
+                request.endpoint and
+                request.endpoint.startswith('case_study_')
+            ) %}
+                is-active
+            {% endif %}" data-target="work" href="{{ url_for('portfolio') }}">
+            <span class="sn-dock__icon-slot">
+                <svg viewBox="0 0 24 24">
+                    <rect x="3" y="7.5" width="18" height="12" rx="2"/>
+                    <path d="M8.5 7.5V6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v1.5"/>
+                    <path d="M3 12.5h18"/>
+                </svg>
+            </span>
+
+            <span class="sn-dock__label">Work</span>
+        </a>
+
+        <a class="sn-dock__item {% if request.endpoint == 'about' %}is-active{% endif %}" data-target="about" href="{{ url_for('about') }}"><span class="sn-dock__icon-slot"><svg viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.2"/><path d="M3.5 20c0-3.3 2.5-5.7 5.5-5.7s5.5 2.4 5.5 5.7"/><circle cx="17.5" cy="7.5" r="2.4"/><path d="M14.8 14.6c2.5.3 4.7 2.6 4.7 5.4"/></svg></span><span class="sn-dock__label">About</span></a>
+        <a class="sn-dock__item {% if request.endpoint == 'contact' %}is-active{% endif %}" data-target="contact" href="{{ url_for('contact') }}"><span class="sn-dock__icon-slot"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.2"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg></span><span class="sn-dock__label">Contact</span></a>
+    </div>
+    <a class="sn-nav__cta" href="{{ url_for('contact') }}">Start a Project</a>
+    <button class="sn-nav__toggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <span class="sn-menu-icon" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+    </button>
+
+</header>

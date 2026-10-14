@@ -1,0 +1,234 @@
+{% extends "base.html" %} {% block title %}n8n Recruitment Automation: AI Candidate Screening{% endblock %} {% block page_css %}
+<meta name="description" content="n8n recruitment automation workflow using Claude AI for candidate screening — automated resume and CV parsing, GitHub scoring, and ranked shortlists.">
+<meta name="keywords" content="n8n recruitment automation workflow, AI candidate screening with Claude, automated resume and CV screening, hiring pipeline automation case study, GitHub API candidate scoring, Google Sheets HR automation">
+<meta name="author" content="Septaneuron">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="{{ request.url if request is defined else 'https://septaneuron.com/case-studies/hr-recruitment-workflow' }}">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="n8n Recruitment Automation: AI Candidate Screening">
+<meta property="og:description" content="How an n8n automation was built to extract CVs, pull GitHub signal, score candidates with Claude AI against a weighted rubric, and route ranked shortlists to a hiring team by role.">
+<meta property="og:image" content="{{ introduction_image|default(url_for('static', filename='assets/imgs/casestudyImgs/hr-system-gallery-img-01.jpeg')) }}">
+<meta property="og:url" content="{{ request.url if request is defined else 'https://septaneuron.com/case-studies/hr-recruitment-workflow' }}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="n8n Recruitment Automation: AI Candidate Screening">
+<meta name="twitter:description" content="An automation pipeline that screens, scores, and routes job candidates using n8n, Claude AI, and Google Sheets.">
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "n8n Recruitment Automation: AI Candidate Screening",
+        "description": "n8n recruitment automation workflow using Claude AI for candidate screening — automated resume and CV parsing, GitHub scoring, and ranked shortlists.",
+        "about": "An n8n automation pipeline for end-to-end candidate screening using CV extraction, GitHub signal, and Claude AI scoring.",
+        "author": {
+            "@type": "Organization",
+            "name": "Septaneuron"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Septaneuron"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://septaneuron.com/case-studies/hr-recruitment-workflow"
+        },
+        "articleSection": "Automation / AI Hiring",
+        "keywords": "n8n recruitment automation workflow, AI candidate screening with Claude, automated resume and CV screening, hiring pipeline automation case study, GitHub API candidate scoring, Google Sheets HR automation"
+    }
+</script>
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Portfolio",
+            "item": "{{ url_for('portfolio', _external=true) }}"
+        }, {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "HR Recruitment Workflow",
+            "item": "https://septaneuron.com/case-studies/hr-recruitment-workflow"
+        }]
+    }
+</script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/case-studies.css') }}"> {% endblock %} {% block content %}
+<div class="cs-ambient" aria-hidden="true">
+    <div class="cs-grid"></div>
+    <div class="cs-orb cs-orb--a"></div>
+    <div class="cs-orb cs-orb--b"></div>
+</div>
+
+<section class="cs-hero" id="top">
+    <canvas class="thread-canvas" id="threadCanvas"></canvas>
+    <div class="hero-scrim"></div>
+    <div class="cs-hero__content">
+        <a class="cs-back" href="{{ url_for('portfolio') }}">← Back to selected work</a>
+        <div class="cs-hero__copy">
+            <span class="cs-kicker">AUTOMATION / AI HIRING</span>
+            <h1>Teaching a workflow to read resumes, GitHub profiles, and rank a shortlist.</h1>
+            <p>An end-to-end n8n automation that pulls unscreened applicants from a Google Sheet, extracts their CV text, enriches it with their public GitHub activity, scores each candidate with Claude against a weighted rubric, and routes a ranked, role-specific
+                shortlist to the hiring team's inbox.</p>
+            <div class="cs-hero__meta"><span>Automation Project · n8n + Claude AI</span><span>2025</span></div>
+        </div>
+        <div class="cs-hero__visual" aria-label="Project system visualization">
+            <div class="cs-system-orbit"><i></i><i></i><i></i><b style="text-align:center;">HR<br>RECRUITMENT<br>WORKFLOW</b></div><br>
+            <span>N8N → CLAUDE AI</span>
+        </div>
+    </div>
+</section>
+
+<main class="cs-main">
+    <section class="cs-section cs-intro" id="introduction">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">01 / Introduction</span>
+            <h2>Screening doesn't have to stop at "who applied."</h2>
+        </div>
+        <div class="cs-editorial">
+            <p class="cs-lead cs-reveal">Manually screening every applicant against a CV, a GitHub profile, and a GPA cutoff doesn't scale once a role gets more than a handful of submissions — reviewers end up skimming instead of comparing. This project set out to build a complete
+                pipeline that could read every unprocessed applicant end-to-end and hand the hiring team a ranked, evidence-backed shortlist instead of a raw spreadsheet.</p>
+            <p class="cs-reveal">The workflow was built entirely in n8n, combining classic data plumbing (Google Sheets reads/writes, Google Drive downloads, GitHub API calls) with an AI scoring stage powered by Claude, chained into a single automated pipeline that runs per
+                role.
+            </p>
+        </div>
+        <figure class="cs-image cs-reveal">
+            <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/hr-system-gallery-img-01.jpeg') }}" alt="Introduction project view">
+        </figure>
+    </section>
+
+    <section class="cs-section cs-story" id="problem">
+        <div class="cs-story__label cs-reveal"><span class="cs-kicker">02 / The problem</span><span class="cs-line"></span></div>
+        <div class="cs-story__body cs-reveal">
+            <h2>A single applicant sheet hides more signal than it shows.</h2>
+            <p>A raw "Master Response" sheet has a name, an email, a CV link, a GitHub URL, a GPA, and a role — but none of that is comparable at a glance. Reading a CV, checking a GPA cutoff, and skimming a GitHub profile for every applicant is exactly
+                the kind of repetitive, judgment-light work that doesn't need a human doing it thirty times in a row.</p>
+            <p>On top of that, four different roles (AI/ML Engineer, Full Stack, Video Editing, Game Development) were being screened against the same sheet, which meant the pipeline had to fan out candidates by role, score them fairly, and still make the
+                final call to the hiring team, not the machine.
+            </p>
+        </div>
+    </section>
+
+    <section class="cs-section cs-solution" id="solution">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">03 / The solution</span>
+            <h2>A three-stage pipeline: enrich, score, then route.</h2>
+            <p>Rather than one opaque AI call, the problem was split into focused stages chained together — a strategy grounded in how structured hiring rubrics work in practice (Schmidt & Hunter, 1998), where breaking a decision into weighted, evidence-backed
+                criteria consistently outperforms a single holistic judgment.</p>
+        </div>
+        <div class="cs-solution-grid">
+            <article class="cs-approach-card cs-reveal"><span>01</span>
+                <h3>Enrich</h3>
+                <p>Each unprocessed applicant's CV is downloaded from Google Drive and converted to text, while their GitHub URL is queried through the GitHub API to summarize public repos, languages, and stars.</p>
+            </article>
+            <article class="cs-approach-card cs-reveal"><span>02</span>
+                <h3>Gate & score</h3>
+                <p>A GPA ≥ 3 gate filters out disqualified candidates before the rest are scored by Claude against a fixed rubric — CV fit 40%, GitHub 30%, GPA 20%, communication 10% — returning a structured score and reasoning.</p>
+            </article>
+            <article class="cs-approach-card cs-reveal"><span>03</span>
+                <h3>Route & notify</h3>
+                <p>Scored candidates are appended to their role's sheet, and once every applicant is processed, each role's top 3 by score are compiled into an HTML digest and emailed to the hiring team.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="cs-section cs-research" id="research-foundation">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">04 / Foundation</span>
+            <h2>Built on a structured-hiring principle, adapted into automation.</h2>
+        </div>
+        <div class="cs-research-grid">
+            <article class="cs-build-item cs-reveal"><span>REFERENCE PRINCIPLE</span>
+                <h3>Structured, weighted criteria beat gut-feel review</h3>
+                <p>Decades of selection-research findings (Schmidt & Hunter, 1998, <em>Psychological Bulletin</em>) show that combining a small set of weighted, evidence-based predictors consistently outperforms unstructured, holistic candidate review.</p>
+            </article>
+            <article class="cs-build-item cs-reveal"><span>KEY FINDING ADOPTED</span>
+                <h3>Fix the rubric, then let evidence fill it in</h3>
+                <p>The strongest lever for consistency was locking a fixed weighting — CV fit, GitHub, GPA, communication — before any candidate was scored, so the AI is filling in evidence against a rubric rather than forming a free-floating opinion.</p>
+            </article>
+            <article class="cs-build-item cs-reveal"><span>WHERE THIS PROJECT DIVERGED</span>
+                <h3>A human still makes the call</h3>
+                <p>Instead of auto-advancing a "winner," every digest is explicitly labeled as requiring manual review — the workflow surfaces a ranked, evidence-backed shortlist per role, but the hiring decision stays with the hiring team.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="cs-section cs-design" id="design-process">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">05 / Build process</span>
+            <h2>From a raw applicant sheet to a routed, ranked shortlist.</h2>
+        </div>
+        <div class="cs-flow cs-reveal">
+            <div><small>01</small><strong>Read & loop</strong><span>Pulled unprocessed rows from the Master Response sheet and looped through candidates one at a time.</span></div><i>→</i>
+            <div><small>02</small><strong>Enrich</strong><span>Downloaded and extracted each CV, then pulled and summarized the candidate's public GitHub repos.</span></div><i>→</i>
+            <div><small>03</small><strong>Score</strong><span>Gated on GPA, then scored the remaining candidates with Claude against the weighted rubric and parsed the structured JSON response.</span></div><i>→</i>
+            <div><small>04</small><strong>Route & digest</strong><span>Appended each candidate to their role sheet, then compiled and emailed a top-3 digest per role.</span></div>
+        </div>
+        <figure class="cs-image cs-image--wide cs-reveal">
+            <div class="cs-image__placeholder cs-image__placeholder--design"><span>BUILD PROCESS / WORKFLOW CANVAS + SCORING LOGIC</span><b>SHEET READ → ENRICH → SCORE → ROUTE → DIGEST</b></div>
+        </figure>
+    </section>
+
+    <section class="cs-section cs-final-designs" id="final-designs">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">06 / Results</span>
+            <h2>A ranked shortlist lands in the inbox, per role, with reasoning attached.</h2>
+            <p>The pipeline reliably enriches, scores, and routes every unprocessed applicant, then produces a clean HTML digest per role — ranked by score, with GPA, contact info, and a trimmed reasoning excerpt for each of the top 3 candidates.</p>
+        </div>
+        <div class="cs-gallery">
+            <figure class="cs-gallery__item cs-reveal">
+                <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/hr-system-gallery-img-01.jpeg') }}" alt="Final design screen one">
+            </figure>
+            <figure class="cs-gallery__item cs-reveal">
+                <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/hr-system-gallery-img-02.jpeg') }}" alt="Final design screen two">
+            </figure>
+        </div>
+    </section>
+
+    <section class="cs-section cs-accessibility" id="accessibility">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">07 / Limitations and scope</span>
+            <h2>Honest about what a rubric-scored, sheet-backed pipeline can and can't do.</h2>
+        </div>
+        <div class="cs-accessibility-grid">
+            <article class="cs-build-item cs-reveal"><span>NO FINAL DECISION</span>
+                <h3>Ranking, not hiring</h3>
+                <p>Every digest is explicitly framed as requiring manual review — the workflow narrows the field to a ranked top 3 per role, but it never advances a candidate on its own.</p>
+            </article>
+            <article class="cs-build-item cs-reveal"><span>SIGNAL, NOT VERIFICATION</span>
+                <h3>GitHub and CV data are taken at face value</h3>
+                <p>Public repo activity and extracted CV text are used as scoring signal, not verified fact — a thin GitHub profile or a poorly parsed PDF can understate a genuinely strong candidate.</p>
+            </article>
+            <article class="cs-build-item cs-reveal"><span>SHEET-DEPENDENT</span>
+                <h3>Only as clean as the source sheet</h3>
+                <p>The pipeline trusts the Master Response sheet's columns (CV Link, GitHub URL, GPA, Role Applied For) exactly as entered, so malformed links or missing fields fall through to graceful-but-lower-signal scoring rather than being caught upfront.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="cs-section cs-outcomes" id="outcomes">
+        <div class="cs-results__copy cs-reveal"><span class="cs-kicker">08 / Outcomes and reflections</span>
+            <h2>A working, end-to-end proof that automated screening can stay human-in-the-loop.</h2>
+            <p>The finished workflow reliably turns a raw applicant sheet into a ranked, reasoned shortlist per role without ever making the final hiring call itself, validating the core idea behind the build: automate the repetitive evidence-gathering and
+                scoring, and leave the judgment call to the people who own the decision.</p>
+            <p>The clearest next step is adding basic validation on the source sheet's CV and GitHub links, and expanding the rubric with a structured interview stage once candidates are shortlisted.</p>
+        </div>
+        <figure class="cs-results__visual cs-reveal">
+            <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/hr-system-gallery-img-02.jpeg') }}" alt="Outcomes and verdict visual evidence">
+        </figure>
+    </section>
+
+    <section class="cs-section cs-stack">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">Project details</span>
+            <h2>Built in n8n, powered by Claude AI.</h2>
+        </div>
+        <div class="cs-stack-list cs-reveal"><span>n8n</span><span>Claude (Anthropic API)</span><span>Google Sheets</span><span>Google Drive</span><span>Gmail API</span><span>GitHub API</span></div>
+        <a class="cs-github-button cs-reveal" href="{{ github_url|default('https://github.com/shaafkhan10k/N8n_scenario/tree/main/HR') }}" target="_blank" rel="noopener">View the project on GitHub <span>↗</span></a>
+    </section>
+
+    <section class="cs-next" id="contact"><span class="cs-kicker">Have a similar problem?</span>
+        <h2>Let's build the <em>next system.</em></h2>
+        <p>Tell us what you are trying to make clearer, faster, or more capable.</p><a class="cs-button" href="{{ url_for('contact') }}">Start a conversation <span>↗</span></a>
+    </section>
+</main>
+{% endblock %} {% block page_scripts %}
+<script src="{{ url_for('static', filename='assets/js/case-studies.js') }}"></script>
+{% endblock %}

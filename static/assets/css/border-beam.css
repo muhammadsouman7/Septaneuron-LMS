@@ -1,0 +1,84 @@
+/* Animated beam card */
+
+.sn-beam-card {
+    --beam-color: #07c0cd;
+    --beam-size: 110px;
+    --beam-thickness: 2px;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+
+/* Keep card content above the beam */
+
+.sn-beam-card>* {
+    position: relative;
+    z-index: 2;
+}
+
+
+/* Permanent subtle card border */
+
+.sn-beam-card::before {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    content: "";
+    pointer-events: none;
+    border: 1px solid rgba(0, 188, 212, 0.22);
+    border-radius: inherit;
+}
+
+
+/* Moving beam */
+
+.sn-border-beam {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--beam-size);
+    height: var(--beam-thickness);
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, var(--beam-color), transparent);
+    box-shadow: 0 0 5px var(--beam-color), 0 0 14px var(--beam-color);
+    offset-path: rect(0 100% 100% 0 round var(--card-radius, 12px));
+    offset-rotate: auto;
+    animation: sn-beam-travel var(--beam-duration, 8s) linear infinite;
+    will-change: offset-distance;
+}
+
+@keyframes sn-beam-travel {
+    from {
+        offset-distance: 0%;
+    }
+    to {
+        offset-distance: 100%;
+    }
+}
+
+
+/* Softer glow behind the beam */
+
+.sn-border-beam::after {
+    position: absolute;
+    inset: -5px 0;
+    content: "";
+    border-radius: inherit;
+    background: inherit;
+    filter: blur(5px);
+    opacity: 0.7;
+}
+
+
+/* Optional: stronger beam when hovering the card */
+
+.sn-beam-card:hover .sn-border-beam {
+    box-shadow: 0 0 7px var(--beam-color), 0 0 18px var(--beam-color), 0 0 36px rgba(0, 188, 212, 0.9);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sn-border-beam {
+        display: none;
+    }
+}

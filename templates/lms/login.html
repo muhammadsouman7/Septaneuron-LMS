@@ -1,0 +1,27 @@
+{% extends 'lms/base.html' %}
+{% from 'lms/_macros.html' import csrf with context %}
+{% block title %}Sign in{% endblock %}
+{% block body %}
+<main class="lms-auth">
+    <div class="lms-card">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}<div class="lms-flash lms-flash--{{ category }}" role="alert">{{ message }}</div>{% endfor %}
+        {% endwith %}
+        <p class="lms-kicker">Intern portal</p>
+        <h1>Welcome back</h1>
+        <p class="lms-muted" style="margin:0 0 26px">Sign in with the email you gave us to see your tasks and submit your work.</p>
+        <form class="lms-form" method="post" action="{{ url_for('lms.login') }}">
+            {{ csrf() }}
+            <input type="hidden" name="next" value="{{ next }}">
+            <label>Email
+                <input type="email" name="email" value="{{ email }}" autocomplete="username" placeholder="you@gmail.com" required autofocus>
+            </label>
+            <label>Password
+                <input type="password" name="password" autocomplete="current-password" required>
+            </label>
+            <button class="lms-btn lms-btn--block" type="submit">Sign in</button>
+        </form>
+        <p class="lms-muted lms-small" style="margin:20px 0 0">Forgot your password? Ask your domain mentor to reset it for you.</p>
+    </div>
+</main>
+{% endblock %}

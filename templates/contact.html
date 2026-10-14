@@ -1,0 +1,175 @@
+{% extends "base.html" %} {% block title %}Contact Septaneuron | AI & Software Development{% endblock %} {% block page_css %}
+<!-- Primary Meta Tags -->
+<meta name="description" content="Contact Septaneuron to build custom AI systems, full-stack web apps, or automation workflows. Based in Rawalpindi, Pakistan — let's start a conversation." />
+<meta name="keywords" content="contact Septaneuron, hire AI developers Pakistan, software development inquiry, hire software studio, custom app development quote" />
+
+<!-- Canonical -->
+<link rel="canonical" href="https://septaneuron.com/contact" />
+
+<!-- Open Graph / Social Tags -->
+<meta property="og:title" content="Contact Septaneuron | AI & Software Development" />
+<meta property="og:description" content="Tell us what you're trying to build, what problem you're solving, or where you're stuck. Let's start a conversation." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://septaneuron.com/contact" />
+<meta property="og:image" content="https://septaneuron.com/static/assets/imgs/logo/septaneuron.svg" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Contact Septaneuron | AI & Software Development" />
+<meta name="twitter:description" content="Reach out to Septaneuron for custom AI development, web applications, and workflow automation." />
+
+<!-- JSON-LD: ContactPage + Organization contact point -->
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [{
+            "@type": "ContactPage",
+            "url": "https://septaneuron.com/contact",
+            "name": "Contact Septaneuron",
+            "description": "Contact Septaneuron to build custom AI systems, full-stack web apps, or automation workflows."
+        }, {
+            "@type": "Organization",
+            "name": "Septaneuron",
+            "url": "https://septaneuron.com/",
+            "logo": "https://septaneuron.com/static/assets/imgs/septaneuron.png",
+            "email": "hello@septaneuron.com",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Rawalpindi",
+                "addressCountry": "PK"
+            },
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "email": "hello@septaneuron.com",
+                "contactType": "sales",
+                "telephone": "+923349593578",
+                "areaServed": "Worldwide"
+            },
+            "sameAs": [
+                "https://www.linkedin.com/in/septaneuron/",
+                "https://www.instagram.com/septaneuron/",
+                "https://www.facebook.com/septaneuron/"
+            ]
+        }, {
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://septaneuron.com/"
+            }, {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Contact",
+                "item": "https://septaneuron.com/contact"
+            }]
+        }]
+    }
+</script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/page-hero.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/contact.css') }}"> {% endblock %} {% block content %}
+<div class="ct-ambient" aria-hidden="true">
+    <div class="ct-grid"></div>
+</div>
+
+<section class="hero page-hero" id="top">
+    <div class="page-hero__aurora" aria-hidden="true">
+        <span class="page-hero__blob page-hero__blob--a"></span>
+        <span class="page-hero__blob page-hero__blob--b"></span>
+        <span class="page-hero__grid"></span>
+    </div>
+    <div class="page-hero__scrim"></div>
+    <div class="page-hero__content">
+        <div class="svc-kicker">Start a Conversation</div>
+        <h1>Hire an AI &amp; Software Development Studio — <span>have something worth building?</span></h1>
+        <p>Tell us what you're trying to build, what problem you're solving, or where you're stuck. Give us as much or as little detail as you have — we'll take it from there.</p>
+        <div class="page-hero__actions">
+            <a class="ct-btn ct-btn--light" href="#contact-form">Tell us about the project <span>↓</span></a>
+        </div>
+    </div>
+</section>
+
+<section class="ct-section ct-form-section" id="contact-form">
+    <div class="ct-heading ct-reveal">
+        <div><span class="ct-kicker">The starting point</span>
+            <h2>Tell us about the <em>project.</em></h2>
+        </div>
+        <p>A rough explanation is enough to start. You do not need a perfectly written specification.</p>
+    </div>
+    <div class="ct-form-layout">
+        <form class="ct-form ct-reveal" id="ctForm" action="{{ url_for('contact_submit') }}" method="POST">
+            <!-- <input type="hidden" name="access_key" value="{{ web3forms_access_key }}"> -->
+            <input type="hidden" name="subject" value="New Septaneuron project inquiry">
+            <input type="hidden" name="from_name" value="Septaneuron website">
+            <input type="checkbox" name="botcheck" class="hidden" style="display:none">
+            <div class="ct-form__row"><label>Name<input type="text" name="name" placeholder="Your name" required></label><label>Email<input type="email" name="email" placeholder="you@company.com" required></label></div><label>Company / Organization<input type="text" name="company" placeholder="Your company" required></label><label>What do you need help with?<select name="service" required><option value="" selected disabled>Select a service</option><option>AI / Machine Learning</option><option>Computer Vision</option><option>Web Application</option><option>Mobile Application</option><option>Automation</option><option>Backend / API</option><option>Internal Tool / Dashboard</option><option>Other</option></select></label><label>Project details<textarea name="details" rows="7" placeholder="What are you trying to build? What problem are you trying to solve? Include any useful context, requirements, links, or technical details." required></textarea></label>
+            <div class="ct-form__row"><label>Budget range<select name="budget" required><option>Not sure yet</option><option>Under $1,000</option><option>$1,000–$5,000</option><option>$5,000–$10,000</option><option>$10,000+</option><option>Prefer to discuss</option></select></label><label>Timeline<select name="timeline" required><option>As soon as possible</option><option>Within 1 month</option><option>1–3 months</option><option>Flexible</option><option>Just exploring</option></select></label></div>
+            <button class="ct-btn ct-btn--submit" type="submit">Send inquiry <span>↗</span></button>
+            <p class="ct-form__note">By sending this inquiry, you are starting a conversation — not committing to a project.</p>
+        </form>
+        <div class="ct-modal" id="ctModal" role="dialog" aria-modal="true" aria-hidden="true">
+            <div class="ct-modal__backdrop" data-close></div>
+            <div class="ct-modal__box">
+                <span class="ct-modal__icon" id="ctModalIcon">✓</span>
+                <h3 id="ctModalTitle">Message sent</h3>
+                <p id="ctModalText">Thanks for reaching out — we'll get back to you soon.</p>
+                <button class="ct-btn ct-btn--light" data-close>Close</button>
+            </div>
+        </div>
+        <aside class="ct-direct ct-reveal"><span class="ct-kicker">Prefer email?</span>
+            <h3>Send us a message <em>directly.</em></h3>
+            <p>Skip the form if you prefer. Send us a note and we'll get back to you from there.</p><a class="ct-email" href="mailto:hello@septaneuron.com">hello@septaneuron.com <span>↗</span></a>
+            <a class="ct-phone" href="https://wa.me/923349593578?text=Hi%20Septaneuron%2C%20I%20would%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener nofollow" aria-label="Chat with Septaneuron on WhatsApp">
+                <i class="fa-brands fa-whatsapp"></i> +92 334 9593578 <span>↗</span>
+            </a>
+            <div class="ct-socials">
+                <a href="https://www.linkedin.com/in/septaneuron/" target="_blank" rel="noopener nofollow" style="margin-right:10px;" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/septaneuron/" target="_blank" rel="noopener nofollow" style="margin-right:10px;" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.facebook.com/septaneuron/" target="_blank" rel="noopener nofollow" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+            </div>
+            <div class="ct-map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d830.4650920291429!2d73.0715766!3d33.6348623!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f483a38a3fc55ab%3A0x4e7965c70817f72!2sSeptaneuron!5e0!3m2!1sen!2s!4v1790281242415!5m2!1sen!2s" title="Septaneuron location on Google Maps"
+                    loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </aside>
+    </div>
+</section>
+<section class="ct-section">
+    <div class="ct-heading ct-reveal">
+        <div><span class="ct-kicker">After you reach out</span>
+            <h2>What happens <em>next?</em></h2>
+        </div>
+    </div>
+    <div class="ct-steps">
+        <article class="ct-reveal"><b>01</b>
+            <h3>We read it</h3>
+            <p>We review your idea, requirements, and technical goals.</p>
+        </article>
+        <article class="ct-reveal"><b>02</b>
+            <h3>We talk</h3>
+            <p>If there's a good fit, we'll get in touch to understand the project properly.</p>
+        </article>
+        <article class="ct-reveal"><b>03</b>
+            <h3>We define the next step</h3>
+            <p>We discuss scope, approach, timeline, and what it would take to move forward.</p>
+        </article>
+    </div>
+</section>
+<section class="ct-section ct-send">
+    <div class="ct-heading ct-reveal">
+        <div><span class="ct-kicker">Helpful context</span>
+            <h2>Not sure what to <em>include?</em></h2>
+        </div>
+        <p>Don't worry about having everything figured out. The more context you can share, the more useful the first conversation will be.</p>
+    </div>
+    <div class="ct-checklist ct-reveal"><span>What you're trying to build</span><span>What problem you're solving</span><span>Who will use it</span><span>What you already have</span><span>Your preferred timeline</span><span>References or examples</span><span>Existing website, GitHub, or designs</span></div>
+</section>
+<section class="ct-final" id="close">
+    <div class="ct-final__glow"></div><span class="ct-kicker">Let's build something useful.</span>
+    <h2>The first step is a <em>conversation.</em></h2>
+    <p>You don't need everything figured out before reaching out.</p><a class="ct-email" href="mailto:hello@septaneuron.com">hello@septaneuron.com <span>↗</span></a></section>
+{% endblock %} {% block page_scripts %}
+<script src="{{ url_for('static', filename='assets/js/contact.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/page-hero.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,242 @@
+{% extends "base.html" %} {% block title %}Cartoon Emotion Recognition AI: YOLOv8 + MobileNetV2{% endblock %} {% block page_css %}
+<meta name="description" content="Case study: YOLOv8 face detection and MobileNetV2 emotion classification for cartoon emotion recognition AI, built and tested on Tom & Jerry footage.">
+<meta name="keywords" content="YOLOv8 face detection case study, cartoon emotion recognition AI, MobileNetV2 emotion classification, computer vision final year project, two-stage detection and classification pipeline, Tom and Jerry, deep learning, transfer learning, FYP">
+<meta name="author" content="Septaneuron">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="{{ request.url if request is defined else 'https://septaneuron.com/case-studies/cartoon-face-emotion-detection' }}">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cartoon Emotion Recognition AI: YOLOv8 + MobileNetV2">
+<meta property="og:description" content="How a two-stage YOLOv8 face detector and fine-tuned MobileNetV2 classifier were built to recognize emotions on Tom and Jerry's faces, grounded in published cartoon emotion recognition research.">
+<meta property="og:image" content="{{ introduction_image|default(url_for('static', filename='assets/imgs/casestudyImgs/face-emotion-gallery-img-01.png')) }}">
+<meta property="og:url" content="{{ request.url if request is defined else 'https://septaneuron.com/case-studies/cartoon-face-emotion-detection' }}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cartoon Emotion Recognition AI: YOLOv8 + MobileNetV2">
+<meta name="twitter:description" content="A two-stage computer vision system detecting cartoon faces and classifying their emotions, built on Tom and Jerry footage.">
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Cartoon Emotion Recognition AI: YOLOv8 + MobileNetV2",
+        "description": "Case study: YOLOv8 face detection and MobileNetV2 emotion classification for cartoon emotion recognition AI, built and tested on Tom & Jerry footage.",
+        "about": "A two-stage deep learning pipeline for cartoon face detection and emotion classification using YOLOv8 and MobileNetV2.",
+        "author": {
+            "@type": "Organization",
+            "name": "Septaneuron"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Septaneuron"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://septaneuron.com/case-studies/cartoon-face-emotion-detection"
+        },
+        "keywords": "YOLOv8 face detection case study, cartoon emotion recognition AI, MobileNetV2 emotion classification, computer vision, deep learning"
+    }
+</script>
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Portfolio",
+            "item": "{{ url_for('portfolio', _external=true) }}"
+        }, {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Cartoon Face and Emotion Detection",
+            "item": "https://septaneuron.com/case-studies/cartoon-face-emotion-detection"
+        }]
+    }
+</script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/case-studies.css') }}"> {% endblock %} {% block content %}
+<div class="cs-ambient" aria-hidden="true">
+    <div class="cs-grid"></div>
+    <div class="cs-orb cs-orb--a"></div>
+    <div class="cs-orb cs-orb--b"></div>
+</div>
+
+<section class="cs-hero" id="top">
+    <canvas class="thread-canvas" id="threadCanvas"></canvas>
+    <div class="hero-scrim"></div>
+    <div class="cs-hero__content">
+        <a class="cs-back" href="{{ url_for('portfolio') }}">← Back to selected work</a>
+        <div class="cs-hero__copy">
+            <span class="cs-kicker">AI / COMPUTER VISION</span>
+            <h1>Teaching a model to read Tom and Jerry's faces.</h1>
+            <p>A two-stage deep learning pipeline that first locates a cartoon character's face with a custom-trained YOLOv8 detector, then classifies its emotional expression — angry, happy, sad, surprised, or unknown — using a fine-tuned MobileNetV2 network.</p>
+            <div class="cs-hero__meta"><span>Final Year Project · 6-person team</span><span>2025</span></div>
+        </div>
+        <div class="cs-hero__visual" aria-label="Project system visualization">
+            <div class="cs-system-orbit"><i></i><i></i><i></i><b style="text-align:center;">CARTOON<br>FACE AND<br>EMOTION<br>DETECTION</b></div><br>
+            <span>YOLOv8 → MOBILENETV2</span>
+        </div>
+    </div>
+</section>
+
+<main class="cs-main">
+    <section class="cs-section cs-intro" id="introduction">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">01 / Introduction</span>
+            <h2>Emotion recognition doesn't stop at human faces.</h2>
+        </div>
+        <div class="cs-editorial">
+            <p class="cs-lead cs-reveal">Facial emotion recognition is a well-studied problem for human faces, but cartoon characters present a different challenge entirely — exaggerated expressions, stylized proportions, and no existing off-the-shelf detector trained to find them.
+                This project set out to build a complete pipeline that could locate Tom and Jerry's faces in a video frame and correctly label the emotion being displayed.</p>
+            <p class="cs-reveal">The work was carried out as a Final Year Project by a six-person team, combining classic dataset preparation (XML annotations, YOLO-format conversion, train/val/test splitting) with two independently trained deep learning models chained into
+                a single inference pipeline.</p>
+        </div>
+        <figure class="cs-image cs-reveal">
+            <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/face-emotion-gallery-img-01.png') }}" alt="Introduction project view">
+        </figure>
+    </section>
+
+    <section class="cs-section cs-story" id="problem">
+        <div class="cs-story__label cs-reveal"><span class="cs-kicker">02 / The problem</span><span class="cs-line"></span></div>
+        <div class="cs-story__body cs-reveal">
+            <h2>Cartoon faces break the assumptions most face detectors are built on.</h2>
+            <p>Pretrained face detectors are trained almost exclusively on human faces and fail on stylized, non-human proportions like Tom and Jerry's. There was no ready-made dataset or model for this specific problem, so both the detection stage and the
+                classification stage had to be built from the ground up — starting with raw video frames and hand-drawn bounding boxes.</p>
+            <p>On top of that, cartoon emotions are frequently more exaggerated and less consistent frame-to-frame than human expressions, which meant the classifier had to generalize from a wide variety of poses, art styles, and lighting within the show
+                itself.
+            </p>
+        </div>
+    </section>
+
+    <section class="cs-section cs-solution" id="solution">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">03 / The solution</span>
+            <h2>A two-stage pipeline: detect, then classify.</h2>
+            <p>Rather than training a single end-to-end model, the problem was split into two focused tasks chained together — a strategy grounded in prior academic research on cartoon emotion recognition (Jain et al., 2022), which showed that isolating
+                the character's face before classification dramatically improves emotion accuracy.</p>
+        </div>
+        <div class="cs-solution-grid">
+            <article class="cs-approach-card cs-reveal"><span>01</span>
+                <h3>Detect</h3>
+                <p>A YOLOv8n model, fine-tuned on 301 hand-annotated frames from Tom and Jerry episodes, locates a single "face" class in the frame with a bounding box.</p>
+            </article>
+            <article class="cs-approach-card cs-reveal"><span>02</span>
+                <h3>Crop & isolate</h3>
+                <p>The detected region is cropped with a small padding margin to preserve facial context, mirroring the segmentation-first approach used in the reference research.</p>
+            </article>
+            <article class="cs-approach-card cs-reveal"><span>03</span>
+                <h3>Classify</h3>
+                <p>The cropped face is passed to a fine-tuned MobileNetV2 network, which predicts one of five emotion labels: angry, happy, sad, surprised, or unknown.</p>
+            </article>
+        </div>
+        <figure class="cs-image cs-image--wide cs-reveal">
+            <div class="cs-image__placeholder cs-image__placeholder--solution"><span>SOLUTION / PIPELINE FLOW</span><b>FRAME → YOLOv8 DETECTION → CROP → MOBILENETV2 → EMOTION LABEL</b></div>
+        </figure>
+    </section>
+
+    <section class="cs-section cs-research" id="research">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">04 / Research and grounding</span>
+            <h2>Built on a peer-reviewed foundation, adapted for a leaner build.</h2>
+        </div>
+        <div class="cs-research-grid">
+            <article class="cs-build-item cs-reveal"><span>REFERENCE PAPER</span>
+                <h3>Understanding cartoon emotion using integrated DNNs</h3>
+                <p>Jain et al. (2022, <em>Neural Computing and Applications</em>) trained Mask R-CNN for character segmentation and compared VGG16, ResNet-50, InceptionV3, and MobileNetV2 for emotion classification across 8,113 labeled Tom & Jerry images,
+                    reaching 96% accuracy with VGG16.</p>
+            </article>
+            <article class="cs-build-item cs-reveal"><span>KEY FINDING ADOPTED</span>
+                <h3>Isolate the face before classifying</h3>
+                <p>The paper's strongest result was that isolating the character's face before classification was the single biggest driver of accuracy — far more than which CNN backbone was used. This directly shaped the decision to use a dedicated detection
+                    stage.
+                </p>
+            </article>
+            <article class="cs-build-item cs-reveal"><span>WHERE THIS PROJECT DIVERGED</span>
+                <h3>A lighter, faster stack</h3>
+                <p>Instead of Mask R-CNN's pixel-level segmentation, YOLOv8n was used for bounding-box detection — faster to train and run, at the cost of not removing background pixels within the box. A single MobileNetV2 model was fine-tuned rather than
+                    benchmarking four backbones.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="cs-section cs-design" id="design-process">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">05 / Build process</span>
+            <h2>From raw video frames to a trained, tested pipeline.</h2>
+        </div>
+        <div class="cs-flow cs-reveal">
+            <div><small>01</small><strong>Dataset prep</strong><span>Extracted frames, parsed XML bounding boxes, converted to YOLO format, split 80/10/10.</span></div><i>→</i>
+            <div><small>02</small><strong>Face detector</strong><span>Trained YOLOv8n for 50 epochs on Tom & Jerry face annotations.</span></div><i>→</i>
+            <div><small>03</small><strong>Emotion classifier</strong><span>Fine-tuned MobileNetV2 on emotion-labeled crops across 5 classes.</span></div><i>→</i>
+            <div><small>04</small><strong>Integration</strong><span>Chained both models into a single detect-then-classify inference function.</span></div>
+        </div>
+        <figure class="cs-image cs-image--wide cs-reveal">
+            <div class="cs-image__placeholder cs-image__placeholder--design"><span>BUILD PROCESS / TRAINING METRICS + CONFUSION MATRIX</span><b>DATA PREP → TRAINING → EVALUATION → INFERENCE</b></div>
+        </figure>
+    </section>
+
+    <section class="cs-section cs-final-designs" id="final-designs">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">06 / Results</span>
+            <h2>Strong detection, near-perfect classification on held-out frames.</h2>
+            <p>The face detector converged quickly and generalized well to unseen frames; the emotion classifier fit its training distribution tightly, correctly labeling a clearly angry Tom in an out-of-sample test image with a confident bounding box and
+                label overlay.</p>
+        </div>
+        <div class="cs-gallery">
+            <figure class="cs-gallery__item cs-reveal">
+                <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/face-emotion-gallery-img-01.png') }}" alt="Final design screen one">
+            </figure>
+            <figure class="cs-gallery__item cs-reveal">
+                <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/face-emotion-gallery-img-02.png') }}" alt="Final design screen two">
+            </figure>
+            <figure class="cs-gallery__item cs-reveal">
+                <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/face-emotion-gallery-img-03.png') }}" alt="Final design screen three">
+            </figure>
+        </div>
+    </section>
+
+    <section class="cs-section cs-accessibility" id="accessibility">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">07 / Limitations and scope</span>
+            <h2>Honest about what a 301-frame, 50-epoch model can and can't do.</h2>
+        </div>
+        <div class="cs-accessibility-grid">
+            <article class="cs-build-item cs-reveal"><span>DATASET SIZE</span>
+                <h3>Small relative to the reference paper</h3>
+                <p>301 annotated frames for detection and a modest emotion-labeled set is far smaller than the paper's 8,113-image benchmark, which naturally caps how well the model generalizes to unseen episodes or art styles.</p>
+            </article>
+            <article class="cs-build-item cs-reveal"><span>BOUNDING BOXES, NOT MASKS</span>
+                <h3>Background pixels remain in the crop</h3>
+                <p>Using YOLOv8 instead of Mask R-CNN trades some classification accuracy for speed and simplicity, since background context inside the box isn't removed the way a segmentation mask would remove it.</p>
+            </article>
+            <article class="cs-build-item cs-reveal"><span>SINGLE BACKBONE</span>
+                <h3>No cross-model benchmark</h3>
+                <p>Only MobileNetV2 was fine-tuned for emotion classification, chosen for its lightweight footprint, rather than comparing it against VGG16, ResNet-50, and InceptionV3 as the reference paper did.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="cs-section cs-outcomes" id="outcomes">
+        <div class="cs-results__copy cs-reveal"><span class="cs-kicker">08 / Outcomes and reflections</span>
+            <h2>A working, end-to-end proof that the two-stage approach holds up.</h2>
+            <p>The finished pipeline reliably detects a cartoon face and predicts a plausible emotion label on new frames, validating the core idea borrowed from the reference research: separate detection from classification, and let each model specialize.
+                The system runs entirely in Colab on free-tier GPU resources, making it easy to reproduce and extend.</p>
+            <p>The clearest next step is scaling the dataset and testing a segmentation-based detector to see how much of the accuracy gap to the published benchmark closes as a result.</p>
+        </div>
+        <figure class="cs-results__visual cs-reveal">
+            <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/face-emotion-gallery-img-03.png') }}" alt="Outcomes and verdict visual evidence">
+        </figure>
+    </section>
+
+    <section class="cs-section cs-stack">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">Project details</span>
+            <h2>Built in Colab, available on GitHub.</h2>
+        </div>
+        <div class="cs-stack-list cs-reveal"><span>Python</span><span>PyTorch</span><span>Ultralytics YOLOv8</span><span>OpenCV</span><span>Torchvision / MobileNetV2</span><span>Google Colab</span></div>
+        <a class="cs-github-button cs-reveal" href="{{ github_url|default('https://github.com/muhammadsouman7/Cartoon-Face-And-Emotion-Detection') }}" target="_blank" rel="noopener">View the project on GitHub <span>↗</span></a>
+    </section>
+
+    <section class="cs-next" id="contact"><span class="cs-kicker">Have a similar problem?</span>
+        <h2>Let's build the <em>next system.</em></h2>
+        <p>Tell us what you are trying to make clearer, faster, or more capable.</p><a class="cs-button" href="{{ url_for('contact') }}">Start a conversation <span>↗</span></a>
+    </section>
+</main>
+{% endblock %} {% block page_scripts %}
+<script src="{{ url_for('static', filename='assets/js/case-studies.js') }}"></script>
+{% endblock %}

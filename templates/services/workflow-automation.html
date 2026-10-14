@@ -1,0 +1,260 @@
+{% extends "base.html" %} {% block title %}Workflow Automation Services | Septaneuron{% endblock %} {% block page_css %}
+<!-- Primary Meta Tags -->
+<meta name="description" content="Workflow automation services: process automation, API integrations, webhooks, admin panels, business dashboards, and reporting tools, built by Septaneuron." />
+<meta name="keywords" content="workflow automation services, process automation, API integrations, webhook automation, admin panel development, business dashboard development" />
+
+<!-- Canonical -->
+<link rel="canonical" href="https://septaneuron.com/services/workflow-automation" />
+
+<!-- Open Graph / Social Tags -->
+<meta property="og:title" content="Workflow Automation Services | Septaneuron" />
+<meta property="og:description" content="We connect the tools your team already uses and build custom dashboards that make your operations completely visible." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://septaneuron.com/services/workflow-automation" />
+<meta property="og:image" content="https://septaneuron.com/static/assets/imgs/logo/septaneuron.svg" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Workflow Automation Services | Septaneuron" />
+<meta name="twitter:description" content="Process automation, API integrations, webhooks, admin panels, business dashboards, and reporting tools." />
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [{
+            "@type": "Service",
+            "serviceType": "Workflow Automation Services",
+            "name": "Workflow Automation Services",
+            "provider": {
+                "@type": "Organization",
+                "name": "Septaneuron",
+                "url": "https://septaneuron.com/"
+            },
+            "areaServed": "Worldwide",
+            "description": "Process automation, API integrations, webhooks, admin panels, business dashboards, and reporting tools.",
+            "url": "https://septaneuron.com/services/workflow-automation"
+        }, {
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://septaneuron.com/"
+            }, {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Services",
+                "item": "https://septaneuron.com/services"
+            }, {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Automation &amp; Internal Systems",
+                "item": "https://septaneuron.com/services/workflow-automation"
+            }]
+        }, {
+            "@type": "FAQPage",
+            "mainEntity": [{
+                "@type": "Question",
+                "name": "What kinds of workflows can you automate?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Anything with a repeatable, rule-based pattern: data entry between systems, approval chains, lead routing, invoice processing, reporting, and notifications across the tools your team already uses."
+                }
+            }, {
+                "@type": "Question",
+                "name": "Do you build on existing automation platforms or from scratch?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Both, depending on the case. Simple integrations often run faster on existing automation tools; anything needing custom logic, higher reliability, or tighter control is built as custom services with proper monitoring."
+                }
+            }, {
+                "@type": "Question",
+                "name": "Can you build an internal dashboard on top of our existing data?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. We regularly build admin panels and business dashboards that pull from your existing databases or third-party APIs, so your team gets visibility without exporting spreadsheets by hand."
+                }
+            }]
+        }]
+    }
+</script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/page-hero.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/services.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/services-additions.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/services-detail.css') }}"> {% endblock %} {% block content %}
+
+<div class="svc-ambient" aria-hidden="true">
+    <div class="svc-orb svc-orb--a"></div>
+    <div class="svc-orb svc-orb--b"></div>
+    <div class="svc-grid"></div>
+</div>
+
+<header class="svcd-hero">
+    <a class="svcd-back" href="{{ url_for('services') }}">← Back to services</a>
+    <div class="svcd-hero__glow" aria-hidden="true"></div>
+    <div class="svcd-hero__content">
+        <span class="svc-kicker">03 / AUTOMATION &amp; INTERNAL SYSTEMS</span>
+        <h1>Workflow Automation that makes repetitive work <em>disappear.</em></h1>
+        <p>We connect the tools your team already uses and build custom dashboards that make your operations completely visible: process automation, API integrations, webhooks, admin panels, and reporting tools that replace manual busywork.</p>
+        <div class="svcd-hero__actions">
+            <a class="svc-btn svc-btn--light" href="{{ url_for('contact') }}">Automate a workflow <span>↗</span></a>
+            <a class="svc-btn svc-btn--glass" href="{{ url_for('portfolio') }}">See related work <span>↗</span></a>
+        </div>
+        <div class="svcd-hero__stats">
+            <div><b>API</b><span>Integrations &amp; webhooks</span></div>
+            <div><b>Ops</b><span>Admin panels</span></div>
+            <div><b>BI</b><span>Business dashboards</span></div>
+        </div>
+    </div>
+</header>
+
+<section class="svc-section" aria-labelledby="svcd-overview-h">
+    <div class="svcd-intro">
+        <h2 id="svcd-overview-h">The unglamorous work that quietly costs the most.</h2>
+        <div class="svcd-intro__body">
+            <p>Most operational drag isn't one big broken system, it's ten small manual steps between systems that already work fine on their own. We find those seams and close them: data that should move on its own, approvals that shouldn't need a Slack
+                message, reports that shouldn't be built by hand every Monday.</p>
+            <p>The result is usually a mix of integrations, a lightweight internal tool, and a dashboard, sized to the actual workflow rather than a generic template.</p>
+        </div>
+    </div>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-features-h">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">WHAT WE BUILD</span>
+            <h2 id="svcd-features-h">Six building blocks, <em>combined per workflow.</em></h2>
+        </div>
+        <p>Most engagements combine two or three of these rather than needing all six.</p>
+    </div>
+    <div class="svcd-features">
+        <article class="svcd-feature">
+            <div class="svcd-feature__icon">↻</div>
+            <h3>Process Automation</h3>
+            <p>Turning manual, repetitive steps into automated pipelines that run on a schedule, a trigger, or an event.</p>
+        </article>
+        <article class="svcd-feature">
+            <div class="svcd-feature__icon">⇄</div>
+            <h3>API Integrations</h3>
+            <p>Connecting the tools you already run, CRM, payments, support, internal databases, so data flows without manual re-entry.</p>
+        </article>
+        <article class="svcd-feature">
+            <div class="svcd-feature__icon">⚡</div>
+            <h3>Webhooks</h3>
+            <p>Real-time event handling between systems, so downstream tools react the moment something changes upstream.</p>
+        </article>
+        <article class="svcd-feature">
+            <div class="svcd-feature__icon">▦</div>
+            <h3>Admin Panels</h3>
+            <p>Internal tools built around how your team actually works, not a generic CRUD interface bolted onto your database.</p>
+        </article>
+        <article class="svcd-feature">
+            <div class="svcd-feature__icon">◧</div>
+            <h3>Business Dashboards</h3>
+            <p>Live views of the metrics that matter, pulled directly from source systems instead of a manually updated spreadsheet.</p>
+        </article>
+        <article class="svcd-feature">
+            <div class="svcd-feature__icon">▥</div>
+            <h3>Reporting Tools</h3>
+            <p>Scheduled or on-demand reports generated automatically and delivered where your team already looks.</p>
+        </article>
+    </div>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-flow-h">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">HOW A WORKFLOW MOVES</span>
+            <h2 id="svcd-flow-h">Input, logic, integration, <em>result.</em></h2>
+        </div>
+        <p>Every automation we build follows the same underlying shape, whatever the specific tools involved.</p>
+    </div>
+    <div class="svc-flow">
+        <div class="svc-flow__node"><strong>01</strong><span>Input</span><small>Data enters seamlessly from multiple sources.</small></div><i>→</i>
+        <div class="svc-flow__node"><strong>02</strong><span>Logic</span><small>Tailored business rules process the inputs automatically.</small></div><i>→</i>
+        <div class="svc-flow__node"><strong>03</strong><span>API</span><small>External services and microservices connect smoothly.</small></div><i>→</i>
+        <div class="svc-flow__node"><strong>04</strong><span>Result</span><small>People progress faster with fewer bottlenecks.</small></div>
+    </div>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-outcomes-h">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">WHY IT WORKS</span>
+            <h2 id="svcd-outcomes-h">Automations that keep working <em>unattended.</em></h2>
+        </div>
+    </div>
+    <ul class="svcd-outcomes">
+        <li>Error handling and retries built in, so a failed step doesn't fail silently</li>
+        <li>Monitoring and alerts, so your team knows before customers do</li>
+        <li>Idempotent operations that are safe to re-run without duplicating data</li>
+        <li>Access control on every admin panel and dashboard we build</li>
+        <li>Clear ownership of what's automated versus what still needs a human</li>
+        <li>Documentation so the automation survives staff changes</li>
+    </ul>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-faq-h">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">FAQ</span>
+            <h2 id="svcd-faq-h">Common questions <em>about automation.</em></h2>
+        </div>
+    </div>
+    <div class="svc-faq__list">
+        <div class="svc-faq">
+            <details>
+                <summary>What kinds of workflows can you automate?</summary>
+                <p>Anything with a repeatable, rule-based pattern: data entry between systems, approval chains, lead routing, invoice processing, reporting, and notifications across the tools your team already uses.</p>
+            </details>
+            <details>
+                <summary>Do you build on existing automation platforms or from scratch?</summary>
+                <p>Both, depending on the case. Simple integrations often run faster on existing automation tools; anything needing custom logic, higher reliability, or tighter control is built as custom services with proper monitoring.</p>
+            </details>
+            <details>
+                <summary>Can you build an internal dashboard on top of our existing data?</summary>
+                <p>Yes. We regularly build admin panels and business dashboards that pull from your existing databases or third-party APIs, so your team gets visibility without exporting spreadsheets by hand.</p>
+            </details>
+        </div>
+    </div>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-related-h" style="border-bottom:0">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">RELATED SERVICES</span>
+            <h2 id="svcd-related-h">Pair automation with <em>the rest of the stack.</em></h2>
+        </div>
+    </div>
+    <div class="svcd-related__grid">
+        <a class="svcd-related__card" href="{{ url_for('service_ai_ml') }}">
+            <span>01 / AI &amp; ML</span>
+            <h3>AI &amp; Machine Learning Development</h3>
+            <p>Add an AI decision layer, classification, extraction, triage, to your automated workflow.</p>
+        </a>
+        <a class="svcd-related__card" href="{{ url_for('service_web_development') }}">
+            <span>02 / WEB &amp; PRODUCT</span>
+            <h3>Full-Stack Web Application Development</h3>
+            <p>Give your automation a proper interface your team can operate without a spreadsheet.</p>
+        </a>
+        <a class="svcd-related__card" href="{{ url_for('service_digital_growth') }}">
+            <span>04 / DIGITAL GROWTH</span>
+            <h3>Digital Growth &amp; Content</h3>
+            <p>Automate reporting on the marketing and growth metrics you already track.</p>
+        </a>
+    </div>
+</section>
+
+<section class="svc-final" id="contact">
+    <div class="svc-final__glow"></div><span class="svc-kicker">Have a problem worth solving?</span>
+    <h2>Let's build something <em>useful together.</em></h2>
+    <p>Tell us what you're trying to build, where you're stuck, and what success looks like.</p>
+    <div><a class="svc-btn svc-btn--light" href="{{ url_for('contact') }}">Start a project <span>↗</span></a></div>
+</section>
+
+{% endblock %} {% block page_scripts %}
+<script src="{{ url_for('static', filename='assets/js/page-hero.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/services-detail.js') }}"></script>
+{% endblock %}

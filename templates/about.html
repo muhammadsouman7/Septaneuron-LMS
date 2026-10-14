@@ -1,0 +1,403 @@
+{% extends "base.html" %} {% block title %}About Septaneuron | AI & Software Studio in Pakistan{% endblock %} {% block page_css %}
+<!-- Primary Meta Tags -->
+<meta name="description" content="Meet Septaneuron: a six-person senior software studio in Rawalpindi, Pakistan building AI systems, full-stack apps, automation, and digital growth." />
+<meta name="keywords" content="Septaneuron team, software studio founders, AI development company Pakistan, full-stack engineers, custom software agency founders" />
+
+<!-- Canonical -->
+<link rel="canonical" href="https://septaneuron.com/about" />
+
+<!-- Open Graph / Social Tags -->
+<meta property="og:title" content="About Septaneuron | AI & Software Studio in Pakistan" />
+<meta property="og:description" content="Six builders. One studio. We build AI systems, web applications, and digital products for people with problems worth solving." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://septaneuron.com/about" />
+<meta property="og:image" content="https://septaneuron.com/static/assets/imgs/logo/septaneuron.svg" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="About Septaneuron | AI & Software Studio in Pakistan" />
+<meta name="twitter:description" content="Meet the six founders building AI systems, full-stack apps, and digital growth services at Septaneuron." />
+
+<!-- JSON-LD: AboutPage + Organization + founders as Person entities -->
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [{
+            "@type": "AboutPage",
+            "url": "https://septaneuron.com/about",
+            "name": "About Septaneuron",
+            "description": "Septaneuron is a six-person senior software studio in Rawalpindi, Pakistan, building AI systems, full-stack applications, automation, and digital growth services."
+        }, {
+            "@type": "Organization",
+            "name": "Septaneuron",
+            "url": "https://septaneuron.com/",
+            "logo": "https://septaneuron.com/static/assets/imgs/septaneuron.png",
+            "foundingLocation": "Rawalpindi, Pakistan",
+            "employee": [{
+                "@type": "Person",
+                "name": "Muhammad Souman",
+                "jobTitle": "CEO & Co-Founder, Full-Stack & AI Developer",
+                "sameAs": ["https://www.linkedin.com/in/muhammadsouman7/", "https://github.com/muhammadsouman7", "https://somy.vercel.app"]
+            }, {
+                "@type": "Person",
+                "name": "Anas Waqas",
+                "jobTitle": "Co-Founder, Machine Learning & Computer Vision Engineer",
+                "sameAs": ["https://www.linkedin.com/in/anas-waqas-rajpout/", "https://github.com/anas-rajpout07/"]
+            }, {
+                "@type": "Person",
+                "name": "Shaaf Khan",
+                "jobTitle": "Co-Founder, AI & Automation Engineer",
+                "sameAs": ["https://www.linkedin.com/in/shaafkhan", "https://github.com/shaafkhan10k"]
+            }, {
+                "@type": "Person",
+                "name": "Alishba Nadeem",
+                "jobTitle": "Co-Founder, Digital Marketing Specialist",
+                "sameAs": ["https://www.linkedin.com/in/alishbaaaa-nadeem/", "https://github.com/Alishba-Nadeem1"]
+            }, {
+                "@type": "Person",
+                "name": "Ilsa Javed",
+                "jobTitle": "Co-Founder, Computer Vision Engineer",
+                "sameAs": ["https://www.linkedin.com/in/ilsajaved-ai/", "https://github.com/ilsa12"]
+            }, {
+                "@type": "Person",
+                "name": "Raja Amman Shakir",
+                "jobTitle": "Co-Founder, Video Editor",
+                "sameAs": ["https://www.linkedin.com/in/rajaamman/", "https://github.com/amanmani07"]
+            }]
+        }, {
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://septaneuron.com/"
+            }, {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "About",
+                "item": "https://septaneuron.com/about"
+            }]
+        }]
+    }
+</script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/page-hero.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/about.css') }}">{% endblock %} {% block content %}
+<div class="ab-ambient" aria-hidden="true">
+    <div class="ab-grid"></div>
+    <div class="ab-orb ab-orb--a"></div>
+    <div class="ab-orb ab-orb--b"></div>
+</div>
+
+<section class="hero page-hero" id="top">
+    <div class="page-hero__aurora" aria-hidden="true">
+        <span class="page-hero__blob page-hero__blob--a"></span>
+        <span class="page-hero__blob page-hero__blob--b"></span>
+        <span class="page-hero__grid"></span>
+    </div>
+    <div class="page-hero__scrim"></div>
+    <div class="page-hero__content">
+        <div class="svc-kicker">About Septaneuron</div>
+        <h1>Six builders. <span>One software studio in Pakistan.</span>
+        </h1>
+        <p>Septaneuron is a premier software studio building advanced AI systems, full-stack web applications, automation architectures, and digital products for people with problems worth solving.</p><small>Small by design. Technical by nature. Accountable from idea to deployment.</small>
+        <div class="svc-hero__actions"><a class="ab-btn ab-btn--light" href="#team">Meet the team <span>↓</span></a><a class="ab-btn ab-btn--glass" href="{{ url_for('contact') }}">Start a project <span>↗</span></a></div>
+    </div>
+</section>
+
+<section class="ab-section ab-who" id="who">
+    <div class="ab-copy ab-reveal"><span class="ab-kicker">Who we are</span>
+        <h2>A senior software development team building things that <em>matter.</em></h2>
+        <p>Septaneuron was started by six founders with diverse technical strengths and a shared passion for creating useful, scalable software. We operate across artificial intelligence, machine learning, computer vision, full-stack development, automation,
+            design, SEO, and digital media production.</p>
+        <p>Rather than acting as a bloated agency with layers of management between clients and engineers, we keep our team close to the work. The people shaping your technical solution are the exact people building it.</p>
+    </div>
+    <div class="ab-seven ab-reveal">
+        <div class="ab-seven__rings"></div><strong>6</strong><span>BUILDERS</span>
+        <div class="ab-seven__labels"><i>AI</i><i>WEB</i><i>AUTOMATION</i><i>EDITING</i><i>MARKETING</i></div>
+    </div>
+</section>
+
+<section class="ab-section ab-what" id="what-we-do">
+    <div class="ab-heading ab-reveal">
+        <div><span class="ab-kicker">What we do</span>
+            <h2>One team for the <em>whole build.</em></h2>
+        </div>
+        <p>We bring product thinking, heavy software engineering, intelligent automation, and creative capability together instead of splitting your project across disconnected specialists.</p>
+    </div>
+    <div class="ab-what__grid">
+        <article class="ab-what-card ab-what-card--wide ab-reveal" data-card-number="01" data-hover-title="Systems that think">
+            <span class="ab-bento-number">01</span>
+            <div class="ab-card-orbit" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="ab-what-card__copy">
+                <h3>AI &amp; Automation</h3>
+                <p>Custom AI agents, large language model (LLM) integrations, computer vision pipelines, and intelligent workflows that eliminate repetitive operational overhead.</p>
+            </div>
+            <strong class="ab-bento-watermark">01</strong>
+        </article>
+        <article class="ab-what-card ab-what-card--tall ab-reveal" data-card-number="02" data-hover-title="Idea to production">
+            <span class="ab-bento-number">02</span>
+            <div class="ab-stack-visual" aria-hidden="true"><i></i><i></i><i></i><i></i><b>IDEA.<br>ARCHITECTURE.<br>PRODUCTION.</b><small>&gt; READY TO EXECUTE_</small></div>
+            <div class="ab-what-card__copy">
+                <h3>From idea to production</h3>
+                <p>We map, architect, build, deploy, and support software products completely end-to-end.</p>
+            </div>
+            <strong class="ab-bento-watermark">02</strong>
+        </article>
+        <article class="ab-what-card ab-reveal" data-card-number="03" data-hover-title="Senior people, close to the work">
+            <span class="ab-bento-number">03</span>
+            <div class="ab-avatar-stack" aria-hidden="true">
+                <img src="{{ url_for('static', filename='assets/imgs/team/muhammad-souman.jpg') }}" alt="" loading="lazy">
+                <img src="{{ url_for('static', filename='assets/imgs/team/anas-waqas.jpeg') }}" alt="" loading="lazy">
+                <img src="{{ url_for('static', filename='assets/imgs/team/shaaf-khan.jpeg') }}" alt="" loading="lazy">
+                <img src="{{ url_for('static', filename='assets/imgs/team/alishba-nadeem.jpeg') }}" alt="" loading="lazy">
+                <img src="{{ url_for('static', filename='assets/imgs/team/ilsa-javed.jpeg') }}" alt="" loading="lazy">
+                <img src="{{ url_for('static', filename='assets/imgs/team/raja-amman-shakir.jpeg') }}" alt="" loading="lazy">
+            </div>
+            <div class="ab-what-card__copy">
+                <h3>Experienced builders</h3>
+                <p>Work directly with senior engineers and technical creators from the initial kickoff straight through to production launch.</p>
+            </div>
+            <strong class="ab-bento-watermark">03</strong>
+        </article>
+        <article class="ab-what-card ab-reveal" data-card-number="04" data-hover-title="One connected team">
+            <span class="ab-bento-number">04</span>
+            <div class="ab-pipeline" aria-hidden="true"><span>CALL</span><i>›</i><span>PLAN</span><i>›</i><span>BUILD</span><i>›</i><span>DEPLOY</span><i>›</i><span>LAUNCH</span></div>
+            <div class="ab-what-card__copy">
+                <h3>No handoffs</h3>
+                <p>The people on your very first discovery call are the exact engineers shipping your code.</p>
+            </div>
+            <strong class="ab-bento-watermark">04</strong>
+        </article>
+        <article class="ab-what-card ab-what-card--wide-bottom ab-reveal" data-card-number="05" data-hover-title="Go deep where it matters">
+            <span class="ab-bento-number">05</span>
+            <div class="ab-layer-visual" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="ab-what-card__copy">
+                <h3>Deep engineering</h3>
+                <p>Web development, backend systems, AI modeling, data structures, and creative digital systems housed in one cohesive team.</p>
+            </div>
+            <strong class="ab-bento-watermark">05</strong>
+        </article>
+    </div>
+    <a class="ab-link" href="{{ url_for('services') }}">Explore our services <span>→</span></a>
+</section>
+
+<section class="ab-section ab-philosophy">
+    <div class="ab-heading ab-reveal">
+        <div><span class="ab-kicker">Why Septaneuron exists</span>
+            <h2>Built around a <em>simple, effective idea.</em></h2>
+        </div>
+    </div>
+    <div class="ab-editorial ab-reveal">
+        <p>Good software doesn't require a massive team behind it. It needs the right people, crystal-clear communication, sound technical choices, and enough personal ownership to carry an idea from conception to completion.</p>
+        <p>We founded Septaneuron around that exact belief. A compact team means fewer handoffs, faster decisions, direct communication, and maximum accountability for the people actually writing the code.</p>
+    </div>
+    <div class="ab-statements">
+        <article class="ab-reveal"><b>01</b>
+            <h3>Less distance</h3>
+            <p>The people making critical engineering decisions stay closely aligned with the people using the product.</p>
+        </article>
+        <article class="ab-reveal"><b>02</b>
+            <h3>More ownership</h3>
+            <p>We don't just close tickets; we take total responsibility for the health and performance of your system.</p>
+        </article>
+        <article class="ab-reveal"><b>03</b>
+            <h3>Better decisions</h3>
+            <p>Technology is a tool, not a trend. We choose the right stack based entirely on your unique problem.</p>
+        </article>
+    </div>
+</section>
+
+<section class="ab-section ab-why" id="why-us">
+    <div class="ab-heading ab-reveal">
+        <div><span class="ab-kicker">Why Septaneuron</span>
+            <h2>Small software studio, senior enough to <em>go deep.</em></h2>
+        </div>
+        <p>A compact team gives you fewer layers, faster decisions, and real ownership from the first conversation to production.A compact team gives you fewer layers, rapid decision-making, and absolute ownership from our first conversation to production
+            deployment.
+        </p>
+    </div>
+    <div class="ab-why__grid">
+        <article class="ab-why-card ab-why-card--wide ab-reveal">
+            <div class="ab-why-card__visual ab-why-card__visual--signal"><span>DIRECT ACCESS</span><b>01</b><i></i><i></i><i></i></div>
+            <div>
+                <h3>Talk to the people doing the work.</h3>
+                <p>No account-manager relay or game of telephone. The minds shaping your solution build it.</p>
+            </div>
+        </article>
+        <article class="ab-why-card ab-reveal">
+            <div class="ab-why-card__visual ab-why-card__visual--team"><span>TEAM / 06</span><b>02</b>
+                <div>
+                    <img src="{{ url_for('static', filename='assets/imgs/team/muhammad-souman.jpg') }}" alt="Muhammad Souman" loading="lazy">
+                    <img src="{{ url_for('static', filename='assets/imgs/team/anas-waqas.jpeg') }}" alt="Anas Waqas" loading="lazy">
+                    <img src="{{ url_for('static', filename='assets/imgs/team/shaaf-khan.jpeg') }}" alt="Shaaf Khan" loading="lazy">
+                    <img src="{{ url_for('static', filename='assets/imgs/team/alishba-nadeem.jpeg') }}" alt="Alishba Nadeem" loading="lazy">
+                    <img src="{{ url_for('static', filename='assets/imgs/team/ilsa-javed.jpeg') }}" alt="Ilsa Javed" loading="lazy">
+                    <img src="{{ url_for('static', filename='assets/imgs/team/raja-amman-shakir.jpeg') }}" alt="Raja Amman Shakir" loading="lazy">
+                </div>
+            </div>
+            <h3>Senior-only team.</h3>
+            <p>No rotating junior benches or staffing ladders standing between you and your product's outcome.</p>
+        </article>
+        <article class="ab-why-card ab-reveal">
+            <div class="ab-why-card__visual ab-why-card__visual--pipeline"><span>START → SHIP</span><b>03</b>
+                <div><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+            <h3>No bloated process.</h3>
+            <p>Short feedback loops, pragmatic decisions, and enough structure to maintain momentum without corporate ceremony.</p>
+        </article>
+        <article class="ab-why-card ab-why-card--wide-bottom ab-reveal">
+            <div class="ab-why-card__visual ab-why-card__visual--ai"><span>AI-NATIVE BUILDING</span><b>04</b>
+                <div class="ab-why-card__ai-core">AI</div>
+            </div>
+            <div>
+                <h3>Modern tools, grounded judgment.</h3>
+                <p>Modern tools combined with grounded technical judgment. We use AI where it multiplies speed and capability, keeping architecture understandable.</p>
+            </div>
+        </article>
+    </div>
+</section>
+
+<section class="ab-section" id="team">
+    <div class="ab-heading ab-reveal">
+        <div><span class="ab-kicker">Meet the founders</span>
+            <h2>The people behind <em>Septaneuron.</em></h2>
+        </div>
+        <p>Six founders. Different technical disciplines. One shared standard: build things properly.</p>
+    </div>
+    <div class="ab-team">
+        <article class="ab-person ab-reveal">
+            <div class="ab-person__portrait">
+                <img src="{{ url_for('static', filename='assets/imgs/team/muhammad-souman.jpg') }}" alt="Muhammad Souman" loading="lazy">
+            </div>
+            <small>CEO &amp; CO-FOUNDER</small>
+            <h3>Muhammad Souman</h3>
+            <p>Full-Stack &amp; AI Developer</p>
+            <div class="ab-person__links">
+                <a href="https://www.linkedin.com/in/muhammadsouman7/" target="_blank" rel="noopener nofollow" aria-label="Muhammad Souman on LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://github.com/muhammadsouman7" target="_blank" rel="noopener nofollow" aria-label="Muhammad Souman on GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="https://somy.vercel.app" target="_blank" rel="noopener nofollow" aria-label="Muhammad Souman's portfolio"><i class="fa-solid fa-globe"></i></a>
+            </div>
+        </article>
+
+        <article class="ab-person ab-reveal">
+            <div class="ab-person__portrait">
+                <img src="{{ url_for('static', filename='assets/imgs/team/anas-waqas.jpeg') }}" alt="Anas Waqas" loading="lazy">
+            </div>
+            <small>CO-FOUNDER</small>
+            <h3>Anas Waqas</h3>
+            <p>Machine Learning &amp; Computer Vision Engineer</p>
+            <div class="ab-person__links">
+                <a href="https://www.linkedin.com/in/anas-waqas-rajpout/" target="_blank" rel="noopener nofollow" aria-label="Anas Waqas on LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://github.com/anas-rajpout07/" target="_blank" rel="noopener nofollow" aria-label="Anas Waqas on GitHub"><i class="fa-brands fa-github"></i></a>
+            </div>
+        </article>
+
+        <article class="ab-person ab-reveal">
+            <div class="ab-person__portrait">
+                <img src="{{ url_for('static', filename='assets/imgs/team/shaaf-khan.jpeg') }}" alt="Shaaf Khan" loading="lazy">
+            </div>
+            <small>CO-FOUNDER</small>
+            <h3>Shaaf Khan</h3>
+            <p>AI &amp; Automation Engineer</p>
+            <div class="ab-person__links">
+                <a href="https://www.linkedin.com/in/shaafkhan" target="_blank" rel="noopener nofollow" aria-label="Shaaf Khan on LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://github.com/shaafkhan10k" target="_blank" rel="noopener nofollow" aria-label="Shaaf Khan on GitHub"><i class="fa-brands fa-github"></i></a>
+            </div>
+        </article>
+
+        <article class="ab-person ab-reveal">
+            <div class="ab-person__portrait">
+                <img src="{{ url_for('static', filename='assets/imgs/team/alishba-nadeem.jpeg') }}" alt="Alishba Nadeem" loading="lazy">
+            </div>
+            <small>CO-FOUNDER</small>
+            <h3>Alishba Nadeem</h3>
+            <p>Digital Marketing Specialist</p>
+            <div class="ab-person__links">
+                <a href="https://www.linkedin.com/in/alishbaaaa-nadeem/" target="_blank" rel="noopener nofollow" aria-label="Alishba Nadeem on LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://github.com/Alishba-Nadeem1" target="_blank" rel="noopener nofollow" aria-label="Alishba Nadeem on GitHub"><i class="fa-brands fa-github"></i></a>
+            </div>
+        </article>
+
+        <article class="ab-person ab-reveal">
+            <div class="ab-person__portrait">
+                <img src="{{ url_for('static', filename='assets/imgs/team/ilsa-javed.jpeg') }}" alt="Ilsa Javed" loading="lazy">
+            </div>
+            <small>CO-FOUNDER</small>
+            <h3>Ilsa Javed</h3>
+            <p>Computer Vision Engineer</p>
+            <div class="ab-person__links">
+                <a href="https://www.linkedin.com/in/ilsajaved-ai/" target="_blank" rel="noopener nofollow" aria-label="Ilsa Javed on LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://github.com/ilsa12" target="_blank" rel="noopener nofollow" aria-label="Ilsa Javed on GitHub"><i class="fa-brands fa-github"></i></a>
+            </div>
+        </article>
+
+        <article class="ab-person ab-reveal">
+            <div class="ab-person__portrait">
+                <img src="{{ url_for('static', filename='assets/imgs/team/raja-amman-shakir.jpeg') }}" alt="Raja Amman Shakir" loading="lazy">
+            </div>
+            <small>CO-FOUNDER</small>
+            <h3>Raja Amman Shakir</h3>
+            <p>Video Editor</p>
+            <div class="ab-person__links">
+                <a href="https://www.linkedin.com/in/rajaamman/" target="_blank" rel="noopener nofollow" aria-label="Raja Amman Shakir on LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://github.com/amanmani07" target="_blank" rel="noopener nofollow" aria-label="Raja Amman Shakir on GitHub"><i class="fa-brands fa-github"></i></a>
+            </div>
+        </article>
+    </div>
+</section>
+
+<section class="ab-section ab-journey">
+    <div class="ab-heading ab-reveal">
+        <div><span class="ab-kicker">Our journey</span>
+            <h2>Still early. Already <em>building.</em></h2>
+        </div>
+    </div>
+    <div class="ab-timeline">
+        <article class="ab-reveal"><b>The Beginning</b>
+            <p>Six builders decide to combine forces and build something meaningful together.</p>
+        </article>
+        <article class="ab-reveal"><b>The Foundation</b>
+            <p>Septaneuron takes formal shape around software engineering, artificial intelligence, and digital product creation.</p>
+        </article>
+        <article class="ab-reveal"><b>The First Builds</b>
+            <p>The team develops and ships complex AI, web, and infrastructure projects across multiple technical domains.</p>
+        </article>
+        <article class="ab-reveal"><b>Today</b>
+            <p>Scaling the studio, expanding our robust portfolio, and establishing long-term technical partnerships with ambitious founders.</p>
+        </article>
+        <article class="ab-reveal"><b>What's next</b>
+            <p>Build better products and grow without losing our edge.</p>
+        </article>
+    </div>
+</section>
+
+<section class="ab-section ab-vision">
+    <div class="ab-heading ab-reveal">
+        <div><span class="ab-kicker">Where we're going</span>
+            <h2>We are building far more than a <em>traditional service company.</em></h2>
+        </div>
+        <p>Over time, our goal is to incubate our own proprietary software products, collaborate alongside visionary teams, and pioneer technology that creates lasting value.</p>
+    </div>
+    <div class="ab-vision-grid">
+        <article class="ab-reveal"><b>Client work</b>
+            <p>Crafting high-utility software for growing businesses and forward-thinking founders.</p>
+        </article>
+        <article class="ab-reveal"><b>Products</b>
+            <p>Turning our internal ideas into standalone digital tools people love to use.</p>
+        </article>
+        <article class="ab-reveal"><b>Technology</b>
+            <p>Continuous experimentation with bleeding-edge AI and distributed computing capabilities.</p>
+        </article>
+    </div>
+</section>
+
+<section class="ab-final" id="contact">
+    <div class="ab-final__glow"></div><span class="ab-kicker">Six people. One starting point.</span>
+    <h2>Have a problem <em>worth solving?</em></h2>
+    <p>Tell us what you're building, where you're stuck, and what you want to change. We'll figure out the next step together.</p>
+    <div><a class="ab-btn ab-btn--light" href="{{ url_for('contact') }}">Start a project <span>↗</span></a><a class="ab-btn ab-btn--glass" href="#team">Meet the team <span>↑</span></a></div>
+</section>
+{% endblock %} {% block page_scripts %}
+<script src="{{ url_for('static', filename='assets/js/page-hero.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/about.js') }}"></script>{% endblock %}

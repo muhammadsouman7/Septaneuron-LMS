@@ -1,0 +1,276 @@
+{% extends "base.html" %} {% block title %}Full-Stack Web Application Development Services | Septaneuron{% endblock %} {% block page_css %}
+<!-- Primary Meta Tags -->
+<meta name="description" content="Full-stack web application development with React, Next.js, Python/Flask and Node.js: SaaS platforms, startup MVPs, and secure customer portals, by Septaneuron." />
+<meta name="keywords" content="full-stack web development, React development, Next.js development, Flask backend development, Node.js development, SaaS development, MVP development Pakistan" />
+
+<!-- Canonical -->
+<link rel="canonical" href="https://septaneuron.com/services/web-application-development" />
+
+<!-- Open Graph / Social Tags -->
+<meta property="og:title" content="Full-Stack Web Application Development Services | Septaneuron" />
+<meta property="og:description" content="React/Next.js frontends, Python/Flask and Node.js backends, and scalable SaaS and MVP builds from a senior software studio." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://septaneuron.com/services/web-application-development" />
+<meta property="og:image" content="https://septaneuron.com/static/assets/imgs/logo/septaneuron.svg" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Full-Stack Web Application Development Services | Septaneuron" />
+<meta name="twitter:description" content="End-to-end web application development: React/Next.js frontends, Python/Flask and Node.js backends, scalable SaaS and MVPs." />
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [{
+            "@type": "Service",
+            "serviceType": "Full-Stack Web Application Development",
+            "name": "Full-Stack Web Application Development",
+            "provider": {
+                "@type": "Organization",
+                "name": "Septaneuron",
+                "url": "https://septaneuron.com/"
+            },
+            "areaServed": "Worldwide",
+            "description": "End-to-end web application development covering React/Next.js frontends, Python/Flask and Node.js backends, and scalable SaaS and MVP builds.",
+            "url": "https://septaneuron.com/services/web-application-development"
+        }, {
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://septaneuron.com/"
+            }, {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Services",
+                "item": "https://septaneuron.com/services"
+            }, {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Web &amp; Product Development",
+                "item": "https://septaneuron.com/services/web-application-development"
+            }]
+        }, {
+            "@type": "FAQPage",
+            "mainEntity": [{
+                "@type": "Question",
+                "name": "Which stack do you build on?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "React or Next.js on the frontend, and Python/Flask or Node.js on the backend, chosen based on your team's existing stack, hiring plans, and the app's performance needs."
+                }
+            }, {
+                "@type": "Question",
+                "name": "Can you take over an existing codebase?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. We regularly inherit existing React, Next.js, Flask, or Node.js projects, audit the codebase first, then continue development or refactor incrementally rather than rewriting from scratch."
+                }
+            }, {
+                "@type": "Question",
+                "name": "Do you build MVPs or only full products?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Both. Most engagements start as a scoped MVP built to validate a real assumption, with an architecture that scales into the full product once that assumption is proven."
+                }
+            }]
+        }]
+    }
+</script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/page-hero.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/services.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/services-additions.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/services-detail.css') }}"> {% endblock %} {% block content %}
+
+<div class="svc-ambient" aria-hidden="true">
+    <div class="svc-orb svc-orb--a"></div>
+    <div class="svc-orb svc-orb--b"></div>
+    <div class="svc-grid"></div>
+</div>
+
+<header class="svcd-hero">
+    <a class="svcd-back" href="{{ url_for('services') }}">← Back to services</a>
+    <div class="svcd-hero__glow" aria-hidden="true"></div>
+    <div class="svcd-hero__content">
+        <span class="svc-kicker">02 / WEB &amp; PRODUCT DEVELOPMENT</span>
+        <h1>Full-Stack Web Application Development <em>from interface to infrastructure.</em></h1>
+        <p>We don't just build frontend screens. We build the complete product underneath them: React and Next.js interfaces, Python/Flask and Node.js backends, and the SaaS or MVP architecture that has to keep working after launch.</p>
+        <div class="svcd-hero__actions">
+            <a class="svc-btn svc-btn--light" href="{{ url_for('contact') }}">Build a web product <span>↗</span></a>
+            <a class="svc-btn svc-btn--glass" href="{{ url_for('portfolio') }}">See related work <span>↗</span></a>
+        </div>
+        <div class="svcd-hero__stats">
+            <div><b>React</b><span>Next.js interfaces</span></div>
+            <div><b>API</b><span>Flask &amp; Node.js backends</span></div>
+            <div><b>SaaS</b><span>MVP to scale</span></div>
+        </div>
+    </div>
+</header>
+
+<section class="svc-section" aria-labelledby="svcd-overview-h">
+    <div class="svcd-intro">
+        <h2 id="svcd-overview-h">A product team, not just a component shop.</h2>
+        <div class="svcd-intro__body">
+            <p>A good interface is only as reliable as what sits behind it. We build both sides together: a frontend that feels fast and a backend that stays correct under real traffic, real data, and real edge cases, not just the happy path from the design
+                file.</p>
+            <p>That means REST APIs designed for your actual data model, authentication and permissions done properly from the start, and a codebase your own engineers (or ours, later) can extend without rewriting it.</p>
+        </div>
+    </div>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-features-h">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">WHAT WE BUILD</span>
+            <h2 id="svcd-features-h">Three layers, <em>one connected product.</em></h2>
+        </div>
+        <p>Every project spans design-to-code frontend work, resilient backend services, and the product decisions that tie them together.</p>
+    </div>
+    <div class="svcd-features">
+        <article class="svcd-feature">
+            <div class="svcd-feature__icon">▣</div>
+            <h3>Frontend Development</h3>
+            <p>React and Next.js interfaces built from your designs or from scratch, with modern, responsive layouts that work across devices.</p>
+        </article>
+        <article class="svcd-feature">
+            <div class="svcd-feature__icon">⌁</div>
+            <h3>Backend Development</h3>
+            <p>Python/Flask and Node.js services with robust REST APIs, proper data modeling, and authentication done correctly.</p>
+        </article>
+        <article class="svcd-feature">
+            <div class="svcd-feature__icon">◫</div>
+            <h3>Scalable SaaS Applications</h3>
+            <p>Multi-tenant architecture, billing, and role-based access built in from day one, so growth doesn't mean a rewrite.</p>
+        </article>
+        <article class="svcd-feature">
+            <div class="svcd-feature__icon">▲</div>
+            <h3>Startup MVPs</h3>
+            <p>A scoped build focused on the one assumption you need to validate, shipped fast without cutting corners on data integrity.</p>
+        </article>
+        <article class="svcd-feature">
+            <div class="svcd-feature__icon">◈</div>
+            <h3>Secure Customer Portals</h3>
+            <p>Authenticated dashboards and self-service portals with proper access control, built for the data your customers trust you with.</p>
+        </article>
+        <article class="svcd-feature">
+            <div class="svcd-feature__icon">↺</div>
+            <h3>Legacy Modernization</h3>
+            <p>Incremental migration of aging codebases onto a modern stack, without a risky big-bang rewrite.</p>
+        </article>
+    </div>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-outcomes-h">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">WHY IT WORKS</span>
+            <h2 id="svcd-outcomes-h">Engineering that holds up <em>after launch.</em></h2>
+        </div>
+        <p>Launch day is the easy part. The product has to keep working every day after.</p>
+    </div>
+    <ul class="svcd-outcomes">
+        <li>API contracts designed before the frontend is built, not guessed at afterward</li>
+        <li>Authentication and authorization treated as core features, not an afterthought</li>
+        <li>Database schemas reviewed for the queries you'll actually run at scale</li>
+        <li>Automated tests on the logic that would be expensive to get wrong</li>
+        <li>Clean handoff documentation so your team can extend the codebase</li>
+        <li>Deployment pipelines that make shipping updates routine, not risky</li>
+    </ul>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-process-h">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">HOW WE WORK</span>
+            <h2 id="svcd-process-h">From requirements <em>to a live product.</em></h2>
+        </div>
+    </div>
+    <div class="svc-process__steps">
+        <article>
+            <b>01</b>
+            <h3>Define the data model</h3>
+            <p>We map the core entities and relationships first, since this decision shapes everything built on top of it.</p>
+        </article>
+        <article>
+            <b>02</b>
+            <h3>Build backend &amp; API</h3>
+            <p>Endpoints, auth, and business logic come first, so the frontend is built against a real, working API.</p>
+        </article>
+        <article>
+            <b>03</b>
+            <h3>Build the interface</h3>
+            <p>React or Next.js screens wired to the live API, with attention to loading, error, and edge-case states.</p>
+        </article>
+        <article>
+            <b>04</b>
+            <h3>Test, deploy, hand off</h3>
+            <p>QA against real scenarios, a production deployment pipeline, and documentation for your team.</p>
+        </article>
+    </div>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-faq-h">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">FAQ</span>
+            <h2 id="svcd-faq-h">Common questions <em>about web development.</em></h2>
+        </div>
+    </div>
+    <div class="svc-faq__list">
+        <div class="svc-faq">
+            <details>
+                <summary>Which stack do you build on?</summary>
+                <p>React or Next.js on the frontend, and Python/Flask or Node.js on the backend, chosen based on your team's existing stack, hiring plans, and the app's performance needs.</p>
+            </details>
+            <details>
+                <summary>Can you take over an existing codebase?</summary>
+                <p>Yes. We regularly inherit existing React, Next.js, Flask, or Node.js projects, audit the codebase first, then continue development or refactor incrementally rather than rewriting from scratch.</p>
+            </details>
+            <details>
+                <summary>Do you build MVPs or only full products?</summary>
+                <p>Both. Most engagements start as a scoped MVP built to validate a real assumption, with an architecture that scales into the full product once that assumption is proven.</p>
+            </details>
+        </div>
+    </div>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-related-h" style="border-bottom:0">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">RELATED SERVICES</span>
+            <h2 id="svcd-related-h">Pair your product with <em>the rest of the stack.</em></h2>
+        </div>
+    </div>
+    <div class="svcd-related__grid">
+        <a class="svcd-related__card" href="{{ url_for('service_ai_ml') }}">
+            <span>01 / AI &amp; ML</span>
+            <h3>AI &amp; Machine Learning Development</h3>
+            <p>Add LLM features, search, or automation on top of your new product.</p>
+        </a>
+        <a class="svcd-related__card" href="{{ url_for('service_automation') }}">
+            <span>03 / AUTOMATION</span>
+            <h3>Workflow Automation Services</h3>
+            <p>Connect your new application to the tools your team already runs on.</p>
+        </a>
+        <a class="svcd-related__card" href="{{ url_for('service_digital_growth') }}">
+            <span>04 / DIGITAL GROWTH</span>
+            <h3>Digital Growth &amp; Content</h3>
+            <p>Get your new product found, watched, and remembered.</p>
+        </a>
+    </div>
+</section>
+
+<section class="svc-final" id="contact">
+    <div class="svc-final__glow"></div><span class="svc-kicker">Have a problem worth solving?</span>
+    <h2>Let's build something <em>useful together.</em></h2>
+    <p>Tell us what you're trying to build, where you're stuck, and what success looks like.</p>
+    <div><a class="svc-btn svc-btn--light" href="{{ url_for('contact') }}">Start a project <span>↗</span></a></div>
+</section>
+
+{% endblock %} {% block page_scripts %}
+<script src="{{ url_for('static', filename='assets/js/page-hero.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/services-detail.js') }}"></script>
+{% endblock %}

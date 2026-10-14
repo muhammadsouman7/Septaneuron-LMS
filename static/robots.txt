@@ -1,0 +1,11 @@
+# septaneuron.com
+User-agent: *
+Allow: /
+Disallow: /portal/
+
+# Nothing to block today — no admin/auth routes exist in app.py.
+# If you add /admin, /dashboard, /api, staging paths, etc., disallow them here, e.g.:
+# Disallow: /admin
+# Disallow: /api/
+
+Sitemap: https://septaneuron.com/sitemap.xml

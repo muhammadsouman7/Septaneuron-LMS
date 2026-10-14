@@ -1,0 +1,68 @@
+{% extends "base.html" %} {% block title %}Terms and Conditions | Septaneuron{% endblock %} {% block meta %}
+<meta name="description" content="Read Septaneuron's Terms and Conditions governing access to our website, services, software projects, communications, and digital products.">
+<meta name="keywords" content="Septaneuron terms and conditions, software development terms, AI development services terms, website terms of use">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Terms and Conditions | Septaneuron">
+<meta property="og:description" content="The terms governing use of the Septaneuron website and engagement with our software, AI, web development, and digital services.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="{{ request.url }}"> {% endblock %} {% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/legal.css') }}">{% endblock %} {% block content %}
+<div class="legal-ambient" aria-hidden="true">
+    <div class="legal-grid"></div>
+    <div class="legal-orb legal-orb--a"></div>
+    <div class="legal-orb legal-orb--b"></div>
+</div>
+<section class="legal-hero">
+    <div class="legal-hero__inner"><span class="legal-kicker">Legal / 02</span>
+        <h1>Terms and <em>conditions.</em></h1>
+        <p>The rules and expectations that apply when you use the Septaneuron website or work with our studio.</p><span class="legal-updated">Last updated: September 19, 2026</span></div>
+</section>
+<main class="legal-layout">
+    <aside class="legal-toc" aria-label="Terms navigation"><span>On this page</span><a href="#agreement">Agreement</a><a href="#services">Our services</a><a href="#responsibilities">Your responsibilities</a><a href="#intellectual-property">Intellectual property</a><a href="#payments">Projects and payments</a>
+        <a href="#liability">Liability</a><a href="#contact">Contact</a></aside>
+    <article class="legal-content">
+        <section class="legal-section legal-reveal" id="agreement"><span class="legal-number">01</span>
+            <h2>Agreement to these terms</h2>
+            <p>These Terms and Conditions govern your access to and use of the Septaneuron website and your interaction with Septaneuron, a software and digital product studio. By accessing this website, submitting an inquiry, or engaging our services, you
+                agree to follow these terms.</p>
+            <p>If you do not agree with these terms, please do not use the website or submit information through it. We may update these terms from time to time. The revised version will be posted on this page with an updated date.</p>
+        </section>
+        <section class="legal-section legal-reveal" id="services"><span class="legal-number">02</span>
+            <h2>Our services</h2>
+            <p>Septaneuron provides software development and digital services, which may include artificial intelligence and machine learning systems, computer vision, web applications, backend and API development, automation, internal tools, video editing,
+                search engine optimization, and social media marketing.</p>
+            <p>Any project scope, deliverables, timeline, technology choices, fees, ownership arrangements, and support commitments will be defined separately in a written proposal, statement of work, or other written agreement. Information on this website
+                is general information and does not constitute a binding offer.</p>
+        </section>
+        <section class="legal-section legal-reveal" id="responsibilities"><span class="legal-number">03</span>
+            <h2>Your responsibilities</h2>
+            <p>You agree to provide accurate information, respond reasonably during a project, supply content and materials that you have the right to use, and review deliverables within the agreed process. You must not use the website to distribute unlawful,
+                harmful, deceptive, abusive, or infringing material.</p>
+            <p>You are responsible for ensuring that information, files, data, credentials, and third-party materials provided to Septaneuron may legally be used for the relevant project. You must not attempt to interfere with website security, access restricted
+                areas, scrape the website abusively, or introduce malicious code.</p>
+        </section>
+        <section class="legal-section legal-reveal" id="intellectual-property"><span class="legal-number">04</span>
+            <h2>Intellectual property</h2>
+            <p>Unless a written project agreement states otherwise, Septaneuron retains ownership of its pre-existing tools, reusable components, methods, frameworks, templates, know-how, and internal development materials. Client-specific deliverables and
+                ownership rights will be handled according to the applicable written agreement.</p>
+            <p>You retain responsibility for the materials and content you provide. You grant Septaneuron permission to use those materials only as needed to provide the agreed services. We may request permission before publicly displaying completed work
+                in our portfolio.</p>
+        </section>
+        <section class="legal-section legal-reveal" id="payments"><span class="legal-number">05</span>
+            <h2>Projects, fees, and payments</h2>
+            <p>Project fees, deposits, milestones, expenses, revisions, cancellation terms, and payment dates will be described in the applicable proposal or agreement. Work may be paused when an invoice is overdue or when required client input is unavailable.</p>
+            <p>Third-party services, hosting, domains, software licenses, advertising budgets, API usage, and other external costs are normally separate from Septaneuron's professional fees unless expressly included in writing.</p>
+        </section>
+        <section class="legal-section legal-reveal" id="liability"><span class="legal-number">06</span>
+            <h2>Disclaimers and liability</h2>
+            <p>We aim to keep the website accurate and available, but we do not guarantee that it will always be uninterrupted, complete, current, or free of errors. Website content is provided for general informational purposes.</p>
+            <p>To the maximum extent permitted by applicable law, Septaneuron will not be responsible for indirect, incidental, special, consequential, or loss-of-profit damages arising from use of the website. Nothing in these terms excludes liability that
+                cannot legally be excluded.</p>
+        </section>
+        <section class="legal-section legal-reveal" id="contact"><span class="legal-number">07</span>
+            <h2>Questions about these terms?</h2>
+            <p>If you have a question about these Terms and Conditions, contact us before using the website or beginning a project.</p><a class="legal-link" href="{{ url_for('contact') }}">hello@septaneuron.com <span>↗</span></a></section>
+    </article>
+</main>
+{% endblock %} {% block page_scripts %}
+<script src="{{ url_for('static', filename='assets/js/legal.js') }}"></script>{% endblock %}

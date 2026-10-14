@@ -1,0 +1,299 @@
+{% extends "base.html" %} {% set seo_title = project_title|default('AI Face Recognition Attendance System | Septaneuron', true) %} {% set seo_description = project_meta_description|default('Desktop facial recognition application for student attendance,
+built with PyQt6, OpenCV and face_recognition — real-time, offline AI attendance software.', true) %} {% set seo_canonical = request.base_url %} {% set seo_image = project_og_image|default(url_for('static', filename='assets/images/seo/face-recognition-attendance-og.jpg',
+_external=true), true) %} {% set seo_author = project_author|default('Septaneuron', true) %} {% set seo_github = github_url|default('https://github.com/AnasWaqas/Face_Recognition_Project', true) %} {% block title %}{{ seo_title }}{% endblock %} {% block
+page_meta %}
+<meta name="description" content="{{ seo_description }}">
+<meta name="keywords" content="face recognition attendance system, AI-based student attendance software, desktop facial recognition application, PyQt6 computer vision app, offline face recognition system Python">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="author" content="{{ seo_author }}">
+<link rel="canonical" href="{{ seo_canonical }}">
+<meta property="og:type" content="article">
+<meta property="og:title" content="{{ seo_title }}">
+<meta property="og:description" content="{{ seo_description }}">
+<meta property="og:url" content="{{ seo_canonical }}">
+<meta property="og:site_name" content="Septaneuron">
+<meta property="og:image" content="{{ seo_image }}">
+<meta property="og:image:alt" content="Face Recognition Attendance System desktop application with real-time facial recognition">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="{{ seo_author }}">
+<meta property="article:section" content="Artificial Intelligence / Computer Vision">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ seo_title }}">
+<meta name="twitter:description" content="{{ seo_description }}">
+<meta name="twitter:image" content="{{ seo_image }}">
+<meta name="twitter:image:alt" content="AI-powered face recognition attendance application">
+
+<script type="application/ld+json">
+    {
+        {
+            {
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": project_title |
+                    default ("Face Recognition Attendance System: Automated Real-Time Facial Identification", true),
+                "description": seo_description,
+                "url": seo_canonical,
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": seo_canonical
+                },
+                "image": [seo_image],
+                "author": {
+                    "@type": "Person",
+                    "name": seo_author,
+                    "sameAs": [seo_github]
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Septaneuron"
+                },
+                "articleSection": "Artificial Intelligence / Computer Vision",
+                "keywords": ["face recognition attendance system", "AI-based student attendance software", "desktop facial recognition application", "computer vision", "Python", "PyQt6", "OpenCV", "face_recognition", "dlib", "SQLite", "real-time face recognition", "Septaneuron"]
+            } | tojson
+        }
+    }
+</script>
+
+<script type="application/ld+json">
+    {
+        {
+            {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [{
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Portfolio",
+                    "item": url_for('portfolio', _external = true)
+                }, {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": project_title |
+                        default ("Face Recognition Attendance System", true),
+                    "item": seo_canonical
+                }]
+            } | tojson
+        }
+    }
+</script>
+{% endblock %} {% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/case-studies.css') }}"> {% endblock %} {% block content %}
+<div class="cs-ambient" aria-hidden="true">
+    <div class="cs-grid"></div>
+    <div class="cs-orb cs-orb--a"></div>
+    <div class="cs-orb cs-orb--b"></div>
+</div>
+
+<section class="cs-hero" id="top" aria-labelledby="project-title">
+    <canvas class="thread-canvas" id="threadCanvas" aria-hidden="true"></canvas>
+    <div class="hero-scrim"></div>
+    <div class="cs-hero__content">
+        <a class="cs-back" href="{{ url_for('portfolio') }}" aria-label="Back to selected work portfolio">← Back to selected work</a>
+        <div class="cs-hero__copy">
+            <span class="cs-kicker">{{ project_category|default('AI / COMPUTER VISION & DESKTOP APPS') }}</span>
+            <h1 id="project-title">{{ project_title|default('Face Recognition Attendance System: Automated Real-Time Facial Identification') }}</h1>
+            <p>{{ project_summary|default('A desktop-based student attendance system built with PyQt6, OpenCV, face_recognition, and SQLite. It automates registration, face encoding, real-time webcam verification, and attendance record management for instructors.')
+                }}
+            </p>
+            <div class="cs-hero__meta">
+                <span>{{ project_client|default('Desktop AI Application / Septaneuron') }}</span>
+                <span>{{ project_year|default('2026') }}</span>
+            </div>
+        </div>
+        <div class="cs-hero__visual" aria-label="Face recognition attendance system visualization">
+            <div class="cs-system-orbit"><i></i><i></i><i></i><b style="text-align:center;">STUDENT<br>ATTENDANCE<br>SYSTEM</b></div><br>
+            <span>FACE RECOGNITION / ONLINE</span>
+        </div>
+    </div>
+</section>
+
+<main class="cs-main">
+    <section class="cs-section cs-intro" id="introduction" aria-labelledby="introduction-heading">
+        <div class="cs-section-heading cs-reveal">
+            <span class="cs-kicker">01 / Introduction</span>
+            <h2 id="introduction-heading">{{ introduction_heading|default('Automating classroom attendance using real-time computer vision.') }}</h2>
+        </div>
+        <div class="cs-editorial">
+            <p class="cs-lead cs-reveal">{{ introduction_text|default('This project delivers an end-to-end desktop software solution for instructors to streamline student attendance. Using live camera feeds, facial landmarks are extracted and matched against pre-generated embeddings
+                to log attendance in seconds.') }}</p>
+            <p class="cs-reveal">{{ introduction_text_two|default('The application pairs a modern PyQt6 GUI with lightweight SQLite storage, local Pickle encoding files, and OpenCV face matching to work completely offline without relying on third-party cloud services.') }}</p>
+        </div>
+        <figure class="cs-image cs-reveal">
+            <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/attendace-system-gallery-img-04.png') }}" alt="Introduction project view">
+        </figure>
+    </section>
+
+    <section class="cs-section cs-story" id="problem" aria-labelledby="problem-heading">
+        <div class="cs-story__label cs-reveal">
+            <span class="cs-kicker">02 / The problem</span><span class="cs-line"></span>
+        </div>
+        <div class="cs-story__body cs-reveal">
+            <h2 id="problem-heading">{{ problem_heading|default('Manual roll calls waste valuable class time and invite proxy attendance.') }}</h2>
+            <p>{{ problem_text|default('Traditional paper-based or manual attendance verification is slow, prone to human error, and allows buddy punching. Instructors need a fast, transparent method to identify students instantly upon entering the classroom.')
+                }}
+            </p>
+            <p>{{ problem_text_two|default('The challenge was building a desktop system that handles live camera streams smoothly, prevents duplicate logs within a set time window, and manages student records securely.') }}</p>
+        </div>
+    </section>
+
+    <section class="cs-section cs-solution" id="solution" aria-labelledby="solution-heading">
+        <div class="cs-section-heading cs-reveal">
+            <span class="cs-kicker">03 / The solution</span>
+            <h2 id="solution-heading">{{ solution_heading|default('A unified desktop suite for registration, encoding, and live verification.') }}</h2>
+            <p>{{ solution_text|default('The platform features teacher authentication, a registration portal with webcam image capture, automated vector encoding generation, real-time facial matching, and offline SQLite data persistence.') }}</p>
+        </div>
+        <div class="cs-solution-grid">
+            <article class="cs-approach-card cs-reveal">
+                <span>01</span>
+                <h3>{{ solution_one_title|default('Register & Capture') }}</h3>
+                <p>{{ solution_one_text|default('Instructors enter student profiles (ID, Name, Major, Gender, Year) and capture real-time webcam photos saved as BLOBs in SQLite.') }}</p>
+            </article>
+            <article class="cs-approach-card cs-reveal">
+                <span>02</span>
+                <h3>{{ solution_two_title|default('Vector Encoding') }}</h3>
+                <p>{{ solution_two_text|default('The dlib-backed face_recognition library extracts 128-dimensional facial feature embeddings stored into serialized Pickle reference files.') }}</p>
+            </article>
+            <article class="cs-approach-card cs-reveal">
+                <span>03</span>
+                <h3>{{ solution_three_title|default('Live Attendance') }}</h3>
+                <p>{{ solution_three_text|default('Live video streams match faces against stored encodings, incrementing attendance counts while preventing duplicate logs.') }}</p>
+            </article>
+        </div>
+        <figure class="cs-image cs-image--wide cs-reveal">
+            {% if solution_image|default('') %}
+            <img src="{{ solution_image }}" alt="{{ solution_image_alt|default('Face Recognition Attendance System workflow showing login, registration, facial encoding, and live matching') }}" loading="lazy" decoding="async"> {% else %}
+            <div class="cs-image__placeholder cs-image__placeholder--solution" role="img" aria-label="Face Recognition Attendance System workflow">
+                <span>SOLUTION / SYSTEM WORKFLOW</span><b>TEACHER LOGIN → STUDENT REGISTRATION → ENCODING → LIVE MATCHING</b>
+            </div>
+            {% endif %}
+        </figure>
+    </section>
+
+    <section class="cs-section cs-research" id="research" aria-labelledby="research-heading">
+        <div class="cs-section-heading cs-reveal">
+            <span class="cs-kicker">04 / Core Engineering & Modules</span>
+            <h2 id="research-heading">{{ research_heading|default('Robust computer vision integrated with desktop GUI control.') }}</h2>
+        </div>
+        <div class="cs-research-grid">
+            <article class="cs-build-item cs-reveal">
+                <span>FACIAL MATCHING</span>
+                <h3>{{ persona_title|default('face_recognition & dlib') }}</h3>
+                <p>{{ persona_text|default('Deep-learning-based facial feature extraction generates encodings for fast distance-based comparison on live camera frames.') }}</p>
+            </article>
+            <article class="cs-build-item cs-reveal">
+                <span>DESKTOP INTERFACE</span>
+                <h3>{{ interview_title|default('PyQt6 Framework') }}</h3>
+                <p>{{ interview_text|default('Multi-window desktop interface featuring teacher login dialogs, student registration forms, and live camera feed containers.') }}</p>
+            </article>
+            <article class="cs-build-item cs-reveal">
+                <span>DATA PERSISTENCE</span>
+                <h3>{{ insight_title|default('SQLite3 & Pickle Storage') }}</h3>
+                <p>{{ insight_text|default('Lightweight, zero-configuration local storage for student demographic data, image BLOBs, timestamp logs, and serialized facial encoding arrays.') }}</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="cs-section cs-design" id="design-process" aria-labelledby="pipeline-heading">
+        <div class="cs-section-heading cs-reveal">
+            <span class="cs-kicker">05 / Application Pipeline</span>
+            <h2 id="pipeline-heading">{{ design_heading|default('Execution flow from instructor login to automated attendance.') }}</h2>
+        </div>
+        <div class="cs-flow cs-reveal">
+            <div><small>01</small><strong>Login</strong><span>{{ ideation_text|default('Instructor authenticates via the PyQt6 credential dialog.') }}</span></div><i aria-hidden="true">→</i>
+            <div><small>02</small><strong>Registration</strong><span>{{ sketching_text|default('Capture student photo and write profile metadata into SQLite.') }}</span></div><i aria-hidden="true">→</i>
+            <div><small>03</small><strong>Encoding</strong><span>{{ wireframing_text|default('Generate facial encodings via EncodingGenerator.py.') }}</span></div><i aria-hidden="true">→</i>
+            <div><small>04</small><strong>Recognition</strong><span>{{ prototype_text|default('OpenCV matches live webcam frames and updates attendance records.') }}</span></div>
+        </div>
+        <figure class="cs-image cs-image--wide cs-reveal">
+            {% if design_image|default('') %}
+            <img src="{{ design_image }}" alt="{{ design_image_alt|default('Face recognition attendance application pipeline from login to registration, encoding, and verification') }}" loading="lazy" decoding="async"> {% else %}
+            <div class="cs-image__placeholder cs-image__placeholder--design" role="img" aria-label="Face recognition system pipeline diagram">
+                <span>PIPELINE / SYSTEM WORKFLOW</span><b>LOGIN → REGISTER → ENCODE → VERIFY</b>
+            </div>
+            {% endif %}
+        </figure>
+    </section>
+
+    <section class="cs-section cs-final-designs" id="final-designs" aria-labelledby="screens-heading">
+        <div class="cs-section-heading cs-reveal">
+            <span class="cs-kicker">06 / Application Screens</span>
+            <h2 id="screens-heading">{{ final_designs_heading|default('Functional, responsive desktop UI layouts.') }}</h2>
+            <p>{{ final_designs_text|default('Built with PyQt6, cvzone overlays, and custom UI components to display real-time video feeds, student identity overlays, and active class statistics.') }}</p>
+        </div>
+        <div class="cs-gallery">
+            <figure class="cs-gallery__item cs-reveal">
+                <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/attendace-system-gallery-img-02.png') }}" alt="Final design screen one">
+            </figure>
+            <figure class="cs-gallery__item cs-reveal">
+                <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/attendace-system-gallery-img-03.png') }}" alt="Final design screen two">
+            </figure>
+            <figure class="cs-gallery__item cs-reveal">
+                <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/attendace-system-gallery-img-04.png') }}" alt="Final design screen three">
+            </figure>
+        </div>
+    </section>
+
+    <section class="cs-section cs-accessibility" id="accessibility" aria-labelledby="integrity-heading">
+        <div class="cs-section-heading cs-reveal">
+            <span class="cs-kicker">07 / Reliability & Constraints</span>
+            <h2 id="integrity-heading">{{ accessibility_heading|default('Designed for fast offline processing and consistent verification.') }}</h2>
+        </div>
+        <div class="cs-accessibility-grid">
+            <article class="cs-build-item cs-reveal">
+                <span>DUPLICATE LOG PROTECTION</span>
+                <h3>Time Window Thresholds</h3>
+                <p>{{ accessibility_language|default('Prevents repeated attendance increments by tracking last_attendance_time timestamps for each student.') }}</p>
+            </article>
+            <article class="cs-build-item cs-reveal">
+                <span>DATA PRIVACY</span>
+                <h3>Local Execution</h3>
+                <p>{{ accessibility_interaction|default('Facial embeddings, captured images, and attendance database records remain on the local filesystem without a required cloud backend.') }}</p>
+            </article>
+            <article class="cs-build-item cs-reveal">
+                <span>EXTENSIBILITY</span>
+                <h3>Modular Codebase</h3>
+                <p>{{ accessibility_flexibility|default('Separated modules for GUI logic, encoding generation, and SQLite handling allow future extensions such as CSV and PDF exports.') }}</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="cs-section cs-outcomes" id="outcomes" aria-labelledby="outcomes-heading">
+        <div class="cs-results__copy cs-reveal">
+            <span class="cs-kicker">08 / Outcomes and Reflections</span>
+            <h2 id="outcomes-heading">{{ outcomes_heading|default('An efficient approach to automated classroom attendance.') }}</h2>
+            <p>{{ outcomes_text|default('The Face Recognition Attendance System demonstrates how desktop application frameworks and computer vision libraries can be combined to automate attendance without depending on external cloud services.') }}</p>
+            <p>{{ reflection_text|default('Key takeaway: Local facial encoding combined with lightweight SQLite storage creates a practical desktop workflow for real-time student identification and attendance logging.') }}</p>
+        </div>
+        <figure class="cs-results__visual cs-reveal">
+            <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/attendace-system-gallery-img-04.png') }}" alt="Outcomes and verdict visual evidence">
+        </figure>
+    </section>
+
+    <section class="cs-section cs-stack">
+        <div class="cs-section-heading cs-reveal">
+            <span class="cs-kicker">Project details</span>
+            <h2>Built by Septaneuron· Code available on GitHub.</h2>
+        </div>
+        <div class="cs-stack-list cs-reveal">
+            <span>{{ stack_one|default('Python 3.11') }}</span>
+            <span>{{ stack_two|default('PyQt6') }}</span>
+            <span>{{ stack_three|default('OpenCV') }}</span>
+            <span>{{ stack_four|default('face_recognition') }}</span>
+            <span>{{ stack_five|default('SQLite3') }}</span>
+            <span>{{ stack_six|default('NumPy / cvzone') }}</span>
+        </div>
+        <a class="cs-github-button cs-reveal" href="{{ seo_github }}" target="_blank" rel="noopener noreferrer" aria-label="View Face Recognition Attendance System source code on GitHub">
+            View the project on GitHub <span aria-hidden="true">↗</span>
+        </a>
+    </section>
+
+    <section class="cs-next" id="contact" aria-labelledby="contact-heading">
+        <span class="cs-kicker">Have a similar AI or Computer Vision problem?</span>
+        <h2 id="contact-heading">Let’s build the <em>next system.</em></h2>
+        <p>Tell us what you are trying to make clearer, faster, or more capable.</p>
+        <a class="cs-button" href="{{ url_for('contact') }}">Start a conversation <span aria-hidden="true">↗</span></a>
+    </section>
+</main>
+{% endblock %} {% block page_scripts %}
+<script src="{{ url_for('static', filename='assets/js/case-studies.js') }}" defer></script>
+{% endblock %}

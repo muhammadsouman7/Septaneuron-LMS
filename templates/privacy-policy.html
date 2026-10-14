@@ -1,0 +1,74 @@
+{% extends "base.html" %} {% block title %}Privacy Policy | Septaneuron{% endblock %} {% block meta %}
+<meta name="description" content="Learn how Septaneuron collects, uses, protects, and retains personal information when you visit our website or contact our software studio.">
+<meta name="keywords" content="Septaneuron privacy policy, software studio privacy, AI services privacy, website data protection">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Privacy Policy | Septaneuron">
+<meta property="og:description" content="How Septaneuron handles information submitted through our website and project inquiry forms.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="{{ request.url }}"> {% endblock %} {% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/legal.css') }}">{% endblock %} {% block content %}
+<div class="legal-ambient" aria-hidden="true">
+    <div class="legal-grid"></div>
+    <div class="legal-orb legal-orb--a"></div>
+    <div class="legal-orb legal-orb--b"></div>
+</div>
+<section class="legal-hero">
+    <div class="legal-hero__inner"><span class="legal-kicker">Legal / 01</span>
+        <h1>Privacy <em>policy.</em></h1>
+        <p>How Septaneuron handles information when you visit our website, contact our studio, or explore our services.</p><span class="legal-updated">Last updated: September 19, 2026</span></div>
+</section>
+<main class="legal-layout">
+    <aside class="legal-toc" aria-label="Privacy navigation"><span>On this page</span><a href="#scope">Scope</a><a href="#information">Information we collect</a><a href="#use">How we use information</a><a href="#sharing">Sharing and providers</a><a href="#retention">Retention and security</a><a href="#rights">Your choices</a>
+        <a href="#contact">Contact</a>
+    </aside>
+    <article class="legal-content">
+        <section class="legal-section legal-reveal" id="scope"><span class="legal-number">01</span>
+            <h2>About this policy</h2>
+            <p>This Privacy Policy explains how Septaneuron collects, uses, stores, and protects personal information connected with this website and our initial project inquiry process. Septaneuron is a software and digital product studio providing AI,
+                web development, automation, backend, video editing, SEO, and social media marketing services.</p>
+            <p>This policy does not replace any privacy notice or data-processing agreement that may apply to a specific client project. A project agreement may contain additional requirements for confidential or regulated information.</p>
+        </section>
+        <section class="legal-section legal-reveal" id="information"><span class="legal-number">02</span>
+            <h2>Information we collect</h2>
+            <p><strong>Information you provide.</strong> When you submit our contact form, we may collect your name, email address, company or organization, selected service, budget range, timeline, and project details. We also receive information you choose
+                to send by email.</p>
+            <p><strong>Technical information.</strong> Our hosting provider or security tools may process limited technical information such as IP address, browser type, device information, requested pages, timestamps, and error logs. This helps maintain
+                availability, prevent abuse, and diagnose technical issues.</p>
+            <p><strong>Cookies.</strong> The website may use essential technologies required for basic operation. If analytics, advertising, or other non-essential cookies are added later, this policy will be updated and any required consent mechanism will
+                be provided.</p>
+        </section>
+        <section class="legal-section legal-reveal" id="use"><span class="legal-number">03</span>
+            <h2>How we use information</h2>
+            <p>We use submitted information to respond to inquiries, understand project requirements, prepare proposals, communicate about potential work, provide requested services, and manage our professional relationship.</p>
+            <p>We may also use technical information to secure the website, prevent spam and abuse, troubleshoot errors, improve performance, and comply with legal obligations. We do not sell personal information or use project inquiry details for unrelated
+                advertising.
+            </p>
+        </section>
+        <section class="legal-section legal-reveal" id="sharing"><span class="legal-number">04</span>
+            <h2>Sharing and service providers</h2>
+            <p>We may share information with trusted providers that help us operate the website and respond to you, such as hosting providers, form-processing services, email providers, security services, and project collaboration tools. These providers
+                receive only the information needed for their service.</p>
+            <p>We may also disclose information when required by law, to protect the rights and safety of Septaneuron or others, or as part of a business transfer. We do not share your inquiry with unrelated third parties for their own marketing purposes.</p>
+            <p>Our contact form may use Web3Forms to process submissions. When you submit the form, the information is transmitted to that provider and delivered to our designated email inbox. You should review the provider's current privacy information
+                for details about its processing.</p>
+        </section>
+        <section class="legal-section legal-reveal" id="retention"><span class="legal-number">05</span>
+            <h2>Retention and security</h2>
+            <p>We retain inquiry information only for as long as reasonably necessary to respond, evaluate or manage a potential engagement, maintain business records, resolve disputes, and meet legal or accounting obligations. Retention periods vary according
+                to the context.</p>
+            <p>We use reasonable administrative, technical, and organizational safeguards to protect information. No internet transmission or storage system can be guaranteed to be completely secure, so please avoid sending passwords, payment-card details,
+                highly sensitive personal information, or confidential credentials through the public contact form.</p>
+        </section>
+        <section class="legal-section legal-reveal" id="rights"><span class="legal-number">06</span>
+            <h2>Your choices and rights</h2>
+            <p>You may choose not to provide optional information, although this may limit our ability to evaluate an inquiry. You may ask us to access, correct, delete, or explain our handling of personal information we hold about you, subject to applicable
+                law and reasonable verification.</p>
+            <p>You may unsubscribe from non-essential communications at any time. To make a privacy request, contact us using the address below. Depending on where you live, you may have additional rights under local data-protection law.</p>
+        </section>
+        <section class="legal-section legal-reveal" id="contact"><span class="legal-number">07</span>
+            <h2>Contact us about privacy</h2>
+            <p>For questions, requests, or concerns about this Privacy Policy or our handling of personal information, contact Septaneuron directly.</p><a class="legal-link" href="{{ url_for('contact') }}">hello@septaneuron.com <span>↗</span></a></section>
+    </article>
+</main>
+{% endblock %} {% block page_scripts %}
+<script src="{{ url_for('static', filename='assets/js/legal.js') }}"></script>{% endblock %}

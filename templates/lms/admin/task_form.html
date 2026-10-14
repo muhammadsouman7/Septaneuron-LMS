@@ -1,0 +1,34 @@
+{% extends 'lms/base.html' %}
+{% from 'lms/_macros.html' import csrf with context %}
+{% block title %}{{ 'Edit task' if editing else 'New task' }}{% endblock %}
+{% block content %}
+<div class="lms-head"><div>
+    <p class="lms-kicker"><a href="{{ url_for('lms.admin_tasks') }}" style="text-decoration:none">← Tasks</a></p>
+    <h1 class="lms-h1">{{ 'Edit task' if editing else 'Publish a task' }}</h1>
+    <p class="lms-sub">{{ 'Changes appear instantly in every intern\'s portal.' if editing else 'Interns in the chosen domain see it immediately and get an email.' }}</p>
+</div></div>
+<div class="lms-card" style="max-width:760px">
+    <form class="lms-form" method="post" enctype="multipart/form-data" data-once>
+        {{ csrf() }}
+        {% if me().role == 'super_admin' and not editing %}
+        <label>Domain
+            <select name="domain_id" required>
+                <option value="">Choose a domain…</option>
+                {% for d in domains %}<option value="{{ d.id }}" {{ 'selected' if (task.domain_id or domain_id) == d.id }}>{{ d.name }}</option>{% endfor %}
+            </select>
+        </label>
+        {% elif not editing %}<p class="lms-kicker" style="margin-bottom:18px">{{ domains[0].name }}</p>{% endif %}
+        <label>Title <input name="title" maxlength="150" value="{{ task.title or '' }}" placeholder="Build a REST API with Flask" required></label>
+        <label>Instructions <textarea name="description" style="min-height:220px" placeholder="What should interns build or learn? Add requirements, resources and how it will be graded.">{{ task.description or '' }}</textarea></label>
+        <div class="lms-two">
+            <label>Deadline <input type="datetime-local" name="due_at" value="{{ due_value }}"><small>Pakistan time (PKT). Leave empty for no deadline.</small></label>
+            <label>Max points <input type="number" name="max_points" min="1" max="1000" value="{{ task.max_points or 100 }}"></label>
+        </div>
+        <label>Attachment <input type="file" name="attachment"><small>Optional, up to 4 MB.{% if editing and task.attachment_name %} Current: {{ task.attachment_name }}{% endif %}</small></label>
+        {% if editing and task.attachment_name %}<label class="check"><input type="checkbox" name="remove_attachment" value="1"> Remove current attachment</label>{% endif %}
+        <label class="check"><input type="checkbox" name="notify" value="1" {{ 'checked' if task.notify }}> {{ 'Email interns about this update' if editing else 'Email interns in this domain now' }}</label>
+        <div class="lms-row"><button class="lms-btn" type="submit" data-busy="Saving…">{{ 'Save changes' if editing else 'Publish task' }}</button>
+        <a class="lms-btn lms-btn--ghost" href="{{ url_for('lms.admin_tasks') }}">Cancel</a></div>
+    </form>
+</div>
+{% endblock %}

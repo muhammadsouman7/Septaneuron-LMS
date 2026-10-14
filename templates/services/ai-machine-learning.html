@@ -1,0 +1,279 @@
+{% extends "base.html" %} {% block title %}AI & Machine Learning Development Services | Septaneuron{% endblock %} {% block page_css %}
+<!-- Primary Meta Tags -->
+<meta name="description" content="Custom AI and machine learning development: LLM integrations, AI agents, RAG systems, computer vision, and AI-powered automation, built by Septaneuron." />
+<meta name="keywords" content="AI development services, machine learning development, LLM integration, AI agents, RAG systems, computer vision development, AI automation Pakistan" />
+
+<!-- Canonical -->
+<link rel="canonical" href="https://septaneuron.com/services/ai-machine-learning-development" />
+
+<!-- Open Graph / Social Tags -->
+<meta property="og:title" content="AI & Machine Learning Development Services | Septaneuron" />
+<meta property="og:description" content="We design and build practical AI systems: LLM integrations, AI agents, RAG pipelines, computer vision, and AI automation." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://septaneuron.com/services/ai-machine-learning-development" />
+<meta property="og:image" content="https://septaneuron.com/static/assets/imgs/logo/septaneuron.svg" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="AI & Machine Learning Development Services | Septaneuron" />
+<meta name="twitter:description" content="LLM integrations, AI agents, RAG systems, computer vision, and AI automation, built by a senior software studio in Pakistan." />
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [{
+            "@type": "Service",
+            "serviceType": "AI and Machine Learning Development",
+            "name": "AI & Machine Learning Development",
+            "provider": {
+                "@type": "Organization",
+                "name": "Septaneuron",
+                "url": "https://septaneuron.com/"
+            },
+            "areaServed": "Worldwide",
+            "description": "Custom AI systems including LLM integrations, AI agents, RAG (Retrieval-Augmented Generation) systems, computer vision, and AI automation.",
+            "url": "https://septaneuron.com/services/ai-machine-learning-development"
+        }, {
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://septaneuron.com/"
+            }, {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Services",
+                "item": "https://septaneuron.com/services"
+            }, {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "AI & Machine Learning",
+                "item": "https://septaneuron.com/services/ai-machine-learning-development"
+            }]
+        }, {
+            "@type": "FAQPage",
+            "mainEntity": [{
+                "@type": "Question",
+                "name": "Do you build custom AI models or use existing ones?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Both. Most projects are faster and more reliable built on proven foundation models (LLMs, vision models) that we fine-tune, prompt-engineer, and wrap in retrieval or tool-use pipelines. We train custom models only when the problem genuinely needs one."
+                }
+            }, {
+                "@type": "Question",
+                "name": "What is a RAG system and do I need one?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Retrieval-Augmented Generation connects an LLM to your own documents or data so answers are grounded in facts you control, rather than the model's training data. If your product needs to answer questions about your own content accurately, you likely need one."
+                }
+            }, {
+                "@type": "Question",
+                "name": "How long does an AI agent build usually take?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A focused single-purpose agent typically takes 3 to 6 weeks from scoping to production. Multi-agent systems or ones requiring custom tool integrations run longer, depending on the number of systems involved."
+                }
+            }]
+        }]
+    }
+</script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/page-hero.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/services.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/services-additions.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/services-detail.css') }}"> {% endblock %} {% block content %}
+
+<div class="svc-ambient" aria-hidden="true">
+    <div class="svc-orb svc-orb--a"></div>
+    <div class="svc-orb svc-orb--b"></div>
+    <div class="svc-grid"></div>
+</div>
+
+<header class="svcd-hero">
+    <a class="svcd-back" href="{{ url_for('services') }}">← Back to services</a>
+    <div class="svcd-hero__glow" aria-hidden="true"></div>
+    <div class="svcd-hero__content">
+        <span class="svc-kicker">01 / AI &amp; MACHINE LEARNING</span>
+        <h1>AI &amp; Machine Learning Development <em>built for real work.</em></h1>
+        <p>We design and build practical AI systems that turn complex machine learning models into useful products: LLM integrations, autonomous agents, RAG pipelines, computer vision, and AI-driven automation that your team can actually run in production.</p>
+        <div class="svcd-hero__actions">
+            <a class="svc-btn svc-btn--light" href="{{ url_for('contact') }}">Start an AI project <span>↗</span></a>
+            <a class="svc-btn svc-btn--glass" href="{{ url_for('portfolio') }}">See related work <span>↗</span></a>
+        </div>
+        <div class="svcd-hero__stats">
+            <div><b>LLM</b><span>Integrations &amp; agents</span></div>
+            <div><b>RAG</b><span>Retrieval-grounded answers</span></div>
+            <div><b>CV</b><span>Computer vision pipelines</span></div>
+        </div>
+    </div>
+</header>
+
+<section class="svc-section" aria-labelledby="svcd-overview-h">
+    <div class="svcd-intro">
+        <h2 id="svcd-overview-h">From model capability to something your team can use.</h2>
+        <div class="svcd-intro__body">
+            <p>Most "AI projects" fail not because the underlying model is weak, but because nobody connects it to real data, real workflows, and a real interface. We build the layer between a capable model and a usable product: the retrieval pipeline, the
+                tool calls, the guardrails, and the UI your team touches every day.</p>
+            <p>Whether you need a chatbot that actually knows your product catalog, an agent that can take action across your internal tools, or a vision model that flags defects on a production line, we scope it against a measurable outcome before writing
+                a line of code.</p>
+        </div>
+    </div>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-features-h">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">WHAT WE BUILD</span>
+            <h2 id="svcd-features-h">Six ways we put AI to work <em>inside your product.</em></h2>
+        </div>
+        <p>Each engagement starts narrow: one workflow, one measurable outcome, then expands once it's proven.</p>
+    </div>
+    <div class="svcd-features">
+        <article class="svcd-feature">
+            <div class="svcd-feature__icon">◆</div>
+            <h3>AI-Powered Applications</h3>
+            <p>End-to-end products with AI at the core, not bolted on: intelligent search, recommendation, summarization, and generation features shipped as part of your app.</p>
+        </article>
+        <article class="svcd-feature">
+            <div class="svcd-feature__icon">⌘</div>
+            <h3>LLM Integrations</h3>
+            <p>Connecting large language models to your existing systems, data, and business logic, with prompt design, evaluation, and cost controls built in.</p>
+        </article>
+        <article class="svcd-feature">
+            <div class="svcd-feature__icon">✦</div>
+            <h3>AI Agents</h3>
+            <p>Autonomous and semi-autonomous agents that plan, call tools, and complete multi-step tasks across your APIs, with human checkpoints where they matter.</p>
+        </article>
+        <article class="svcd-feature">
+            <div class="svcd-feature__icon">▤</div>
+            <h3>RAG Systems</h3>
+            <p>Retrieval-Augmented Generation pipelines that ground model answers in your own documents, tickets, or databases, so responses stay accurate and current.</p>
+        </article>
+        <article class="svcd-feature">
+            <div class="svcd-feature__icon">◎</div>
+            <h3>Computer Vision</h3>
+            <p>Object detection, classification, OCR, and depth or scene understanding, deployed as real-time services or offline batch pipelines.</p>
+        </article>
+        <article class="svcd-feature">
+            <div class="svcd-feature__icon">↻</div>
+            <h3>AI Automation</h3>
+            <p>Using AI as the decision layer inside a larger automated workflow: routing, tagging, extraction, and triage that used to be manual.</p>
+        </article>
+    </div>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-outcomes-h">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">WHY IT WORKS</span>
+            <h2 id="svcd-outcomes-h">Built to survive <em>contact with production.</em></h2>
+        </div>
+        <p>AI demos are easy. AI systems that stay accurate, affordable, and maintainable are the actual deliverable.</p>
+    </div>
+    <ul class="svcd-outcomes">
+        <li>Evaluation and testing built in from day one, not added after launch</li>
+        <li>Cost and latency budgets set upfront, so the system stays affordable at scale</li>
+        <li>Clear fallback paths for when the model is wrong or unsure</li>
+        <li>Data pipelines you own and can inspect, not a black box</li>
+        <li>Guardrails and human-in-the-loop checkpoints where the stakes are high</li>
+        <li>Documentation your team can extend after we hand it off</li>
+    </ul>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-process-h">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">HOW WE WORK</span>
+            <h2 id="svcd-process-h">A short path from idea <em>to shipped feature.</em></h2>
+        </div>
+    </div>
+    <div class="svc-process__steps">
+        <article>
+            <b>01</b>
+            <h3>Scope the outcome</h3>
+            <p>We define the specific decision or task the AI needs to improve, and how we'll measure it.</p>
+        </article>
+        <article>
+            <b>02</b>
+            <h3>Prototype fast</h3>
+            <p>A working prototype against real data within the first one to two weeks, so we validate direction early.</p>
+        </article>
+        <article>
+            <b>03</b>
+            <h3>Harden for production</h3>
+            <p>Evaluation, guardrails, monitoring, and cost tuning turn the prototype into something reliable.</p>
+        </article>
+        <article>
+            <b>04</b>
+            <h3>Ship &amp; hand off</h3>
+            <p>Deployment, documentation, and a walkthrough so your team can operate and extend it.</p>
+        </article>
+    </div>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-faq-h">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">FAQ</span>
+            <h2 id="svcd-faq-h">Common questions <em>about AI development.</em></h2>
+        </div>
+    </div>
+    <div class="svc-faq__list">
+        <div class="svc-faq">
+            <details>
+                <summary>Do you build custom AI models or use existing ones?</summary>
+                <p>Both. Most projects are faster and more reliable built on proven foundation models (LLMs, vision models) that we fine-tune, prompt-engineer, and wrap in retrieval or tool-use pipelines. We train custom models only when the problem genuinely
+                    needs one.</p>
+            </details>
+            <details>
+                <summary>What is a RAG system and do I need one?</summary>
+                <p>Retrieval-Augmented Generation connects an LLM to your own documents or data so answers are grounded in facts you control, rather than the model's training data. If your product needs to answer questions about your own content accurately,
+                    you likely need one.</p>
+            </details>
+            <details>
+                <summary>How long does an AI agent build usually take?</summary>
+                <p>A focused single-purpose agent typically takes 3 to 6 weeks from scoping to production. Multi-agent systems or ones requiring custom tool integrations run longer, depending on the number of systems involved.</p>
+            </details>
+        </div>
+    </div>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-related-h" style="border-bottom:0">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">RELATED SERVICES</span>
+            <h2 id="svcd-related-h">Pair AI with <em>the rest of the stack.</em></h2>
+        </div>
+    </div>
+    <div class="svcd-related__grid">
+        <a class="svcd-related__card" href="{{ url_for('service_web_development') }}">
+            <span>02 / WEB &amp; PRODUCT</span>
+            <h3>Full-Stack Web Application Development</h3>
+            <p>Ship the interface and infrastructure your AI features live inside.</p>
+        </a>
+        <a class="svcd-related__card" href="{{ url_for('service_automation') }}">
+            <span>03 / AUTOMATION</span>
+            <h3>Workflow Automation Services</h3>
+            <p>Wire AI decisions into the tools your team already uses daily.</p>
+        </a>
+        <a class="svcd-related__card" href="{{ url_for('service_digital_growth') }}">
+            <span>04 / DIGITAL GROWTH</span>
+            <h3>Digital Growth &amp; Content</h3>
+            <p>Get your new AI-powered product found, watched, and remembered.</p>
+        </a>
+    </div>
+</section>
+
+<section class="svc-final" id="contact">
+    <div class="svc-final__glow"></div><span class="svc-kicker">Have a problem worth solving?</span>
+    <h2>Let's build something <em>useful together.</em></h2>
+    <p>Tell us what you're trying to build, where you're stuck, and what success looks like.</p>
+    <div><a class="svc-btn svc-btn--light" href="{{ url_for('contact') }}">Start a project <span>↗</span></a></div>
+</section>
+
+{% endblock %} {% block page_scripts %}
+<script src="{{ url_for('static', filename='assets/js/page-hero.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/services-detail.js') }}"></script>
+{% endblock %}

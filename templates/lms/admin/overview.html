@@ -1,0 +1,46 @@
+{% extends 'lms/base.html' %}
+{% from 'lms/_macros.html' import domain_picker with context %}
+{% block title %}Overview{% endblock %}
+{% block content %}
+<div class="lms-head"><div>
+    <p class="lms-kicker">{{ 'All domains' if me().role == 'super_admin' and not domain_id else (breakdown[0].domain.name if breakdown else 'Admin') }}</p>
+    <h1 class="lms-h1">Mentor overview</h1>
+    <p class="lms-sub">What needs your attention across your interns' work.</p>
+</div>
+<div class="lms-row">{{ domain_picker(domains, domain_id, url_for('lms.admin_overview')) }}
+<a class="lms-btn" href="{{ url_for('lms.admin_task_new', domain=domain_id) }}">+ New task</a></div></div>
+
+<div class="lms-grid lms-grid--stats">
+    <div class="lms-card lms-stat lms-stat--accent"><b>{{ stats.pending }}</b><span>Awaiting review</span></div>
+    <div class="lms-card lms-stat"><b>{{ stats.tasks }}</b><span>Tasks published</span></div>
+    <div class="lms-card lms-stat"><b>{{ stats.interns }}</b><span>Active interns</span></div>
+</div>
+
+<h2 class="lms-section-title">Needs review</h2>
+{% if shown %}
+<div class="lms-table-wrap"><table class="lms-table">
+    <thead><tr><th>Intern</th><th>Task</th><th>Submitted</th><th></th></tr></thead>
+    <tbody>
+    {% for s in shown %}
+    <tr>
+        <td class="lms-name">{{ names[s.intern_id].full_name if s.intern_id in names else '—' }}<small>{{ names[s.intern_id].email if s.intern_id in names }}</small></td>
+        <td>{{ titles[s.task_id].title if s.task_id in titles else '—' }}</td>
+        <td class="lms-muted">{{ s.submitted_at|dt }}{% if s.is_late %} <span class="lms-badge lms-badge--bad">Late</span>{% endif %}</td>
+        <td><div class="actions"><a class="lms-btn lms-btn--sm" href="{{ url_for('lms.admin_task', task_id=s.task_id) }}#s-{{ s.id }}">Review</a></div></td>
+    </tr>
+    {% endfor %}
+    </tbody></table></div>
+{% if stats.pending > shown|length %}<p class="lms-muted lms-small">Showing the oldest {{ shown|length }} of {{ stats.pending }}.</p>{% endif %}
+{% else %}
+<div class="lms-empty"><b>Inbox zero</b>No submissions are waiting for review.</div>
+{% endif %}
+
+{% if breakdown|length > 1 %}
+<h2 class="lms-section-title">By domain</h2>
+<div class="lms-table-wrap"><table class="lms-table">
+    <thead><tr><th>Domain</th><th>Active interns</th><th>Tasks</th><th>To review</th></tr></thead>
+    <tbody>{% for b in breakdown %}
+    <tr><td><a class="lms-link" href="{{ url_for('lms.admin_overview', domain=b.domain.id) }}">{{ b.domain.name }}</a></td><td>{{ b.interns }}</td><td>{{ b.tasks }}</td><td>{{ b.pending }}</td></tr>
+    {% endfor %}</tbody></table></div>
+{% endif %}
+{% endblock %}

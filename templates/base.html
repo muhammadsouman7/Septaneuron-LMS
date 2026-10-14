@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{% block title %}Septaneuron{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/fontawesome/css/all.min.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/imgs/septaneuron-favicon.jpg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/hero.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/border-beam.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/footer-responsive.css') }}">{% block page_css %}{% endblock %}</head>
+
+<body>
+    <div class="sn-page-loader" id="snPageLoader" aria-hidden="true">
+        <div class="sn-page-loader__content">
+            <img class="sn-page-loader__logo" src="{{ url_for('static', filename='assets/imgs/septaneuron.png') }}" alt="">
+
+            <div class="sn-page-loader__line"></div>
+            <div class="sn-page-loader__line sn-page-loader__line--short"></div>
+
+            <p class="sn-page-loader__label">
+                Loading Septaneuron
+            </p>
+        </div>
+    </div>
+    {% include 'navbar.html' %}{% block content %}{% endblock %}{% include 'footer.html' %}
+    <script src="{{ url_for('static', filename='assets/js/navbar.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/footer.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/page-transitions.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/border-beam.js') }}"></script>
+    {% block page_scripts %}{% endblock %}</body>
+
+</html>

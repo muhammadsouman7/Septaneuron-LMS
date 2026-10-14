@@ -1,0 +1,24 @@
+{% macro csrf() %}<input type="hidden" name="_csrf" value="{{ csrf_token() }}">{% endmacro %}
+
+{% macro badge(state) %}{% if state.status == 'approved' %}<span class="lms-badge lms-badge--good">Approved</span>
+{%- elif state.status == 'submitted' %}<span class="lms-badge lms-badge--cyan">Awaiting review</span>
+{%- elif state.status == 'needs_revision' %}<span class="lms-badge lms-badge--warn">Changes requested</span>
+{%- elif state.overdue %}<span class="lms-badge lms-badge--bad">Overdue</span>
+{%- else %}<span class="lms-badge">To do</span>{% endif %}{% endmacro %}
+
+{% macro sub_badge(sub) %}{% if not sub %}<span class="lms-badge">Not submitted</span>
+{%- elif sub.status == 'approved' %}<span class="lms-badge lms-badge--good">Approved</span>
+{%- elif sub.status == 'needs_revision' %}<span class="lms-badge lms-badge--warn">Changes requested</span>
+{%- else %}<span class="lms-badge lms-badge--cyan">Needs review</span>{% endif %}{% endmacro %}
+
+{% macro domain_picker(domains, selected, action) %}
+{% if domains|length > 1 %}
+<form method="get" action="{{ action }}" class="lms-row">
+  <select name="domain" onchange="this.form.submit()" aria-label="Filter by domain" style="height:42px;padding:0 14px;border:1px solid var(--lms-line);border-radius:999px;background:#080d10;color:var(--lms-ink);font:inherit;font-size:13.5px">
+    <option value="">All domains</option>
+    {% for d in domains %}<option value="{{ d.id }}" {{ 'selected' if d.id == selected }}>{{ d.name }}</option>{% endfor %}
+  </select>
+  <noscript><button class="lms-btn lms-btn--ghost lms-btn--sm">Apply</button></noscript>
+</form>
+{% endif %}
+{% endmacro %}

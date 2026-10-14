@@ -1,0 +1,187 @@
+       :root {
+          --bg: #05080a;
+          --ink: #f2f6f7;
+          --ink-dim: rgba(242, 246, 247, 0.62);
+          --cyan: #07c0cd;
+          --navy: #000080;
+          --line: rgba(242, 246, 247, 0.14);
+      }
+      
+      * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+      }
+      
+      html,
+      body {
+          background: var(--bg);
+      }
+      
+      body {
+          font-family: 'Söhne', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          color: var(--ink);
+          -webkit-font-smoothing: antialiased;
+      }
+      
+      .hero {
+          position: relative;
+          width: 100%;
+          min-height: 640px;
+          height: 92vh;
+          max-height: 900px;
+          border-radius: 20px;
+          overflow: hidden;
+          background: radial-gradient(120% 100% at 12% 45%, #071019 0%, #05080a 55%, #030405 100%);
+          border: 1px solid rgba(242, 246, 247, 0.08);
+      }
+      
+      .thread-canvas {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          display: block;
+      }
+      
+      .hero-scrim {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(3, 4, 5, 0.15) 0%, rgba(3, 4, 5, 0) 30%, rgba(3, 4, 5, 0) 70%, rgba(3, 4, 5, 0.35) 100%);
+          pointer-events: none;
+      }
+      
+      .hero-content {
+          position: relative;
+          z-index: 2;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          padding: 28px 32px;
+          justify-content: center;
+          align-items: center;
+      }
+      /* Center content */
+      
+      .hero-main {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          padding: 40px 20px;
+          gap: 26px;
+      }
+      
+      .badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 9px;
+          padding: 6px 8px 6px 6px;
+          border-radius: 999px;
+          background: rgba(242, 246, 247, 0.06);
+          border: 1px solid rgba(242, 246, 247, 0.14);
+          font-size: 13px;
+          color: var(--ink-dim);
+          backdrop-filter: blur(6px);
+          margin-top: 60px;
+      }
+      
+      .badge-tag {
+          background: var(--ink);
+          color: #05080a;
+          font-size: 11.5px;
+          font-weight: 700;
+          padding: 3px 9px;
+          border-radius: 999px;
+      }
+      
+      h1 {
+          font-size: clamp(32px, 5vw, 58px);
+          line-height: 1.14;
+          font-weight: 560;
+          max-width: 780px;
+          letter-spacing: -0.01em;
+      }
+      
+      .hero-sub {
+          max-width: 520px;
+          font-size: 16.5px;
+          line-height: 1.55;
+          color: var(--ink-dim);
+      }
+      
+      .hero-actions {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          margin-top: 4px;
+      }
+      
+      .btn-primary {
+          background: var(--ink);
+          color: #05080a;
+          border: none;
+          padding: 13px 26px;
+          border-radius: 999px;
+          font-size: 15px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: transform 0.2s ease, background 0.2s ease;
+      }
+      
+      .btn-primary:hover {
+          transform: translateY(-1px);
+          background: #d9e6e8;
+      }
+      
+      .btn-secondary {
+          background: rgba(242, 246, 247, 0.07);
+          color: var(--ink);
+          border: 1px solid rgba(242, 246, 247, 0.2);
+          padding: 13px 24px;
+          border-radius: 999px;
+          font-size: 15px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: background 0.2s ease, border-color 0.2s ease;
+      }
+      
+      .btn-secondary:hover {
+          background: rgba(242, 246, 247, 0.12);
+          border-color: rgba(242, 246, 247, 0.32);
+      }
+      
+      .hero-footer {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          gap: 10px;
+          font-size: 12.5px;
+          color: rgba(242, 246, 247, 0.4);
+          padding: 4px 8px;
+      }
+      
+      @media (max-width: 720px) {
+          .hero {
+              border-radius: 14px;
+              height: 100vh;
+              max-height: none;
+          }
+          .hero-content {
+              padding: 18px 18px;
+          }
+          h1 {
+              font-size: clamp(28px, 8vw, 40px);
+          }
+          .hero-actions {
+              flex-direction: column;
+              width: 100%;
+              max-width: 280px;
+          }
+          .btn-primary,
+          .btn-secondary {
+              width: 100%;
+          }
+      }

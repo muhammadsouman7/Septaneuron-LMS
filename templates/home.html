@@ -1,0 +1,284 @@
+{% extends "base.html" %} {% block title %}AI & Software Development Studio in Pakistan | Septaneuron{% endblock %} {% block page_css %}
+<!-- Primary Meta Tags -->
+<meta name="description" content="Septaneuron is a senior software studio in Rawalpindi, Pakistan building custom AI products, full-stack web apps, and workflow automation for startups." />
+<meta name="keywords" content="AI development company Pakistan, software development company Rawalpindi, custom AI product development, full-stack software development, MVP builds for startups" />
+
+<!-- Canonical -->
+<link rel="canonical" href="https://septaneuron.com/" />
+
+<!-- Open Graph / Social Tags -->
+<meta property="og:title" content="AI & Software Development Studio in Pakistan | Septaneuron" />
+<meta property="og:description" content="We build the software your team hasn't gotten around to yet. AI products, automation, and full-stack builds shipped by a senior team in Rawalpindi, Pakistan." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://septaneuron.com/" />
+<meta property="og:image" content="https://septaneuron.com/static/assets/imgs/logo/septaneuron.svg" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="AI & Software Development Studio in Pakistan | Septaneuron" />
+<meta name="twitter:description" content="Custom AI products, full-stack web apps, and workflow automation — built by a senior software studio in Rawalpindi, Pakistan." />
+
+<!-- JSON-LD: Organization + WebSite schema (homepage only) -->
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Septaneuron",
+        "url": "https://septaneuron.com/",
+        "logo": "https://septaneuron.com/static/assets/imgs/septaneuron.png",
+        "description": "Septaneuron is a senior software development studio in Rawalpindi, Pakistan, building custom AI products, full-stack web applications, workflow automation, and digital growth services.",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Rawalpindi",
+            "addressCountry": "PK"
+        },
+        "email": "hello@septaneuron.com",
+        "sameAs": [
+            "https://www.linkedin.com/in/septaneuron/",
+            "https://www.instagram.com/septaneuron/",
+            "https://www.facebook.com/septaneuron/"
+        ]
+    }
+</script>
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Septaneuron",
+        "url": "https://septaneuron.com/"
+    }
+</script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/homepage-sections.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/about.css') }}">{% endblock %} {% block content %}
+
+<div class="sn-ambient" aria-hidden="true">
+    <div class="sn-ambient__orb sn-ambient__orb--one"></div>
+    <div class="sn-ambient__orb sn-ambient__orb--two"></div>
+    <div class="sn-ambient__grid"></div>
+    <div class="sn-ambient__noise"></div>
+</div>
+
+<!-- ===== Navbar ===== -->
+
+
+<!-- ===== Hero ===== -->
+
+<div class="hero" id="home">
+    <canvas class="thread-canvas" id="threadCanvas"></canvas>
+    <div class="hero-scrim"></div>
+
+    <div class="hero-content">
+        <div class="hero-main">
+            <div class="badge">
+                <span class="badge-tag">NEW</span> AI systems, shipped by a six-person team
+            </div>
+
+            <h1>AI Development &amp; Full-Stack Software Studio in <span style="color:#07c0cd;">Rawalpindi, Pakistan</span></h1>
+
+            <p class="hero-sub">
+                Septaneuron is a specialized software development partner for founders and growing teams who need AI products, automated workflows, and production-ready full-stack applications built by engineers who actually ship — not just a proposal deck.
+            </p>
+
+            <div class="hero-actions">
+                <a class="ab-btn ab-btn--glass" href="{{ url_for('contact') }}">Start a project</a>
+                <a class="ab-btn ab-btn--light" href="{{ url_for('portfolio') }}">See our work</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Place this block immediately after the existing hero and before the footer. -->
+
+<main class="sn-home-sections">
+    <section class="sn-trust sn-section" aria-label="Trust and proof points">
+        <p class="sn-eyebrow">Trusted by teams who needed it done right the first time.</p>
+        <div class="sn-trust__items">
+            <span><strong>6</strong> senior engineers</span>
+            <span><strong>0</strong> missed deadlines</span>
+            <span><strong>1</strong> accountable team</span>
+        </div>
+    </section>
+
+    <section class="sn-section sn-build" id="services">
+        <div class="sn-section__heading sn-reveal">
+            <div>
+                <p class="sn-kicker">Capabilities</p>
+                <h2>AI, Full-Stack, and Digital Growth Services, built <em>end to end.</em></h2>
+            </div>
+            <p class="sn-section__intro">From the first technical decision to the last production deploy, we keep your build in one senior team. No account-manager relay, no staffing ladders—just direct execution.</p>
+        </div>
+        <div class="sn-capability-grid">
+            <article class="sn-capability-card sn-beam-card sn-reveal" data-beam-size="180"><span class="sn-card-index">01</span>
+                <h3>Advanced AI &amp; Machine Learning Development</h3>
+                <p>Intelligent systems engineered to solve complex cognitive and analytical problems.<br><strong style="color:#07c0cd;">Core Technologies:</strong> Computer Vision, Deep Learning, Natural Language Processing (NLP), and Machine Learning models.<br>
+                    <strong style="color:#07c0cd;">Capabilities:</strong> Agentic AI, LLM-powered copilots, RAG (Retrieval-Augmented Generation) systems, automated workflows, and custom vision/processing pipelines.</article>
+            <article class="sn-capability-card sn-beam-card sn-reveal" data-beam-size="180"><span class="sn-card-index">02</span>
+                <h3>Full-Stack Software &amp; Product Engineering</h3>
+                <p>Production-ready applications built to scale seamlessly from concept to launch.<br><strong style="color:#07c0cd;">Core Technologies:</strong> Python, Flask, Node.js, React, Next.js, and robust cloud architectures.<br>
+                    <strong style="color:#07c0cd;">Capabilities:</strong> End-to-end web application development, MVP builds for startups, custom backend systems, APIs, internal tools, and database engineering.</article>
+            <article class="sn-capability-card sn-beam-card sn-reveal" data-beam-size="180"><span class="sn-card-index">03</span>
+                <h3>Custom Web Design &amp; CMS Solutions</h3>
+                <p>High-performance, responsive websites tailored for engagement and seamless user experience.<br><strong style="color:#07c0cd;">Core Technologies:</strong> WordPress, Astra, Elementor, modern HTML/CSS, JavaScript, and Bootstrap.<br>
+                    <strong style="color:#07c0cd;">Capabilities:</strong> Custom theme development, dynamic landing pages, tailored e-commerce/business solutions, and conversion-focused UI/UX layouts.</article>
+            <article class="sn-capability-card sn-beam-card sn-reveal" data-beam-size="180"><span class="sn-card-index">04</span>
+                <h3>Growth, SEO &amp; Digital Marketing Services</h3>
+                <p>Strategic digital scaling designed to amplify your brand presence and drive measurable traffic.<br><strong style="color:#07c0cd;">Core Disciplines:</strong> Search Engine Optimization (SEO), digital marketing campaigns, and social media
+                    management.
+                    <br>
+                    <strong style="color:#07c0cd;">Capabilities:</strong> Technical on-page SEO, organic growth strategies, multi-channel social media marketing, and performance-driven content positioning.</article>
+            <article class="sn-capability-card sn-beam-card sn-reveal" data-beam-size="180"><span class="sn-card-index">05</span>
+                <h3>Creative Production &amp; Video Editing</h3>
+                <p>Engaging visual media and content creation crafted to capture attention and communicate value.<br><strong style="color:#07c0cd;">Core Disciplines:</strong> Video production, post-production editing, and digital media assets.<br>
+                    <strong style="color:#07c0cd;">Capabilities:</strong> Professional corporate and social video editing, promotional media production, and cohesive visual storytelling for digital campaigns.</article>
+        </div>
+    </section>
+
+    <section class="sn-section sn-work" id="work">
+        <div class="sn-section__heading sn-reveal">
+            <div>
+                <p class="sn-kicker">Selected work</p>
+                <h2>A few things we’ve <em>made.</em></h2>
+            </div>
+            <p class="sn-section__intro">A small studio is at its best when the work speaks for itself. Here are two representative builds from our portfolio.</p>
+        </div>
+        <div class="sn-work-grid">
+            <article class="sn-work-card sn-work-card--feature sn-reveal sn-beam-card" data-beam-size="250">
+                <a class="sn-work-card__visual sn-visual--image" href="{{ url_for('case_study_deepfake_detection') }}" aria-label="View XAI Forensics case study">
+                    <img src="{{ url_for('static', filename='assets/imgs/casestudyImgs/xai-gallery-img-01.png') }}" alt="XAI Forensics dashboard showing a deepfake verdict with a Grad-CAM heatmap" loading="lazy">
+                    <span class="sn-visual__label">EXPLAINABLE AI / 2025</span>
+                    <span class="sn-visual__metric">15<small>frames sampled per video</small></span>
+                </a>
+                <div class="sn-work-card__body">
+                    <p class="sn-card-meta">XAI Forensics · Deepfake video detection</p>
+                    <h3>A deepfake detector that shows its work, not just a "real or fake" label.</h3>
+                    <p>MTCNN face detection, a fine-tuned EfficientNet classifier, and Grad-CAM heatmaps, delivered through a Flask API and a React forensic dashboard.</p>
+                    <div class="sn-tags"><span>PyTorch</span><span>EfficientNet</span><span>Grad-CAM</span><span>Flask</span><span>React</span></div>
+                    <a class="sn-work-card__link" href="{{ url_for('case_study_deepfake_detection') }}">View case study <span>↗</span></a>
+                </div>
+            </article>
+
+            <article class="sn-work-card sn-reveal sn-beam-card" data-beam-size="250">
+                <a class="sn-work-card__visual sn-visual--image" href="{{ url_for('case_study_kidney_stone_detection') }}" aria-label="View KidneyAI case study">
+                    <img src="{{ url_for('static', filename='assets/imgs/casestudyImgs/kidney-stone-gallery-img-01.png') }}" alt="KidneyAI dashboard detecting kidney stones in a CT scan" loading="lazy">
+                    <span class="sn-visual__label">MEDICAL AI / 2026</span>
+                </a>
+                <div class="sn-work-card__body">
+                    <p class="sn-card-meta">KidneyAI · CT scan analysis</p>
+                    <h3>From CT upload to kidney stone detection and a PDF report in one workflow.</h3>
+                    <p>A custom-trained YOLO model with bounding-box overlays, SQLite scan history, and one-click PDF reports.</p>
+                    <div class="sn-tags"><span>YOLO</span><span>Flask</span><span>OpenCV</span><span>React</span><span>SQLite</span></div>
+                    <a class="sn-work-card__link" href="{{ url_for('case_study_kidney_stone_detection') }}">View case study <span>↗</span></a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="sn-section sn-why" aria-labelledby="why-title">
+        <div class="sn-section__heading sn-reveal">
+            <div>
+                <p class="sn-kicker">The studio model</p>
+                <h2 id="why-title">Why Founders <em>Choose Us?</em></h2>
+            </div>
+            <p class="sn-section__intro">Why growing teams pick a focused seven-person studio over a sprawling 50-person agency:</p>
+        </div>
+        <div class="sn-differentiators">
+            <article class="sn-diff sn-reveal"><span>01</span>
+                <h3>Direct Access</h3>
+                <p>No middle-man or account manager. You collaborate directly with the engineers making the technical decisions.</p>
+            </article>
+            <article class="sn-diff sn-reveal"><span>02</span>
+                <h3>Senior-Only Team</h3>
+                <p>Every project is architected and deployed by experienced builders, keeping code quality high.</p>
+            </article>
+            <article class="sn-diff sn-reveal"><span>03</span>
+                <h3>Less Ceremony</h3>
+                <p>Small team sizes mean short feedback loops and streamlined processes that accelerate delivery.</p>
+            </article>
+            <article class="sn-diff sn-reveal"><span>04</span>
+                <h3>AI-Native Approach</h3>
+                <p>Designed past the proof-of-concept, with your data and your workflow in mind from day one.We integrate modern AI tools both inside the products we build and throughout our development workflow.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="sn-section sn-process" id="process">
+        <div class="sn-section__heading sn-reveal">
+            <div>
+                <p class="sn-kicker">Our process</p>
+                <h2>Our <em>4-Step </em>Development Process</h2>
+            </div>
+            <p class="sn-section__intro">From initial concept to production release in a clear, predictable timeline.</p>
+        </div>
+        <div class="sn-stepper">
+            <article class="sn-step sn-reveal">
+                <div class="sn-step__top"><span>01</span><span class="sn-step__time">3–5 days</span></div>
+                <h3>Discovery</h3>
+                <p>We clarify your core problem, user personas, technical constraints, and define the leanest version worth building.</p>
+            </article>
+            <article class="sn-step sn-reveal">
+                <div class="sn-step__top"><span>02</span><span class="sn-step__time">1–2 weeks</span></div>
+                <h3>Design &amp; Architecture</h3>
+                <p>We map out the user experience and technical specifications before writing code.</p>
+            </article>
+            <article class="sn-step sn-reveal">
+                <div class="sn-step__top"><span>03</span><span class="sn-step__time">2–8 weeks</span></div>
+                <h3>Build Phase</h3>
+                <p>We develop in tight weekly loops, share progress early, and keep staging environments usable throughout.</p>
+            </article>
+            <article class="sn-step sn-reveal">
+                <div class="sn-step__top"><span>04</span><span class="sn-step__time">ongoing</span></div>
+                <h3>Ship &amp; Support</h3>
+                <p>We deploy securely, document the architecture, and stay close to guide your next growth phase.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="sn-section sn-testimonials" id="testimonials">
+        <div class="sn-section__heading sn-reveal">
+            <div>
+                <p class="sn-kicker">Client notes</p>
+                <h2>What it's like partnering with <em>our engineering team</em></h2>
+            </div>
+        </div>
+        <div class="sn-testimonial-grid">
+            <blockquote class="sn-quote sn-quote--primary sn-reveal"><span class="sn-quote__mark">“</span>
+                <p>Really happy with Septaneuron's service. My website looks clean, modern, and professional, and everything was built perfectly. The team handled everything smoothly and made the whole experience easy. Great work highly recommended!</p>
+                <footer><strong>Raja Shakir Liaquat</strong><span>Owner - Shakir Bridal Couture</span></footer>
+            </blockquote>
+            <blockquote class="sn-quote sn-reveal"><span class="sn-quote__mark">“</span>
+                <p>Septaneuron created a modern, professional, and user-friendly website that effectively presents my medical services, expertise, and professional profile. The team understood my requirements and delivered a clean, responsive website that
+                    makes it easier for patients to connect and learn about my practice.</p>
+                <footer><strong>Dr. Adil Aziz Khan</strong><span>Neurosurgeon</span></footer>
+            </blockquote>
+            <blockquote class="sn-quote sn-reveal"><span class="sn-quote__mark">“</span>
+                <p>We had a great experience working with Septa Neuron for our digital marketing. Alishba Nadeem understood our business needs, created engaging content, and helped us reach the right audience through effective marketing strategies. Everything
+                    was handled professionally and smoothly, and we are very satisfied with the results. Highly recommended!</p>
+                <footer><strong>Al-Wahad Traders</strong><span>Digital Marketing Client</span></footer>
+            </blockquote>
+            <blockquote class="sn-quote sn-quote--primary sn-reveal"><span class="sn-quote__mark">“</span>
+                <p>We are really happy with Septa Neuron’s digital marketing services. Alishba Nadeem understood our bakery brand, created engaging content, and helped us promote our products to the right audience through effective social media marketing.
+                    The whole process was smooth, creative, and professional. Highly recommended for businesses looking to grow their online presence!</p>
+                <footer><strong>Bake Bliss Hub</strong><span>Bakery Owner</span></footer>
+            </blockquote>
+        </div>
+
+        <div class="sn-reviews-more sn-reveal">
+            <a class="sn-reviews-link" href="https://www.google.com/maps/place/Septaneuron/@33.6348623,73.0715766,19z/data=!4m8!3m7!1s0x8f483a38a3fc55ab:0x4e7965c70817f72!8m2!3d33.6347727!4d73.0715026!9m1!1b1!16s%2Fg%2F11zx30fgzl?entry=ttu&g_ep=EgoyMDI2MDkyMi4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank" rel="noopener nofollow" aria-label="Read more Septaneuron reviews on Google Maps">
+                <i class="fa-brands fa-google"></i> Read more reviews on Google Maps <span>↗</span>
+            </a>
+        </div>
+    </section>
+
+    <section class="sn-final-cta sn-reveal" id="contact">
+        <div class="sn-final-cta__glow"></div>
+        <p class="sn-kicker">Let's make the first move</p>
+        <h2>Got something <em>worth building?</em></h2>
+        <p>Tell us what you're trying to create, what's getting in the way, and where you want to go next.</p><a class="sn-final-cta__button" href="{{ url_for('contact') }}">Start a project <span>↗</span></a>
+    </section>
+</main>
+{% endblock %} {% block page_scripts %}
+<script src="{{ url_for('static', filename='assets/js/hero.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/homepage-sections.js') }}"></script>{% endblock %}

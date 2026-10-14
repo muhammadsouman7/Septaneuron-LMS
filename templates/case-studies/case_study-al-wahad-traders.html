@@ -1,0 +1,231 @@
+{% extends "base.html" %} {% block title %}Al-Wahad Traders Meta Ads Case Study | Septaneuron{% endblock %} {% block page_css %}
+<meta name="description" content="Al-Wahad Traders Meta Ads case study: retargeting, prospecting, upsell, and awareness campaign performance, CTR, and cost per link click in Pakistan.">
+<meta name="keywords" content="Al-Wahad Traders, Meta Ads, Facebook advertising, Instagram advertising, retargeting, prospecting, upsell, awareness, Pakistan digital marketing, campaign performance">
+<meta name="author" content="Septaneuron">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="{{ request.url if request is defined else 'https://septaneuron.com/case-studies/al-wahad-traders' }}">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Al-Wahad Traders Meta Ads Case Study | Septaneuron">
+<meta property="og:description" content="Al-Wahad Traders Meta Ads case study: retargeting, prospecting, upsell, and awareness campaign performance, CTR, and cost per link click in Pakistan.">
+<meta property="og:image" content="{{ introduction_image|default(url_for('static', filename='assets/imgs/casestudyImgs/al-wahad-gallery-img-01.jpeg')) }}">
+<meta property="og:url" content="{{ request.url if request is defined else 'https://septaneuron.com/case-studies/al-wahad-traders' }}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Al-Wahad Traders Meta Ads Case Study | Septaneuron">
+<meta name="twitter:description" content="A Pakistan-market Meta Ads case study comparing retargeting, prospecting, upsell, and awareness campaign performance.">
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [{
+            "@type": "CreativeWork",
+            "name": "Al-Wahad Traders Meta Ads Case Study",
+            "headline": "Turning Al-Wahad Traders' Meta Ads data into clearer campaign decisions.",
+            "about": "A Meta Ads case study comparing retargeting, prospecting, upsell and awareness campaign performance for Al-Wahad Traders in Pakistan.",
+            "author": {
+                "@type": "Organization",
+                "name": "Septaneuron",
+                "url": "https://septaneuron.com/"
+            },
+            "creator": {
+                "@type": "Organization",
+                "name": "Septaneuron"
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "Septaneuron",
+                "url": "https://septaneuron.com/"
+            },
+            "image": "https://septaneuron.com/static/assets/imgs/casestudyImgs/al-wahad-gallery-img-01.jpeg",
+            "url": "https://septaneuron.com/case-studies/al-wahad-traders",
+            "keywords": "Meta Ads, digital marketing, retargeting, prospecting, upsell, awareness, campaign performance, Pakistan",
+            "mainEntityOfPage": "https://septaneuron.com/case-studies/al-wahad-traders"
+        }, {
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://septaneuron.com/"
+            }, {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Portfolio",
+                "item": "https://septaneuron.com/portfolio"
+            }, {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Al-Wahad Traders",
+                "item": "https://septaneuron.com/case-studies/al-wahad-traders"
+            }]
+        }]
+    }
+</script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/case-studies.css') }}"> {% endblock %} {% block content %}
+<div class="cs-ambient" aria-hidden="true">
+    <div class="cs-grid"></div>
+    <div class="cs-orb cs-orb--a"></div>
+    <div class="cs-orb cs-orb--b"></div>
+</div>
+
+<section class="cs-hero" id="top">
+    <canvas class="thread-canvas" id="threadCanvas"></canvas>
+    <div class="hero-scrim"></div>
+    <div class="cs-hero__content">
+        <a class="cs-back" href="{{ url_for('portfolio') }}">← Back to selected work</a>
+        <div class="cs-hero__copy">
+            <span class="cs-kicker">DIGITAL MARKETING / META ADS</span>
+            <h1>Turning Al-Wahad Traders' Meta Ads data into clearer campaign decisions.</h1>
+            <p>A Pakistan-market paid-social case study built around the supplied Meta campaign report, covering link clicks, impressions, reach, CTR, cost per link click, and amount spent across four campaign objectives.</p>
+            <div class="cs-hero__meta"><span>Digital Marketing Case Study</span><span>Pakistan Market · PKR</span></div>
+        </div>
+        <div class="cs-hero__visual" aria-label="Project system visualization">
+            <div class="cs-system-orbit"><i></i><i></i><i></i><b style="text-align:center;">AL-WAHAD TRADERS<br>CAMPAIGN<br>PERFORMANCE</b></div><br><span>META ADS → PERFORMANCE INSIGHTS</span>
+        </div>
+    </div>
+</section>
+
+<main class="cs-main">
+    <section class="cs-section cs-intro" id="introduction">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">01 / Introduction</span>
+            <h2>Turning paid social activity into measurable campaign insight.</h2>
+        </div>
+        <div class="cs-editorial">
+            <p class="cs-lead cs-reveal">The report provides a broader campaign comparison than a simple reach dashboard. It makes it possible to examine how retargeting, prospecting, upsell, and awareness differ in clicks, reach, CTR, cost per link click, and spend.</p>
+            <p class="cs-reveal">The report does not show which campaigns ultimately produced orders or qualified customers, so the case study treats ad-platform metrics as directional evidence rather than final business outcomes.</p>
+        </div>
+        <figure class="cs-image cs-reveal">
+            <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/al-wahad-gallery-img-01.jpeg') }}" alt="Al-Wahad Traders campaign performance overview">
+        </figure>
+    </section>
+
+    <section class="cs-section cs-story" id="problem">
+        <div class="cs-story__label cs-reveal"><span class="cs-kicker">02 / The problem</span><span class="cs-line"></span></div>
+        <div class="cs-story__body cs-reveal">
+            <h2>Four campaigns can perform very differently when measured against the same business objective.</h2>
+            <p>The supplied report shows a wide spread in engagement efficiency: retargeting has the highest displayed CTR and lowest cost per link click, while awareness has the lowest CTR and highest cost per link click. Those are platform performance
+                observations, not proof of revenue impact.</p>
+            <p>The report does not show which campaigns ultimately produced orders or qualified customers, so the case study treats ad-platform metrics as directional evidence rather than final business outcomes.</p>
+        </div>
+    </section>
+
+    <section class="cs-section cs-solution" id="solution">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">03 / The solution</span>
+            <h2>Use the campaign data to decide where the next rupee should work harder.</h2>
+            <p>The solution is to read each campaign according to its role, then use comparable metrics to identify where creative, audience strategy, or budget allocation deserves further investigation.</p>
+        </div>
+        <div class="cs-solution-grid">
+            <article class="cs-approach-card cs-reveal"><span>01</span>
+                <h3>Retarget</h3>
+                <p>Use warm-audience campaigns when the objective is to capture users already familiar with the business.</p>
+            </article>
+            <article class="cs-approach-card cs-reveal"><span>02</span>
+                <h3>Prospect</h3>
+                <p>Use broader audience acquisition to build reach and generate new traffic.</p>
+            </article>
+            <article class="cs-approach-card cs-reveal"><span>03</span>
+                <h3>Upsell</h3>
+                <p>Evaluate upsell activity separately so additional-value campaigns are not judged only by awareness metrics.</p>
+            </article>
+        </div>
+        <figure class="cs-image cs-image--wide cs-reveal">
+            <div class="cs-image__placeholder cs-image__placeholder--solution"><span>SOLUTION / CAMPAIGN FLOW</span><b>RETARGETING → PROSPECTING → UPSELL → AWARENESS → PERFORMANCE INSIGHTS</b></div>
+        </figure>
+    </section>
+
+    <section class="cs-section cs-research" id="research">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">04 / Research and grounding</span>
+            <h2>Four campaign objectives, compared on the same core metrics.</h2>
+        </div>
+        <div class="cs-research-grid">
+            <article class="cs-build-item cs-reveal"><span>CAMPAIGN MIX</span>
+                <h3>Four objectives, one performance view</h3>
+                <p>The report compares retargeting, prospecting, upsell, and awareness using the same core delivery and click metrics.</p>
+            </article>
+            <article class="cs-build-item cs-reveal"><span>EFFICIENCY SIGNAL</span>
+                <h3>Retargeting leads the displayed click metrics</h3>
+                <p>The report lists 0.98% CTR and PKR 2.85 cost per link click for retargeting, compared with 0.89% and PKR 3.45 for prospecting.</p>
+            </article>
+            <article class="cs-build-item cs-reveal"><span>REACH SIGNAL</span>
+                <h3>Prospecting reaches the largest displayed audience</h3>
+                <p>The report lists 2,002,915 reach for prospecting, higher than retargeting, upsell, and awareness.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="cs-section cs-design" id="design-process">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">05 / Build process</span>
+            <h2>From campaign mapping to budget decisions.</h2>
+        </div>
+        <div class="cs-flow cs-reveal">
+            <div><small>01</small><strong>Campaign mapping</strong><span>Keep retargeting, prospecting, upsell, and awareness distinct so each is evaluated against its role.</span></div><i>→</i>
+            <div><small>02</small><strong>Measurement</strong><span>Review clicks, impressions, reach, CTR, cost per link click, and spend together.</span></div><i>→</i>
+            <div><small>03</small><strong>Creative review</strong><span>Use lower CTR or higher click costs as prompts for creative and targeting tests.</span></div><i>→</i>
+            <div><small>04</small><strong>Budget decisions</strong><span>Use revenue, qualified leads, or customer acquisition data before making final scaling decisions.</span></div>
+        </div>
+        <figure class="cs-image cs-image--wide cs-reveal">
+            <div class="cs-image__placeholder cs-image__placeholder--design"><span>BUILD PROCESS / CAMPAIGN MEASUREMENT FRAMEWORK</span><b>CAMPAIGN MAPPING → MEASUREMENT → CREATIVE REVIEW → BUDGET DECISIONS</b></div>
+        </figure>
+    </section>
+
+    <section class="cs-section cs-final-designs" id="final-designs">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">06 / Results</span>
+            <h2>A four-campaign view of Al-Wahad Traders' reported Meta Ads performance.</h2>
+            <p>The supplied report totals 58,877 link clicks, 9,890,289 impressions, 3,922,791 reach, 0.85% CTR, PKR 3.09 cost per link click, and PKR 174,129 amount spent. At campaign level, retargeting reports 29,287 clicks and 0.98% CTR; prospecting reports
+                21,598 clicks and 2,002,915 reach.</p>
+        </div>
+        <div class="cs-gallery">
+            <figure class="cs-gallery__item cs-reveal"><img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/al-wahad-gallery-img-01.jpeg') }}" alt="Al-Wahad Traders campaign evidence 1"></figure>
+            <figure class="cs-gallery__item cs-reveal"><img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/al-wahad-gallery-img-02.jpeg') }}" alt="Al-Wahad Traders campaign evidence 2"></figure>
+        </div>
+    </section>
+
+    <section class="cs-section cs-accessibility" id="accessibility">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">07 / Limitations and scope</span>
+            <h2>Honest about what ad-platform metrics can and can't show.</h2>
+        </div>
+        <div class="cs-accessibility-grid">
+            <article class="cs-build-item cs-reveal"><span>ATTRIBUTION</span>
+                <h3>No sales data in the supplied report</h3>
+                <p>The image reports ad-platform metrics but does not show revenue, orders, qualified leads, or verified ROAS.</p>
+            </article>
+            <article class="cs-build-item cs-reveal"><span>OBJECTIVES</span>
+                <h3>Metrics need campaign context</h3>
+                <p>Awareness, prospecting, upsell, and retargeting have different purposes, so a single metric should not be treated as a universal success measure.</p>
+            </article>
+            <article class="cs-build-item cs-reveal"><span>NEXT TEST</span>
+                <h3>Connect clicks to outcomes</h3>
+                <p>The next measurement layer should connect campaign traffic to inquiries, conversions, revenue, and acquisition cost.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="cs-section cs-outcomes" id="outcomes">
+        <div class="cs-results__copy cs-reveal"><span class="cs-kicker">08 / Outcomes and reflections</span>
+            <h2>A complete campaign-level performance snapshot with clear next measurement steps.</h2>
+            <p>The report gives a strong operational picture of where clicks, reach, and cost are concentrated. Retargeting has the highest displayed CTR and lowest cost per link click, while prospecting has the highest displayed reach.</p>
+            <p>To move from platform performance to business performance, the next iteration should connect these campaign records to downstream sales or qualified inquiry data and then evaluate budget changes against verified ROI.</p>
+        </div>
+        <figure class="cs-results__visual cs-reveal">
+            <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/al-wahad-gallery-img-02.jpeg') }}" alt="Al-Wahad Traders outcomes visual evidence">
+        </figure>
+    </section>
+
+    <section class="cs-section cs-stack">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">Project details</span>
+            <h2>Campaign execution, measurement, and optimization details.</h2>
+        </div>
+        <div class="cs-stack-list cs-reveal"><span>Meta Ads</span><span>Facebook</span><span>Instagram</span><span>WhatsApp</span><span>Campaign analytics</span><span>Audience targeting</span></div>
+
+    </section>
+
+    <section class="cs-next" id="contact"><span class="cs-kicker">Have a similar campaign?</span>
+        <h2>Let's build the <em>next campaign.</em></h2>
+        <p>Turn your Meta Ads data into clearer decisions, stronger reach, and measurable growth.</p><a class="cs-button" href="{{ url_for('contact') }}">Start a conversation <span>↗</span></a>
+    </section>
+</main>
+{% endblock %} {% block page_scripts %}
+<script src="{{ url_for('static', filename='assets/js/case-studies.js') }}"></script>
+{% endblock %}

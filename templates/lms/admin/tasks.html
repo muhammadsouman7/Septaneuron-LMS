@@ -1,0 +1,29 @@
+{% extends 'lms/base.html' %}
+{% from 'lms/_macros.html' import domain_picker with context %}
+{% block title %}Tasks{% endblock %}
+{% block content %}
+<div class="lms-head"><div>
+    <p class="lms-kicker">Tasks</p>
+    <h1 class="lms-h1">Published tasks</h1>
+</div>
+<div class="lms-row">{{ domain_picker(domains, domain_id, url_for('lms.admin_tasks')) }}
+<a class="lms-btn" href="{{ url_for('lms.admin_task_new', domain=domain_id) }}">+ New task</a></div></div>
+{% if rows %}
+<div class="lms-table-wrap"><table class="lms-table">
+    <thead><tr><th>Task</th>{% if domains|length > 1 %}<th>Domain</th>{% endif %}<th>Deadline</th><th>Submitted</th><th>To review</th><th>Email</th></tr></thead>
+    <tbody>
+    {% for r in rows %}
+    <tr>
+        <td><a class="lms-link" href="{{ url_for('lms.admin_task', task_id=r.task.id) }}">{{ r.task.title }}</a></td>
+        {% if domains|length > 1 %}<td class="lms-muted">{{ r.domain }}</td>{% endif %}
+        <td class="lms-muted">{{ r.task.due_at|dt if r.task.due_at else '—' }}</td>
+        <td>{{ r.submitted }} / {{ r.interns }}</td>
+        <td>{% if r.review %}<span class="lms-badge lms-badge--cyan">{{ r.review }}</span>{% else %}<span class="lms-muted">0</span>{% endif %}</td>
+        <td>{% if r.task.email_error %}<span class="lms-badge lms-badge--warn" title="{{ r.task.email_error }}">Failed</span>{% elif r.task.emailed_count %}<span class="lms-muted">{{ r.task.emailed_count }} sent</span>{% else %}<span class="lms-muted">—</span>{% endif %}</td>
+    </tr>
+    {% endfor %}
+    </tbody></table></div>
+{% else %}
+<div class="lms-empty"><b>No tasks yet</b>Create the first task and your interns will be emailed.</div>
+{% endif %}
+{% endblock %}

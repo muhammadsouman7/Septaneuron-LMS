@@ -1,0 +1,58 @@
+{% extends 'lms/base.html' %} {% from 'lms/_macros.html' import csrf, badge with context %} {% block title %}{{ task.title }}{% endblock %} {% block content %}
+<div class="lms-head">
+    <div>
+        <p class="lms-kicker"><a href="{{ url_for('lms.dashboard') }}" style="text-decoration:none">← Dashboard</a> · {{ domain.name }}</p>
+        <h1 class="lms-h1">{{ task.title }}</h1>
+    </div>{{ badge(state) }}</div>
+
+<div class="lms-split">
+    <div class="lms-card">
+        <h2>Instructions</h2>
+        <div class="lms-prose" style="margin-top:14px">{{ task.description or 'No description provided.' }}</div>
+        {% if task.attachment_path %}
+        <p style="margin:22px 0 0"><a class="lms-btn lms-btn--ghost lms-btn--sm" href="{{ url_for('lms.task_file', task_id=task.id) }}">Download {{ task.attachment_name }}</a></p>
+        {% endif %}
+    </div>
+
+    <div style="display:grid;gap:14px">
+        <div class="lms-card">
+            <dl class="lms-kv">
+                <dt>Deadline</dt>
+                <dd>{{ task.due_at|dt if task.due_at else 'None' }}</dd>
+                <dt>Status</dt>
+                <dd>{{ task.due_at|due_in if task.due_at else '—' }}</dd>
+                <dt>Points</dt>
+                <dd>{{ task.max_points }}</dd>
+                {% if sub and sub.score is not none %}<dt>Your score</dt>
+                <dd style="color:var(--lms-cyan)">{{ sub.score }} / {{ task.max_points }}</dd>{% endif %}
+            </dl>
+        </div>
+
+        {% if sub and sub.feedback %}
+        <div class="lms-feedback"><b>Mentor feedback</b>
+            <p class="lms-prose" style="margin:8px 0 0">{{ sub.feedback }}</p>
+        </div>
+        {% endif %} {% if sub and sub.status == 'approved' %}
+        <div class="lms-card">
+            <h3>Approved 🎉</h3>
+            <p class="lms-muted" style="margin:0">Great work. This submission is locked.</p>
+        </div>
+        {% else %}
+        <div class="lms-card">
+            <h3>{{ 'Update your submission' if sub else 'Submit your work' }}</h3>
+            {% if sub %}
+            <p class="lms-muted lms-small" style="margin:0 0 16px">Last submitted {{ sub.submitted_at|dt }}{% if sub.is_late %} · late{% endif %}. Sending again replaces it.</p>{% endif %}
+            <form class="lms-form" method="post" action="{{ url_for('lms.submit', task_id=task.id) }}" enctype="multipart/form-data" data-once>
+                {{ csrf() }}
+                <label>Link <input type="url" name="link" value="{{ sub.link_url if sub and sub.link_url }}" placeholder="https://github.com/you/project"><small>GitHub, Drive, Figma, a live demo… anything we can open.</small></label>
+                <label>Zip file <input type="file" name="file" accept=".zip,application/zip,application/x-zip-compressed" data-zip-only><small>.zip only, up to 4 MB. Password-protected zips and executables are rejected.{% if sub and sub.file_name %} Current file: {{ sub.file_name }}{% endif %}</small></label>
+                <label>Notes <textarea name="note" style="min-height:90px" placeholder="Anything your mentor should know?">{{ sub.note if sub and sub.note }}</textarea></label>
+                <button class="lms-btn lms-btn--block" type="submit" data-busy="Uploading…">{{ 'Resubmit' if sub else 'Submit task' }}</button>
+            </form>
+        </div>
+        {% endif %} {% if sub and sub.file_path %}
+        <p class="lms-small lms-muted" style="margin:0">Your file: <a href="{{ url_for('lms.submission_file', sub_id=sub.id) }}">{{ sub.file_name }}</a></p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

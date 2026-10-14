@@ -1,0 +1,68 @@
+{% extends 'lms/base.html' %}
+{% from 'lms/_macros.html' import csrf, sub_badge with context %}
+{% block title %}{{ task.title }}{% endblock %}
+{% block content %}
+<div class="lms-head"><div>
+    <p class="lms-kicker"><a href="{{ url_for('lms.admin_tasks') }}" style="text-decoration:none">← Tasks</a> · {{ domain.name }}</p>
+    <h1 class="lms-h1">{{ task.title }}</h1>
+    <p class="lms-sub">Deadline: {{ task.due_at|dt if task.due_at else 'none' }} · {{ task.max_points }} points</p>
+</div>
+<div class="lms-row">
+    <a class="lms-btn lms-btn--ghost" href="{{ url_for('lms.admin_task_edit', task_id=task.id) }}">Edit</a>
+    <form method="post" action="{{ url_for('lms.admin_task_resend', task_id=task.id) }}" class="inline" data-confirm="Email all active {{ domain.name }} interns about this task again?">{{ csrf() }}<button class="lms-btn lms-btn--ghost" type="submit">Resend email</button></form>
+    <form method="post" action="{{ url_for('lms.admin_task_delete', task_id=task.id) }}" class="inline" data-confirm="Delete this task and all submissions? This cannot be undone.">{{ csrf() }}<button class="lms-btn lms-btn--danger" type="submit">Delete</button></form>
+</div></div>
+
+{% if task.email_error %}<div class="lms-flash lms-flash--warn">Last email attempt failed: {{ task.email_error }}</div>{% endif %}
+
+<div class="lms-grid lms-grid--stats" style="margin-bottom:18px">
+    <div class="lms-card lms-stat"><b>{{ counts.submitted }}/{{ counts.interns }}</b><span>Submitted</span></div>
+    <div class="lms-card lms-stat lms-stat--accent"><b>{{ counts.review }}</b><span>To review</span></div>
+    <div class="lms-card lms-stat"><b>{{ counts.approved }}</b><span>Approved</span></div>
+    <div class="lms-card lms-stat"><b>{{ task.emailed_count }}</b><span>Emails sent</span></div>
+</div>
+
+<div class="lms-card" style="margin-bottom:28px">
+    <h2>Instructions</h2>
+    <div class="lms-prose" style="margin-top:12px">{{ task.description or 'No description.' }}</div>
+    {% if task.attachment_path %}<p style="margin:18px 0 0"><a class="lms-btn lms-btn--ghost lms-btn--sm" href="{{ url_for('lms.task_file', task_id=task.id) }}">Download {{ task.attachment_name }}</a></p>{% endif %}
+</div>
+
+<h2 class="lms-section-title">Interns</h2>
+{% if rows %}
+<div class="lms-list">
+{% for r in rows %}
+{% set s = r.sub %}
+<div class="lms-card" id="s-{{ s.id if s else 'x' ~ loop.index }}" style="padding:20px 24px">
+  <details class="lms-review" {{ 'open' if s and s.status == 'submitted' and request.args.get('open') }}>
+    <summary class="lms-row" style="justify-content:space-between">
+        <span class="lms-name"><b style="font-weight:500">{{ r.intern.full_name }}</b>{% if not r.intern.is_active %} <span class="lms-badge lms-badge--warn">Deactivated</span>{% endif %}<small>{{ r.intern.email }}</small></span>
+        <span class="lms-row">{% if s and s.is_late %}<span class="lms-badge lms-badge--bad">Late</span>{% endif %}{% if s and s.score is not none %}<span class="lms-muted">{{ s.score }}/{{ task.max_points }}</span>{% endif %}{{ sub_badge(s) }}</span>
+    </summary>
+    {% if s %}
+    <div class="lms-split" style="margin-top:6px">
+        <div>
+            <p class="lms-small lms-muted" style="margin:0 0 10px">Submitted {{ s.submitted_at|dt }}</p>
+            {% if s.link_url %}<p style="margin:0 0 8px"><a href="{{ s.link_url }}" target="_blank" rel="noopener noreferrer nofollow" style="color:var(--lms-cyan);overflow-wrap:anywhere">{{ s.link_url }}</a></p>{% endif %}
+            {% if s.file_path %}<p style="margin:0 0 8px"><a class="lms-btn lms-btn--ghost lms-btn--sm" href="{{ url_for('lms.submission_file', sub_id=s.id) }}">Download {{ s.file_name }}</a></p>{% endif %}
+            {% if s.note %}<div class="lms-prose lms-small" style="margin-top:10px">{{ s.note }}</div>{% endif %}
+        </div>
+        <form class="lms-form lms-review-box" method="post" action="{{ url_for('lms.admin_review', sub_id=s.id) }}">
+            {{ csrf() }}
+            <label>Score (0–{{ task.max_points }}) <input type="number" name="score" min="0" max="{{ task.max_points }}" value="{{ s.score if s.score is not none }}"></label>
+            <label>Feedback <textarea name="feedback" style="min-height:90px" placeholder="What went well? What should change?">{{ s.feedback or '' }}</textarea></label>
+            <div class="lms-row">
+                <button class="lms-btn lms-btn--sm" name="decision" value="approved" type="submit">Approve</button>
+                <button class="lms-btn lms-btn--ghost lms-btn--sm" name="decision" value="needs_revision" type="submit">Request changes</button>
+            </div>
+        </form>
+    </div>
+    {% else %}<p class="lms-muted lms-small" style="margin:0">Hasn't submitted yet.</p>{% endif %}
+  </details>
+</div>
+{% endfor %}
+</div>
+{% else %}
+<div class="lms-empty"><b>No interns in this domain yet</b><a class="lms-btn lms-btn--sm" style="margin-top:12px" href="{{ url_for('lms.admin_interns', domain=task.domain_id) }}">Add interns</a></div>
+{% endif %}
+{% endblock %}

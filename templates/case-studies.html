@@ -1,0 +1,167 @@
+{% extends "base.html" %} {% block title %}{{ project_title|default('Project Case Study') }} · Septaneuron{% endblock %} {% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/case-studies.css') }}"> {% endblock %} {% block content %}
+<div class="cs-ambient" aria-hidden="true">
+    <div class="cs-grid"></div>
+    <div class="cs-orb cs-orb--a"></div>
+    <div class="cs-orb cs-orb--b"></div>
+</div>
+
+<section class="cs-hero" id="top">
+    <canvas class="thread-canvas" id="threadCanvas"></canvas>
+    <div class="hero-scrim"></div>
+    <div class="cs-hero__content">
+        <a class="cs-back" href="{{ url_for('portfolio') }}">← Back to selected work</a>
+        <div class="cs-hero__copy">
+            <span class="cs-kicker">{{ project_category|default('AI / MACHINE LEARNING') }}</span>
+            <h1>{{ project_title|default('Turning a hard problem into a working system.') }}</h1>
+            <p>{{ project_summary|default('A concise description of the project, the problem it addressed, and the value the finished system created.') }}</p>
+            <div class="cs-hero__meta"><span>{{ project_client|default('Client / Independent build') }}</span><span>{{ project_year|default('2025') }}</span></div>
+        </div>
+        <div class="cs-hero__visual" aria-label="Project system visualization">
+            <div class="cs-system-orbit"><i></i><i></i><i></i><b>{{ project_code|default('AI / 01') }}</b></div>
+            <span>MODEL PIPELINE / ONLINE</span>
+        </div>
+        <div class="hero-footer">Case study / {{ project_code|default('01') }}<span>Septaneuron · AI systems</span></div>
+    </div>
+</section>
+
+<main class="cs-main">
+    <section class="cs-section cs-intro" id="introduction">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">01 / Introduction</span>
+            <h2>{{ introduction_heading|default('A thoughtful digital experience for people who care deeply.') }}</h2>
+        </div>
+        <div class="cs-editorial">
+            <p class="cs-lead cs-reveal">{{ introduction_text|default('This project explores how a focused digital product can make discovery, learning, and participation feel more intuitive for bird enthusiasts and their pets.') }}</p>
+            <p class="cs-reveal">{{ introduction_text_two|default('The work brings together research, interaction design, visual language, and a clear product structure for an audience with different needs, routines, and levels of technical confidence.') }}</p>
+        </div>
+        <figure class="cs-image cs-reveal">{% if introduction_image|default('') %}<img src="{{ introduction_image }}" alt="{{ introduction_image_alt|default('Introduction project view') }}">{% else %}
+            <div class="cs-image__placeholder cs-image__placeholder--intro"><span>INTRODUCTION / PROJECT VIEW</span><b>{{ project_code|default('AI / 01') }}</b></div>{% endif %}</figure>
+    </section>
+
+    <section class="cs-section cs-story" id="problem">
+        <div class="cs-story__label cs-reveal"><span class="cs-kicker">02 / The problem</span><span class="cs-line"></span></div>
+        <div class="cs-story__body cs-reveal">
+            <h2>{{ problem_heading|default('Bird care should feel engaging, not like another task to manage.') }}</h2>
+            <p>{{ problem_text|default('Bird owners often have to piece together care information, product discovery, and enrichment ideas from disconnected sources. The experience can feel difficult to navigate, especially when useful advice is hidden behind
+                dense content or unfamiliar terminology.') }}</p>
+            <p>{{ problem_text_two|default('The opportunity was to make the useful next step feel clear while respecting the emotional connection people have with their pets.') }}</p>
+        </div>
+    </section>
+
+    <section class="cs-section cs-solution" id="solution">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">03 / The solution</span>
+            <h2>{{ solution_heading|default('A calmer way to discover, learn, and connect.') }}</h2>
+            <p>{{ solution_text|default('The proposed platform combines product discovery, practical care tips, and community engagement in one approachable experience. The structure is designed to help users move from curiosity to confident action.') }}</p>
+        </div>
+        <div class="cs-solution-grid">
+            <article class="cs-approach-card cs-reveal"><span>01</span>
+                <h3>{{ solution_one_title|default('Discover') }}</h3>
+                <p>{{ solution_one_text|default('Find relevant products and resources without sorting through unnecessary complexity.') }}</p>
+            </article>
+            <article class="cs-approach-card cs-reveal"><span>02</span>
+                <h3>{{ solution_two_title|default('Understand') }}</h3>
+                <p>{{ solution_two_text|default('Access care guidance in a format that is clear, visual, and easy to return to.') }}</p>
+            </article>
+            <article class="cs-approach-card cs-reveal"><span>03</span>
+                <h3>{{ solution_three_title|default('Participate') }}</h3>
+                <p>{{ solution_three_text|default('Create space for people to share experiences, learn from one another, and stay engaged.') }}</p>
+            </article>
+        </div>
+        <figure class="cs-image cs-image--wide cs-reveal">{% if solution_image|default('') %}<img src="{{ solution_image }}" alt="{{ solution_image_alt|default('Solution interface view') }}">{% else %}
+            <div class="cs-image__placeholder cs-image__placeholder--solution"><span>SOLUTION / EXPERIENCE MAP</span><b>DISCOVER → CARE → CONNECT</b></div>{% endif %}</figure>
+    </section>
+
+    <section class="cs-section cs-research" id="research">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">04 / Research and insights</span>
+            <h2>{{ research_heading|default('The product started with people, not screens.') }}</h2>
+        </div>
+        <div class="cs-research-grid">
+            <article class="cs-build-item cs-reveal"><span>PERSONAS</span>
+                <h3>{{ persona_title|default('Different routines, different needs.') }}</h3>
+                <p>{{ persona_text|default('We mapped the motivations, habits, and barriers of bird owners with different experience levels and care routines.') }}</p>
+            </article>
+            <article class="cs-build-item cs-reveal"><span>INTERVIEWS</span>
+                <h3>{{ interview_title|default('Listen for the workarounds.') }}</h3>
+                <p>{{ interview_text|default('Conversations helped reveal where people looked for advice, what they trusted, and which parts of care felt unnecessarily difficult.') }}</p>
+            </article>
+            <article class="cs-build-item cs-reveal"><span>INSIGHTS</span>
+                <h3>{{ insight_title|default('Confidence comes from clarity.') }}</h3>
+                <p>{{ insight_text|default('The strongest opportunities were around plain language, visual guidance, reassurance, and making the next action obvious.') }}</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="cs-section cs-design" id="design-process">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">05 / Design process</span>
+            <h2>{{ design_heading|default('From first sketch to a system with a point of view.') }}</h2>
+        </div>
+        <div class="cs-flow cs-reveal">
+            <div><small>01</small><strong>Ideation</strong><span>{{ ideation_text|default('Frame the opportunity and explore directions.') }}</span></div><i>→</i>
+            <div><small>02</small><strong>Sketching</strong><span>{{ sketching_text|default('Make the structure visible quickly.') }}</span></div><i>→</i>
+            <div><small>03</small><strong>Wireframing</strong><span>{{ wireframing_text|default('Test hierarchy, flow, and clarity.') }}</span></div><i>→</i>
+            <div><small>04</small><strong>Prototype</strong><span>{{ prototype_text|default('Turn the strongest direction into something testable.') }}</span></div>
+        </div>
+        <figure class="cs-image cs-image--wide cs-reveal">{% if design_image|default('') %}<img src="{{ design_image }}" alt="{{ design_image_alt|default('Design process sketches and wireframes') }}">{% else %}
+            <div class="cs-image__placeholder cs-image__placeholder--design"><span>DESIGN PROCESS / SKETCHES + WIREFRAMES</span><b>IDEA → STRUCTURE → EXPERIENCE</b></div>{% endif %}</figure>
+    </section>
+
+    <section class="cs-section cs-final-designs" id="final-designs">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">06 / Final designs</span>
+            <h2>{{ final_designs_heading|default('Playful, useful, and easy to understand.') }}</h2>
+            <p>{{ final_designs_text|default('The final direction balances a distinctive brand with clear interaction patterns, giving the product personality without compromising usability.') }}</p>
+        </div>
+        <div class="cs-gallery">
+            <figure class="cs-gallery__item cs-reveal">{% if final_image_one|default('') %}<img src="{{ final_image_one }}" alt="{{ final_image_one_alt|default('Final design screen one') }}">{% else %}
+                <div class="cs-image__placeholder"><span>FINAL DESIGN / 01</span></div>{% endif %}</figure>
+            <figure class="cs-gallery__item cs-reveal">{% if final_image_two|default('') %}<img src="{{ final_image_two }}" alt="{{ final_image_two_alt|default('Final design screen two') }}">{% else %}
+                <div class="cs-image__placeholder"><span>FINAL DESIGN / 02</span></div>{% endif %}</figure>
+            <figure class="cs-gallery__item cs-reveal">{% if final_image_three|default('') %}<img src="{{ final_image_three }}" alt="{{ final_image_three_alt|default('Final design screen three') }}">{% else %}
+                <div class="cs-image__placeholder"><span>FINAL DESIGN / 03</span></div>{% endif %}</figure>
+        </div>
+    </section>
+
+    <section class="cs-section cs-accessibility" id="accessibility">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">07 / Accessibility and inclusivity</span>
+            <h2>{{ accessibility_heading|default('Designed for more people, not just confident users.') }}</h2>
+        </div>
+        <div class="cs-accessibility-grid">
+            <article class="cs-build-item cs-reveal"><span>LANGUAGE</span>
+                <h3>Plain and welcoming</h3>
+                <p>{{ accessibility_language|default('Clear language and supportive guidance reduce the cognitive load for people who are new to the subject.') }}</p>
+            </article>
+            <article class="cs-build-item cs-reveal"><span>INTERACTION</span>
+                <h3>Visible and predictable</h3>
+                <p>{{ accessibility_interaction|default('Consistent patterns, readable hierarchy, and obvious actions make the experience easier to navigate.') }}</p>
+            </article>
+            <article class="cs-build-item cs-reveal"><span>FLEXIBILITY</span>
+                <h3>Room for different needs</h3>
+                <p>{{ accessibility_flexibility|default('The system leaves space for different levels of knowledge, different devices, and different ways of caring.') }}</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="cs-section cs-outcomes" id="outcomes">
+        <div class="cs-results__copy cs-reveal"><span class="cs-kicker">08 / Outcomes and reflections</span>
+            <h2>{{ outcomes_heading|default('A stronger foundation for a delightful care experience.') }}</h2>
+            <p>{{ outcomes_text|default('The final concept creates a clear foundation for helping bird owners discover useful products, build better care habits, and connect with a community. While the project is not a live product, the design direction
+                gives future teams a concrete system to validate and develop.') }}</p>
+            <p>{{ reflection_text|default('The main reflection is simple: when an experience respects both the emotional and practical side of care, usefulness and delight reinforce each other.') }}</p>
+        </div>
+        <figure class="cs-results__visual cs-reveal">{% if outcomes_image|default('') %}<img src="{{ outcomes_image }}" alt="{{ outcomes_image_alt|default('Case study outcomes overview') }}">{% else %}
+            <div class="cs-image__placeholder cs-image__placeholder--outcomes"><span>OUTCOMES / REFLECTIONS</span><b>USEFUL + DELIGHTFUL</b></div>{% endif %}</figure>
+    </section>
+
+    <section class="cs-section cs-stack">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">Project details</span>
+            <h2>Built for exploration, available on GitHub.</h2>
+        </div>
+        <div class="cs-stack-list cs-reveal"><span>{{ stack_one|default('Python') }}</span><span>{{ stack_two|default('PyTorch') }}</span><span>{{ stack_three|default('OpenCV') }}</span><span>{{ stack_four|default('Flask') }}</span><span>{{ stack_five|default('Figma') }}</span><span>{{ stack_six|default('GitHub') }}</span></div>
+        <a
+            class="cs-github-button cs-reveal" href="{{ github_url|default('https://github.com/your-username/your-project') }}" target="_blank" rel="noopener">View the project on GitHub <span>↗</span></a>
+    </section>
+    <section class="cs-next" id="contact"><span class="cs-kicker">Have a similar problem?</span>
+        <h2>Let’s build the <em>next system.</em></h2>
+        <p>Tell us what you are trying to make clearer, faster, or more capable.</p><a class="cs-button" href="{{ url_for('contact') }}">Start a conversation <span>↗</span></a></section>
+</main>
+{% endblock %} {% block page_scripts %}
+<script src="{{ url_for('static', filename='assets/js/case-studies.js') }}"></script>{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'lms/base.html' %}
+{% from 'lms/_macros.html' import csrf with context %}
+{% block title %}Team{% endblock %}
+{% block content %}
+<div class="lms-head"><div>
+    <p class="lms-kicker">Super admin</p>
+    <h1 class="lms-h1">Domains &amp; admins</h1>
+    <p class="lms-sub">Each internship domain is run by its own admin, who only sees that domain's interns, tasks and submissions.</p>
+</div></div>
+
+<div class="lms-grid lms-grid--2" style="margin-bottom:34px">
+    <div class="lms-card">
+        <h2>Add a domain</h2><p class="lms-muted">e.g. Cyber Security, UI/UX Design.</p>
+        <form class="lms-form" method="post" action="{{ url_for('lms.admin_domain_add') }}">{{ csrf() }}
+            <label>Name<input name="name" maxlength="60" required></label><button class="lms-btn" type="submit">Add domain</button></form>
+    </div>
+    <div class="lms-card">
+        <h2>Add a domain admin</h2><p class="lms-muted">They must change this password at first sign-in.</p>
+        <form class="lms-form" method="post" action="{{ url_for('lms.admin_admin_add') }}" autocomplete="off">{{ csrf() }}
+            <div class="lms-two"><label>Full name<input name="full_name" required></label><label>Email<input type="email" name="email" required></label></div>
+            <div class="lms-two"><label>Domain<select name="domain_id" required>{% for d in domains %}<option value="{{ d.id }}">{{ d.name }}</option>{% endfor %}</select></label>
+            <label>Temporary password<input name="password" minlength="10" autocomplete="off" required></label></div>
+            <button class="lms-btn" type="submit">Create admin</button></form>
+    </div>
+</div>
+
+<h2 class="lms-section-title">Domains</h2>
+<div class="lms-row" style="margin-bottom:34px">{% for d in domains %}<span class="lms-badge lms-badge--cyan">{{ d.name }}</span>{% endfor %}</div>
+
+<h2 class="lms-section-title">Admins</h2>
+<div class="lms-table-wrap"><table class="lms-table">
+    <thead><tr><th>Admin</th><th>Domain</th><th>Status</th><th></th></tr></thead>
+    <tbody>{% for a in admins %}
+    <tr>
+        <td class="lms-name">{{ a.full_name }}<small>{{ a.email }}</small></td>
+        <td class="lms-muted">{{ 'All domains' if a.role == 'super_admin' else dnames.get(a.domain_id, '—') }}</td>
+        <td>{% if a.is_active %}<span class="lms-badge lms-badge--good">Active</span>{% else %}<span class="lms-badge lms-badge--warn">Deactivated</span>{% endif %}</td>
+        <td>{% if a.role == 'admin' %}<div class="actions">
+            <form class="inline lms-row" method="post" action="{{ url_for('lms.admin_admin_password', user_id=a.id) }}" autocomplete="off">{{ csrf() }}
+                <input name="password" minlength="10" placeholder="New password" aria-label="New password for {{ a.email }}" style="height:34px;padding:0 12px;border:1px solid var(--lms-line);border-radius:999px;background:#080d10;color:var(--lms-ink);font:inherit;font-size:13px;width:150px">
+                <button class="lms-btn lms-btn--ghost lms-btn--sm" type="submit">Reset</button></form>
+            <form class="inline" method="post" action="{{ url_for('lms.admin_admin_toggle', user_id=a.id) }}" data-confirm="{{ 'Deactivate' if a.is_active else 'Reactivate' }} {{ a.email }}?">{{ csrf() }}<button class="lms-btn lms-btn--ghost lms-btn--sm" type="submit">{{ 'Deactivate' if a.is_active else 'Reactivate' }}</button></form>
+        </div>{% endif %}</td>
+    </tr>{% endfor %}</tbody></table></div>
+{% endblock %}

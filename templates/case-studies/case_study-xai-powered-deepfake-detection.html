@@ -1,0 +1,239 @@
+{% extends "base.html" %} {% block title %}Explainable AI Deepfake Detection: EfficientNet + Grad-CAM{% endblock %} {% block page_css %}
+<meta name="description" content="Explainable AI deepfake detection case study: EfficientNet and MTCNN deepfake detection with Grad-CAM heatmap classifier verdicts, not just a score.">
+<meta name="keywords" content="explainable AI deepfake detection, Grad-CAM heatmap deepfake classifier, EfficientNet and MTCNN deepfake detection, deepfake video forensics system, XAI computer vision case study, final year AI project deepfake">
+<meta name="author" content="Septaneuron">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="{{ request.url if request is defined else 'https://septaneuron.com/case-studies/xai-powered-deepfake-detection' }}">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Explainable AI Deepfake Detection: EfficientNet + Grad-CAM">
+<meta property="og:description" content="A EfficientNet deepfake classifier paired with Grad-CAM heatmaps and MTCNN face detection, so every verdict comes with visual proof, not just a label.">
+<meta property="og:image" content="{{ introduction_image|default(url_for('static', filename='assets/imgs/casestudyImgs/xai-gallery-img-01.png')) }}">
+<meta property="og:url" content="{{ request.url if request is defined else 'https://septaneuron.com/case-studies/xai-powered-deepfake-detection' }}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Explainable AI Deepfake Detection: EfficientNet + Grad-CAM">
+<meta name="twitter:description" content="A EfficientNet + Grad-CAM pipeline that shows its work when flagging deepfake video.">
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Explainable AI Deepfake Detection: EfficientNet + Grad-CAM",
+        "description": "Explainable AI deepfake detection case study: EfficientNet and MTCNN deepfake detection with Grad-CAM heatmap classifier verdicts, not just a score.",
+        "about": "A deepfake video detection system combining MTCNN face detection, a fine-tuned EfficientNet classifier, and Grad-CAM explainability, served via Flask and a React forensic dashboard.",
+        "author": {
+            "@type": "Organization",
+            "name": "Septaneuron"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Septaneuron"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://septaneuron.com/case-studies/xai-powered-deepfake-detection"
+        },
+        "articleSection": "Artificial Intelligence / Explainable Computer Vision",
+        "keywords": "explainable AI deepfake detection, Grad-CAM heatmap deepfake classifier, EfficientNet and MTCNN deepfake detection, deepfake video forensics system, XAI computer vision case study"
+    }
+</script>
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Portfolio",
+            "item": "{{ url_for('portfolio', _external=true) }}"
+        }, {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "XAI-Powered DeepFake Detection",
+            "item": "https://septaneuron.com/case-studies/xai-powered-deepfake-detection"
+        }]
+    }
+</script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/case-studies.css') }}"> {% endblock %} {% block content %}
+<div class="cs-ambient" aria-hidden="true">
+    <div class="cs-grid"></div>
+    <div class="cs-orb cs-orb--a"></div>
+    <div class="cs-orb cs-orb--b"></div>
+</div>
+
+<section class="cs-hero" id="top">
+    <canvas class="thread-canvas" id="threadCanvas"></canvas>
+    <div class="hero-scrim"></div>
+    <div class="cs-hero__content">
+        <a class="cs-back" href="{{ url_for('portfolio') }}">← Back to selected work</a>
+        <div class="cs-hero__copy">
+            <span class="cs-kicker">AI / EXPLAINABLE COMPUTER VISION</span>
+            <h1>A deepfake detector that shows its work.</h1>
+            <p>XAI Forensics pairs a fine-tuned EfficientNet classifier with Grad-CAM heatmaps, turning a plain "real or fake" label into a visual, defendable verdict — built to be verified, not just trusted.</p>
+            <div class="cs-hero__meta"><span>Final Year Project · 3-person team</span><span>2025</span></div>
+        </div>
+        <div class="cs-hero__visual" aria-label="Project system visualization">
+            <div class="cs-system-orbit"><i></i><i></i><i></i><b style="text-align:center;">DEEPFAKE<br>DETECTION</b></div><br>
+            <span>MTCNN → EfficientNet → GRAD-CAM / ONLINE</span>
+        </div>
+    </div>
+</section>
+
+<main class="cs-main">
+    <section class="cs-section cs-intro" id="introduction">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">01 / Introduction</span>
+            <h2>Detection without explanation isn't good enough anymore.</h2>
+        </div>
+        <div class="cs-editorial">
+            <p class="cs-lead cs-reveal">Deepfake detectors are everywhere, but most of them are black boxes — they return a probability and nothing else. XAI Forensics was built to close that gap: a full-stack system that classifies uploaded images and videos as real or fake, and
+                then shows exactly which region of the face drove that decision.</p>
+            <p class="cs-reveal">The project pairs a fine-tuned EfficientNet binary classifier with MTCNN face detection and Grad-CAM explainability on the backend, delivered through a Flask API and a React/TanStack Start forensic dashboard designed to feel like an actual
+                investigative tool rather than a demo toy.</p>
+        </div>
+        <figure class="cs-image cs-reveal">
+            <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/xai-gallery-img-01.png') }}" alt="Introduction project view">
+        </figure>
+    </section>
+
+    <section class="cs-section cs-story" id="problem">
+        <div class="cs-story__label cs-reveal"><span class="cs-kicker">02 / The problem</span><span class="cs-line"></span></div>
+        <div class="cs-story__body cs-reveal">
+            <h2>A label without a reason isn't evidence.</h2>
+            <p>Most deepfake classifiers output a single confidence score and stop there. That's a dead end for journalists, forensic analysts, and platforms that need to justify a decision, not just receive one — a black-box "94% fake" verdict can't be
+                cross-examined, cited, or trusted at face value.</p>
+            <p>The goal was to build a system that keeps the accuracy of a modern CNN classifier while adding a second, independent layer: visual proof of where the model is looking, so a human reviewer can agree or disagree with the reasoning, not just
+                the label.</p>
+        </div>
+    </section>
+
+    <section class="cs-section cs-solution" id="solution">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">03 / The solution</span>
+            <h2>Detect the face, classify it, then explain the classification.</h2>
+            <p>Rather than treating detection as a single opaque step, the pipeline separates face localization, binary classification, and explainability into three distinct stages — so each one can be inspected, tested, and improved independently.</p>
+        </div>
+        <div class="cs-solution-grid">
+            <article class="cs-approach-card cs-reveal"><span>01</span>
+                <h3>Locate</h3>
+                <p>MTCNN extracts and aligns the most prominent face from an uploaded image, or from up to 15 evenly sampled frames of an uploaded video.</p>
+            </article>
+            <article class="cs-approach-card cs-reveal"><span>02</span>
+                <h3>Classify</h3>
+                <p>A EfficientNet backbone, fine-tuned with a custom dropout-linear-ReLU head, scores each detected face and averages the results across all sampled frames for a single verdict.</p>
+            </article>
+            <article class="cs-approach-card cs-reveal"><span>03</span>
+                <h3>Explain</h3>
+                <p>Grad-CAM hooks into the final convolutional layer of EfficientNet to generate a heatmap over the highest-confidence face, overlaid and returned alongside the verdict.</p>
+            </article>
+        </div>
+        <figure class="cs-image cs-image--wide cs-reveal">
+            <div class="cs-image__placeholder cs-image__placeholder--solution"><span>SOLUTION / PIPELINE FLOW</span><b>UPLOAD → MTCNN FACE CROP → EFFICIENTNET SCORE → GRAD-CAM HEATMAP → VERDICT</b></div>
+        </figure>
+    </section>
+
+    <section class="cs-section cs-research" id="research">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">04 / Model architecture & inference</span>
+            <h2>How a single upload becomes a verdict with visual evidence.</h2>
+        </div>
+        <div class="cs-research-grid">
+            <article class="cs-build-item cs-reveal"><span>FRAME SAMPLING</span>
+                <h3>Video-aware, not just image-aware</h3>
+                <p>Images are analyzed directly; videos are decoded and evenly sampled at up to 15 frames using OpenCV, so a short clip and a longer one both get proportional coverage without processing every frame.</p>
+            </article>
+            <article class="cs-build-item cs-reveal"><span>FACE DETECTION</span>
+                <h3>MTCNN with margin-padded crops</h3>
+                <p>Each sampled frame is passed through MTCNN with a 20px margin around the detected face, producing consistently sized 224×224 crops that feed directly into the classifier's expected input shape.</p>
+            </article>
+            <article class="cs-build-item cs-reveal"><span>SCORE AGGREGATION</span>
+                <h3>Averaging across frames, not just one</h3>
+                <p>Each face crop gets an independent sigmoid probability from EfficientNet; the final verdict is the mean across all detected faces, giving a video-level judgment instead of a single fragile frame-level guess.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="cs-section cs-design" id="design-process">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">05 / Build process</span>
+            <h2>From a trained checkpoint to a live, explainable API.</h2>
+        </div>
+        <div class="cs-flow cs-reveal">
+            <div><small>01</small><strong>Model loading</strong><span>EfficientNet checkpoint loaded with a custom classification head, with automatic CUDA/CPU fallback.</span></div><i>→</i>
+            <div><small>02</small><strong>Face pipeline</strong><span>MTCNN wired in for consistent face alignment on both images and sampled video frames.</span></div><i>→</i>
+            <div><small>03</small><strong>Explainability</strong><span>Custom Grad-CAM class registered on EfficientNet's final conv block, with gradient-enabled inference for the top-scoring face.</span></div><i>→</i>
+            <div><small>04</small><strong>API + dashboard</strong><span>Flask <code>/analyze</code> endpoint wired to a React drag-and-drop upload flow with live pipeline-stage animation.</span></div>
+        </div>
+        <figure class="cs-image cs-image--wide cs-reveal">
+            <div class="cs-image__placeholder cs-image__placeholder--design"><span>BUILD PROCESS / MODEL LOADING → INFERENCE → GRAD-CAM → API RESPONSE</span><b>PYTORCH → FLASK → REACT</b></div>
+        </figure>
+    </section>
+
+    <section class="cs-section cs-final-designs" id="final-designs">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">06 / The dashboard</span>
+            <h2>A forensic interface, not just an upload box.</h2>
+            <p>Built with React, TanStack Start, and Framer Motion, the interface walks the reviewer through each pipeline stage in real time — frame extraction, spatial scan, confidence fusion — before surfacing the verdict, spatial and temporal sub-scores,
+                and the Grad-CAM heatmap overlaid directly on the uploaded media.</p>
+        </div>
+        <div class="cs-gallery">
+            <figure class="cs-gallery__item cs-reveal">
+                <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/xai-gallery-img-01.png') }}" alt="Final design screen one">
+            </figure>
+            <figure class="cs-gallery__item cs-reveal">
+                <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/xai-gallery-img-02.png') }}" alt="Final design screen two">
+            </figure>
+            <figure class="cs-gallery__item cs-reveal">
+                <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/xai-gallery-img-03.png') }}" alt="Final design screen three">
+            </figure>
+        </div>
+    </section>
+
+    <section class="cs-section cs-accessibility" id="accessibility">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">07 / Limitations and honest framing</span>
+            <h2>What "explainable" does and doesn't mean here.</h2>
+        </div>
+        <div class="cs-accessibility-grid">
+            <article class="cs-build-item cs-reveal"><span>TEMPORAL SCORE</span>
+                <h3>Heuristic, not a dedicated network</h3>
+                <p>The "temporal anomaly" score shown in the dashboard is derived from the variance of per-frame predictions rather than a purpose-built temporal model like an LSTM or 3D-CNN — a reasonable proxy, but not true motion-consistency analysis.</p>
+            </article>
+            <article class="cs-build-item cs-reveal"><span>NATURAL-LANGUAGE FINDINGS</span>
+                <h3>Illustrative, not independently detected</h3>
+                <p>The listed "findings" (lighting inconsistency, lip-sync drift, frequency artifacts) are selected from a fixed set based on the confidence score rather than each being independently verified by a dedicated detector — useful context, but
+                    not standalone evidence.</p>
+            </article>
+            <article class="cs-build-item cs-reveal"><span>SINGLE-FACE FOCUS</span>
+                <h3>One face per frame, by design</h3>
+                <p>MTCNN is configured to detect only the most prominent face per frame, so multi-person videos are evaluated on one subject at a time rather than analyzing every face present.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="cs-section cs-outcomes" id="outcomes">
+        <div class="cs-results__copy cs-reveal"><span class="cs-kicker">08 / Outcomes and reflections</span>
+            <h2>A working system where the verdict comes with proof, not just a percentage.</h2>
+            <p>XAI Forensics runs end to end: a real upload triggers real MTCNN face detection, real EfficientNet inference, and a real Grad-CAM heatmap — not mocked data. That heatmap is the core deliverable of the project, turning an opaque classifier
+                into something a reviewer can actually inspect and argue with.</p>
+            <p>The clearest next step is replacing the heuristic temporal score with a genuine sequence model (e.g. a frame-level LSTM or 3D-CNN) and validating the classifier against a public benchmark like FaceForensics++ or Celeb-DF to quantify accuracy
+                beyond the current qualitative testing.</p>
+        </div>
+        <figure class="cs-results__visual cs-reveal">
+            <img class="cs-zoom" src="{{ url_for('static', filename='assets/imgs/casestudyImgs/xai-gallery-img-03.png') }}" alt="Outcomes and verdict visual evidence">
+        </figure>
+    </section>
+
+    <section class="cs-section cs-stack">
+        <div class="cs-section-heading cs-reveal"><span class="cs-kicker">Project details</span>
+            <h2>Built as a NUML final year project, available on GitHub.</h2>
+        </div>
+        <div class="cs-stack-list cs-reveal"><span>Python</span><span>PyTorch</span><span>Flask</span><span>MTCNN / facenet-pytorch</span><span>Grad-CAM</span><span>React / TanStack Start</span></div>
+        <a class="cs-github-button cs-reveal" href="{{ github_url|default('https://github.com/muhammadsouman7/XAI-Powered-DeepFake-Detection') }}" target="_blank" rel="noopener">View the project on GitHub <span>↗</span></a>
+    </section>
+
+    <section class="cs-next" id="contact"><span class="cs-kicker">Have a similar problem?</span>
+        <h2>Let's build the <em>next system.</em></h2>
+        <p>Tell us what you are trying to make clearer, faster, or more capable.</p><a class="cs-button" href="{{ url_for('contact') }}">Start a conversation <span>↗</span></a>
+    </section>
+</main>
+{% endblock %} {% block page_scripts %}
+<script src="{{ url_for('static', filename='assets/js/case-studies.js') }}"></script>
+{% endblock %}

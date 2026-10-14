@@ -1,0 +1,264 @@
+{% extends "base.html" %} {% block title %}Technical SEO, Social Media & Video Production Services | Septaneuron{% endblock %} {% block page_css %}
+<!-- Primary Meta Tags -->
+<meta name="description" content="Digital growth services in Pakistan: technical SEO, social media marketing, and video editing and production, built by Septaneuron to help you get found, watched, and remembered." />
+<meta name="keywords" content="technical SEO services Pakistan, social media marketing Pakistan, video editing production, on-page SEO, content strategy, reels and shorts editing" />
+
+<!-- Canonical -->
+<link rel="canonical" href="https://septaneuron.com/services/digital-growth" />
+
+<!-- Open Graph / Social Tags -->
+<meta property="og:title" content="Technical SEO, Social Media & Video Production Services | Septaneuron" />
+<meta property="og:description" content="Strategic social media marketing, technical SEO, and professional video editing to help modern software teams get found, watched, and remembered." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://septaneuron.com/services/digital-growth" />
+<meta property="og:image" content="https://septaneuron.com/static/assets/imgs/logo/septaneuron.svg" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Technical SEO, Social Media & Video Production Services | Septaneuron" />
+<meta name="twitter:description" content="Technical SEO, social media marketing, and video editing and production services for modern software teams." />
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [{
+            "@type": "Service",
+            "serviceType": "Technical SEO Services",
+            "name": "Technical SEO Services",
+            "provider": {
+                "@type": "Organization",
+                "name": "Septaneuron",
+                "url": "https://septaneuron.com/"
+            },
+            "areaServed": "Pakistan",
+            "description": "Technical foundations, on-page SEO, keyword direction, and content architecture designed to compound organic traffic over time.",
+            "url": "https://septaneuron.com/services/digital-growth#seo"
+        }, {
+            "@type": "Service",
+            "serviceType": "Social Media Marketing",
+            "name": "Social Media Marketing",
+            "provider": {
+                "@type": "Organization",
+                "name": "Septaneuron",
+                "url": "https://septaneuron.com/"
+            },
+            "areaServed": "Pakistan",
+            "description": "Content strategy, social campaigns, content calendars, and performance review across Facebook, Instagram, and WhatsApp.",
+            "url": "https://septaneuron.com/services/digital-growth#social"
+        }, {
+            "@type": "Service",
+            "serviceType": "Video Editing and Production",
+            "name": "Video Editing and Production",
+            "provider": {
+                "@type": "Organization",
+                "name": "Septaneuron",
+                "url": "https://septaneuron.com/"
+            },
+            "areaServed": "Worldwide",
+            "description": "Short-form video, reels, motion graphics, and captioned platform-ready video stories for product launches and campaigns.",
+            "url": "https://septaneuron.com/services/digital-growth#video"
+        }, {
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://septaneuron.com/"
+            }, {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Services",
+                "item": "https://septaneuron.com/services"
+            }, {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Digital Growth &amp; Content",
+                "item": "https://septaneuron.com/services/digital-growth"
+            }]
+        }, {
+            "@type": "FAQPage",
+            "mainEntity": [{
+                "@type": "Question",
+                "name": "Do you offer SEO, social, and video separately?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Each is scoped and priced on its own, though most clients see the strongest results when technical SEO and content-driven social or video work run together, since they compound each other."
+                }
+            }, {
+                "@type": "Question",
+                "name": "How long before technical SEO shows results?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Technical fixes (indexing, site speed, structured data) can show up in Search Console within weeks. Organic ranking and traffic growth from content and authority work typically takes a few months to compound."
+                }
+            }, {
+                "@type": "Question",
+                "name": "What platforms do you cover for social media?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Facebook, Instagram, and WhatsApp are our core focus for the Pakistani market, with content calendars, platform-native creative, and regular performance reviews."
+                }
+            }]
+        }]
+    }
+</script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/page-hero.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/services.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/services-additions.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/services-detail.css') }}"> {% endblock %} {% block content %}
+
+<div class="svc-ambient" aria-hidden="true">
+    <div class="svc-orb svc-orb--a"></div>
+    <div class="svc-orb svc-orb--b"></div>
+    <div class="svc-grid"></div>
+</div>
+
+<header class="svcd-hero">
+    <a class="svcd-back" href="{{ url_for('services') }}">← Back to services</a>
+    <div class="svcd-hero__glow" aria-hidden="true"></div>
+    <div class="svcd-hero__content">
+        <span class="svc-kicker">04 / DIGITAL GROWTH &amp; CONTENT</span>
+        <h1>Technical SEO, Social Media &amp; Video <em>to get you found, watched, and remembered.</em></h1>
+        <p>We combine strategic social media marketing, technical SEO, and professional video editing to help modern software teams communicate clearly and capture market share, without treating growth as a separate department from the product.</p>
+        <div class="svcd-hero__actions">
+            <a class="svc-btn svc-btn--light" href="{{ url_for('contact') }}">Grow your reach <span>↗</span></a>
+            <a class="svc-btn svc-btn--glass" href="{{ url_for('portfolio') }}">See related work <span>↗</span></a>
+        </div>
+        <div class="svcd-hero__stats">
+            <div><b>SEO</b><span>Technical &amp; on-page</span></div>
+            <div><b>Social</b><span>FB, Instagram, WhatsApp</span></div>
+            <div><b>Video</b><span>Reels &amp; motion graphics</span></div>
+        </div>
+    </div>
+</header>
+
+<section class="svc-section" aria-labelledby="svcd-overview-h">
+    <div class="svcd-intro">
+        <h2 id="svcd-overview-h">Growth that compounds instead of resetting monthly.</h2>
+        <div class="svcd-intro__body">
+            <p>Paid reach disappears the moment you stop paying. Technical SEO, a real content system, and consistent video output keep working long after we hand them off, because they're built on your own site and channels, not rented attention.</p>
+            <p>We treat these three services as one system: SEO informs what content is worth making, social distributes it, and video is often the format that performs best across both.</p>
+        </div>
+    </div>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-seo-h" id="seo">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">TECHNICAL SEO</span>
+            <h2 id="svcd-seo-h">Foundations first, <em>then content that ranks.</em></h2>
+        </div>
+        <p>Content can't rank on top of a site with broken technical foundations.</p>
+    </div>
+    <div class="svc-backend__list">
+        <span>Technical audits</span><span>Site speed &amp; Core Web Vitals</span><span>Structured data</span><span>On-page SEO</span><span>Keyword direction</span><span>Content architecture</span><span>Search Console monitoring</span>
+    </div>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-social-h" id="social">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">SOCIAL MEDIA MARKETING</span>
+            <h2 id="svcd-social-h">Consistent presence <em>where your audience already is.</em></h2>
+        </div>
+        <p>Content strategy, platform-native creative, and a publishing system your team doesn't have to think about.</p>
+    </div>
+    <div class="svc-backend__list">
+        <span>Content strategy</span><span>Social campaigns</span><span>Content calendars</span><span>Community touchpoints</span><span>Performance review</span>
+    </div>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-video-h" id="video">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">VIDEO EDITING &amp; PRODUCTION</span>
+            <h2 id="svcd-video-h">Raw footage turned into <em>platform-ready stories.</em></h2>
+        </div>
+        <p>Short-form video, reels, and motion graphics for product launches, campaigns, and brand storytelling.</p>
+    </div>
+    <div class="svc-backend__list">
+        <span>Short-form video</span><span>Reels &amp; Shorts</span><span>Motion graphics</span><span>Captions</span><span>Product launch videos</span>
+    </div>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-outcomes-h">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">WHY IT WORKS</span>
+            <h2 id="svcd-outcomes-h">Growth work tied back <em>to real numbers.</em></h2>
+        </div>
+    </div>
+    <ul class="svcd-outcomes">
+        <li>SEO fixes prioritized by actual traffic and indexing impact, not a generic checklist</li>
+        <li>Content calendars built around your real launch and release schedule</li>
+        <li>Every campaign tied to a metric you already care about</li>
+        <li>Video output sized for how your team can realistically keep up</li>
+        <li>Monthly performance review, not a report nobody reads</li>
+        <li>Work handed off in formats your team can reuse and repurpose</li>
+    </ul>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-faq-h">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">FAQ</span>
+            <h2 id="svcd-faq-h">Common questions <em>about digital growth.</em></h2>
+        </div>
+    </div>
+    <div class="svc-faq__list">
+        <div class="svc-faq">
+            <details>
+                <summary>Do you offer SEO, social, and video separately?</summary>
+                <p>Yes. Each is scoped and priced on its own, though most clients see the strongest results when technical SEO and content-driven social or video work run together, since they compound each other.</p>
+            </details>
+            <details>
+                <summary>How long before technical SEO shows results?</summary>
+                <p>Technical fixes (indexing, site speed, structured data) can show up in Search Console within weeks. Organic ranking and traffic growth from content and authority work typically takes a few months to compound.</p>
+            </details>
+            <details>
+                <summary>What platforms do you cover for social media?</summary>
+                <p>Facebook, Instagram, and WhatsApp are our core focus for the Pakistani market, with content calendars, platform-native creative, and regular performance reviews.</p>
+            </details>
+        </div>
+    </div>
+</section>
+
+<section class="svc-section" aria-labelledby="svcd-related-h" style="border-bottom:0">
+    <div class="svc-section__head">
+        <div>
+            <span class="svc-index">RELATED SERVICES</span>
+            <h2 id="svcd-related-h">Pair growth with <em>the rest of the stack.</em></h2>
+        </div>
+    </div>
+    <div class="svcd-related__grid">
+        <a class="svcd-related__card" href="{{ url_for('service_ai_ml') }}">
+            <span>01 / AI &amp; ML</span>
+            <h3>AI &amp; Machine Learning Development</h3>
+            <p>Use AI to speed up content research, tagging, and repurposing.</p>
+        </a>
+        <a class="svcd-related__card" href="{{ url_for('service_web_development') }}">
+            <span>02 / WEB &amp; PRODUCT</span>
+            <h3>Full-Stack Web Application Development</h3>
+            <p>Make sure the site your SEO work points to actually converts.</p>
+        </a>
+        <a class="svcd-related__card" href="{{ url_for('service_automation') }}">
+            <span>03 / AUTOMATION</span>
+            <h3>Workflow Automation Services</h3>
+            <p>Automate reporting and publishing across your growth channels.</p>
+        </a>
+    </div>
+</section>
+
+<section class="svc-final" id="contact">
+    <div class="svc-final__glow"></div><span class="svc-kicker">Have a problem worth solving?</span>
+    <h2>Let's build something <em>useful together.</em></h2>
+    <p>Tell us what you're trying to build, where you're stuck, and what success looks like.</p>
+    <div><a class="svc-btn svc-btn--light" href="{{ url_for('contact') }}">Start a project <span>↗</span></a></div>
+</section>
+
+{% endblock %} {% block page_scripts %}
+<script src="{{ url_for('static', filename='assets/js/page-hero.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/services-detail.js') }}"></script>
+{% endblock %}
