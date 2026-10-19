@@ -11,11 +11,26 @@ from .utils import (EMAIL_RE, check_upload, default_password, fmt_dt, fmt_input,
 
 
 # ------------------------------------------------------------------ helpers
-def visible_domains():
-    user = current_user()
+def _domains_for(user):
     if user["role"] == "super_admin":
         return supa.select("domains", order="name.asc")
     return supa.select("domains", filters={"id": user["domain_id"]})
+
+
+def visible_domains():
+    return _domains_for(current_user())
+
+
+def interns_in(domain_id, columns="id,is_active", order=None, active_only=False):
+    """Interns of one domain (or of every domain when domain_id is None). Each row carries
+    `intern_domains`: the domain(s) it belongs to. One query, however many interns there are."""
+    filters = [("role", "eq", "intern")]
+    if active_only:
+        filters.append(("is_active", "eq", True))
+    if domain_id:
+        filters.append(("intern_domains.domain_id", "eq", domain_id))
+        return supa.select("users", columns=f"{columns},intern_domains!inner(domain_id)", filters=filters, order=order)
+    return supa.select("users", columns=f"{columns},intern_domains(domain_id)", filters=filters, order=order)
 
 
 def scope_domain(source):
@@ -57,25 +72,30 @@ def _friendly(err):
 @bp.route("/admin")
 @admin_required
 def admin_overview():
+    user = current_user()
     domain_id = scope_domain(request.args)
-    domains = visible_domains()
-    interns = supa.select("users", filters=_flt(domain_id, role="intern"), columns="id,domain_id,is_active")
-    tasks = supa.select("tasks", filters=_flt(domain_id), columns="id,domain_id")
-    pending = supa.select("submissions", filters=_flt(domain_id, status="submitted"), order="submitted_at.asc")
+    domains, interns, tasks, pending = supa.parallel(
+        lambda: _domains_for(user),
+        lambda: interns_in(domain_id, "id,is_active"),
+        lambda: supa.select("tasks", filters=_flt(domain_id), columns="id,domain_id"),
+        lambda: supa.select("submissions", filters=_flt(domain_id, status="submitted"), order="submitted_at.asc"))
     shown = pending[:10]
-    names = {u["id"]: u for u in supa.select("users", filters=[("id", "in", [s["intern_id"] for s in shown])],
-                                             columns="id,full_name,email")} if shown else {}
-    titles = {t["id"]: t for t in supa.select("tasks", filters=[("id", "in", [s["task_id"] for s in shown])],
-                                              columns="id,title")} if shown else {}
+    names, titles = ({}, {})
+    if shown:
+        found_users, found_tasks = supa.parallel(
+            lambda: supa.select("users", filters=[("id", "in", [s["intern_id"] for s in shown])], columns="id,full_name,email"),
+            lambda: supa.select("tasks", filters=[("id", "in", [s["task_id"] for s in shown])], columns="id,title"))
+        names = {u["id"]: u for u in found_users}
+        titles = {t["id"]: t for t in found_tasks}
     breakdown = [{
         "domain": d,
-        "interns": sum(i["domain_id"] == d["id"] and i["is_active"] for i in interns),
+        "interns": sum(1 for i in interns if i["is_active"] and any(l["domain_id"] == d["id"] for l in i["intern_domains"])),
         "tasks": sum(t["domain_id"] == d["id"] for t in tasks),
         "pending": sum(s["domain_id"] == d["id"] for s in pending),
     } for d in domains if not domain_id or d["id"] == domain_id]
     return render_template("lms/admin/overview.html", domains=domains, domain_id=domain_id, shown=shown,
                            names=names, titles=titles, breakdown=breakdown,
-                           stats={"interns": sum(i["is_active"] for i in interns), "tasks": len(tasks),
+                           stats={"interns": sum(bool(i["is_active"]) for i in interns), "tasks": len(tasks),
                                   "pending": len(pending)})
 
 
@@ -83,18 +103,20 @@ def admin_overview():
 @bp.route("/admin/tasks")
 @admin_required
 def admin_tasks():
+    user = current_user()
     domain_id = scope_domain(request.args)
-    domains = visible_domains()
+    domains, tasks, subs, interns = supa.parallel(
+        lambda: _domains_for(user),
+        lambda: supa.select("tasks", filters=_flt(domain_id), order="created_at.desc"),
+        lambda: supa.select("submissions", filters=_flt(domain_id), columns="task_id,status"),
+        lambda: interns_in(domain_id, "id", active_only=True))
     dnames = {d["id"]: d["name"] for d in domains}
-    tasks = supa.select("tasks", filters=_flt(domain_id), order="created_at.desc")
-    subs = supa.select("submissions", filters=_flt(domain_id), columns="task_id,status")
-    interns = supa.select("users", filters=_flt(domain_id, role="intern", is_active=True), columns="domain_id")
     rows = []
     for t in tasks:
         mine = [s for s in subs if s["task_id"] == t["id"]]
         rows.append({"task": t, "domain": dnames.get(t["domain_id"], "—"),
                      "submitted": len(mine), "review": sum(s["status"] == "submitted" for s in mine),
-                     "interns": sum(i["domain_id"] == t["domain_id"] for i in interns)})
+                     "interns": sum(1 for i in interns if any(l["domain_id"] == t["domain_id"] for l in i["intern_domains"]))})
     return render_template("lms/admin/tasks.html", rows=rows, domains=domains, domain_id=domain_id)
 
 
@@ -118,24 +140,26 @@ def _task_values(form):
 
 def _notify(task, domain, updated=False):
     """Email the domain's active interns and record the outcome on the task."""
-    emails = [u["email"] for u in supa.select(
-        "users", filters={"domain_id": domain["id"], "role": "intern", "is_active": True}, columns="email")]
+    emails = [u["email"] for u in interns_in(domain["id"], "email", active_only=True)]
     base = os.environ.get("PORTAL_BASE_URL", "").rstrip("/") or request.host_url.rstrip("/")
     link = base + url_for("lms.task_view", task_id=task["id"])
     info = {"title": task["title"], "description": task.get("description"),
             "due_text": fmt_dt(task.get("due_at")) if task.get("due_at") else "No deadline"}
-    sent, error = 0, None
+    sent, error, failed = 0, None, []
     if not emails:
         error = "There are no active interns in this domain yet."
     else:
         try:
-            sent = mailer.send_task_email(info, domain["name"], emails, link, updated=updated)
+            sent = mailer.send_task_email(info, domain["name"], emails, link, updated=updated, failed=failed)
         except mailer.MailError as exc:
             error = str(exc)
+    note = f"The mail server rejected {len(failed)} address(es): {', '.join(failed[:5])}." if failed else None
     supa.update("tasks", {"emailed_count": sent, "emailed_at": now_utc().isoformat() if sent else None,
-                          "email_error": error}, filters={"id": task["id"]})
+                          "email_error": error or note}, filters={"id": task["id"]})
     if error:
         flash(f"Task saved, but the email was not sent: {error}", "warn")
+    elif note:
+        flash(f"Email sent to {sent} intern{'s' if sent != 1 else ''}. {note}", "warn")
     else:
         flash(f"Email sent to {sent} intern{'s' if sent != 1 else ''}.", "success")
 
@@ -211,12 +235,13 @@ def admin_task_edit(task_id):
 @admin_required
 def admin_task(task_id):
     task = _get_task(task_id)
-    domain = supa.one("domains", id=task["domain_id"])
-    interns = supa.select("users", filters={"domain_id": task["domain_id"], "role": "intern"},
-                          order="full_name.asc", columns="id,full_name,email,is_active")
-    subs = {s["intern_id"]: s for s in supa.select("submissions", filters={"task_id": task_id})}
+    domain, interns, subs = supa.parallel(
+        lambda: supa.one("domains", id=task["domain_id"]),
+        lambda: interns_in(task["domain_id"], "id,full_name,email,is_active", order="full_name.asc"),
+        lambda: supa.select("submissions", filters={"task_id": task_id}))
+    subs = {s["intern_id"]: s for s in subs}
     rows = [{"intern": i, "sub": subs.get(i["id"])} for i in interns if i["is_active"] or i["id"] in subs]
-    counts = {"interns": sum(i["is_active"] for i in interns), "submitted": len(subs),
+    counts = {"interns": sum(bool(i["is_active"]) for i in interns), "submitted": len(subs),
               "review": sum(s["status"] == "submitted" for s in subs.values()),
               "approved": sum(s["status"] == "approved" for s in subs.values())}
     return render_template("lms/admin/task_detail.html", task=task, domain=domain, rows=rows, counts=counts)
@@ -299,35 +324,52 @@ def _parse_lines(text):
 
 
 def _create_interns(entries, domain_id, password):
-    existing = {u["email"] for u in supa.select("users", filters=[("email", "in", [e for _, e in entries])],
-                                                 columns="email")} if entries else set()
+    """New emails get an account; an email that already has an intern account is simply added to
+    this domain (so one person can be in several domains). Returns (created, added, skipped, invalid)."""
+    emails = [e for _, e in entries if EMAIL_RE.match(e)]
+    existing = {u["email"]: u for u in supa.select("users", filters=[("email", "in", emails)],
+                                                   columns="id,email,role")} if emails else {}
+    members = {i["id"] for i in interns_in(domain_id, "id")}
     pw_hash = hash_password(password)  # hashed once: identical temporary password for the whole batch
-    rows, skipped, invalid, seen = [], [], [], set()
+    rows, add_ids, skipped, invalid, seen = [], [], [], [], set()
     for name, email in entries:
         if not _allowed_email(email):
             invalid.append(email or name)
-        elif email in existing or email in seen:
+        elif email in seen:
             skipped.append(email)
+        elif email in existing:
+            seen.add(email)
+            user = existing[email]
+            if user["role"] != "intern" or user["id"] in members:
+                skipped.append(email)
+            else:
+                add_ids.append(user["id"])
         else:
             seen.add(email)
             rows.append({"email": email, "full_name": name, "password_hash": pw_hash, "role": "intern",
                          "domain_id": domain_id, "must_change_password": True})
-    supa.insert_many("users", rows)
-    return len(rows), skipped, invalid
+    created = supa.insert_many("users", rows)
+    supa.insert_many("intern_domains", [{"user_id": u["id"], "domain_id": domain_id} for u in created]
+                     + [{"user_id": uid, "domain_id": domain_id} for uid in add_ids])
+    return len(created), len(add_ids), skipped, invalid
 
 
 @bp.route("/admin/interns")
 @admin_required
 def admin_interns():
+    user = current_user()
     domain_id = scope_domain(request.args)
-    domains = visible_domains()
-    interns = supa.select("users", filters=_flt(domain_id, role="intern"), order="created_at.desc")
-    subs = supa.select("submissions", filters=_flt(domain_id), columns="intern_id,status")
+    domains, interns, subs = supa.parallel(
+        lambda: _domains_for(user),
+        lambda: interns_in(domain_id, "*", order="created_at.desc"),
+        lambda: supa.select("submissions", filters=_flt(domain_id), columns="intern_id,status"))
+    dnames = {d["id"]: d["name"] for d in domains}
     for i in interns:
         mine = [s for s in subs if s["intern_id"] == i["id"]]
         i["n_sub"], i["n_ok"] = len(mine), sum(s["status"] == "approved" for s in mine)
+        i["domain_names"] = sorted(dnames.get(l["domain_id"], "—") for l in i["intern_domains"])
     return render_template("lms/admin/interns.html", interns=interns, domains=domains, domain_id=domain_id,
-                           dnames={d["id"]: d["name"] for d in domains}, default_pw=default_password())
+                           dnames=dnames, default_pw=default_password())
 
 
 def _form_domain():
@@ -350,9 +392,13 @@ def admin_intern_add():
     elif len(password) < 8:
         flash("A custom password must be at least 8 characters.", "error")
     else:
-        made, skipped, _ = _create_interns([(name, email)], domain_id, password)
-        flash(f"Account created for {email}." if made else f"{email} already has an account.",
-              "success" if made else "warn")
+        made, added, skipped, _ = _create_interns([(name, email)], domain_id, password)
+        if made:
+            flash(f"Account created for {email}.", "success")
+        elif added:
+            flash(f"{email} already had an account, so they were added to this domain (same password).", "success")
+        else:
+            flash(f"{email} is already in this domain.", "warn")
     return redirect(url_for("lms.admin_interns", domain=domain_id))
 
 
@@ -364,13 +410,15 @@ def admin_intern_bulk():
     if not entries:
         flash("Paste at least one email address.", "error")
     else:
-        made, skipped, invalid = _create_interns(entries, domain_id, default_password())
+        made, added, skipped, invalid = _create_interns(entries, domain_id, default_password())
         msg = f"Created {made} account{'s' if made != 1 else ''}."
+        if added:
+            msg += f" Added {added} existing intern{'s' if added != 1 else ''} to this domain."
         if skipped:
-            msg += f" Already existed: {', '.join(skipped[:8])}{'…' if len(skipped) > 8 else ''}."
+            msg += f" Already in this domain: {', '.join(skipped[:8])}{'…' if len(skipped) > 8 else ''}."
         if invalid:
             msg += f" Skipped invalid: {', '.join(invalid[:8])}{'…' if len(invalid) > 8 else ''}."
-        flash(msg, "success" if made else "warn")
+        flash(msg, "success" if (made or added) else "warn")
     return redirect(url_for("lms.admin_interns", domain=domain_id))
 
 
@@ -378,7 +426,10 @@ def _get_intern(user_id):
     row = supa.one("users", id=user_id)
     if not row or row["role"] != "intern":
         abort(404)
-    require_domain(row["domain_id"])
+    me = current_user()
+    if me["role"] == "admin" and not supa.select("intern_domains", filters={"user_id": row["id"], "domain_id": me["domain_id"]},
+                                                   columns="user_id", limit=1):
+        abort(404)  # not an intern of this admin's domain
     return row
 
 
@@ -403,16 +454,31 @@ def admin_intern_toggle(user_id):
 @bp.route("/admin/interns/<user_id>/delete", methods=["POST"])
 @admin_required
 def admin_intern_delete(user_id):
-    row = _get_intern(user_id)  # 404 unless an intern inside this admin's own domain
-    files = [s["file_path"] for s in supa.select("submissions", filters={"intern_id": row["id"]},
-                                                 columns="file_path") if s.get("file_path")]
-    supa.delete("users", filters={"id": row["id"]})  # their submissions cascade
+    """Domain admin: removes the intern from THIS domain (and deletes the account if it was their only one).
+    Super admin: deletes the account everywhere."""
+    row = _get_intern(user_id)
+    me = current_user()
+    domains = [l["domain_id"] for l in supa.select("intern_domains", filters={"user_id": row["id"]}, columns="domain_id")]
+    if me["role"] == "admin":
+        leaving, remaining = [me["domain_id"]], [d for d in domains if d != me["domain_id"]]
+    else:
+        leaving, remaining = domains or [row["domain_id"]], []
+    scope = [("intern_id", "eq", row["id"]), ("domain_id", "in", leaving)]
+    files = [s["file_path"] for s in supa.select("submissions", filters=scope, columns="file_path") if s.get("file_path")]
+    if remaining:
+        supa.delete("submissions", filters=scope)
+        supa.delete("intern_domains", filters=[("user_id", "eq", row["id"]), ("domain_id", "in", leaving)])
+        if row["domain_id"] in leaving:
+            supa.update("users", {"domain_id": remaining[0]}, filters={"id": row["id"]})
+        flash(f"{row['email']} was removed from this domain (their other domains are untouched).", "success")
+    else:
+        supa.delete("users", filters={"id": row["id"]})  # memberships and submissions cascade
+        flash(f"{row['email']} and all their submissions were deleted.", "success")
     try:
         supa.remove_files(files)
     except supa.SupabaseError:
         pass  # orphaned files are harmless
-    flash(f"{row['email']} and all their submissions were deleted.", "success")
-    return redirect(url_for("lms.admin_interns", domain=row["domain_id"]))
+    return redirect(url_for("lms.admin_interns", domain=me["domain_id"] if me["role"] == "admin" else request.form.get("domain_id", "")))
 
 # --------------------------------------------------- team (super admin only)
 @bp.route("/admin/team")

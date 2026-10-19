@@ -1,12 +1,11 @@
-{% extends 'lms/base.html' %}
-{% from 'lms/_macros.html' import badge with context %}
-{% block title %}Dashboard{% endblock %}
-{% block content %}
-<div class="lms-head"><div>
-    <p class="lms-kicker">{{ domain.name }}</p>
-    <h1 class="lms-h1">Hi {{ me().full_name.split()[0] }}, here's your work</h1>
-    <p class="lms-sub">Tasks from your mentor appear here as soon as they're published. Submit before the deadline to stay on track.</p>
-</div></div>
+{% extends 'lms/base.html' %} {% from 'lms/_macros.html' import badge with context %} {% block title %}Dashboard{% endblock %} {% block content %}
+<div class="lms-head">
+    <div>
+        <p class="lms-kicker">{{ domains|map(attribute='name')|join(' · ') }}</p>
+        <h1 class="lms-h1">Hi {{ me().full_name.split()[0] }}, here's your work</h1>
+        <p class="lms-sub">Tasks from your mentor appear here as soon as they're published. Submit before the deadline to stay on track.</p>
+    </div>
+</div>
 
 <div class="lms-grid lms-grid--stats">
     <div class="lms-card lms-stat lms-stat--accent"><b>{{ stats.todo }}</b><span>To do</span></div>
@@ -23,22 +22,19 @@
 </div>
 {% if rows %}
 <div class="lms-list">
-{% for r in rows %}
+    {% for r in rows %}
     <a class="lms-task" href="{{ url_for('lms.task_view', task_id=r.task.id) }}">
         <div>
             <h3>{{ r.task.title }}</h3>
             <div class="lms-task__meta">
-                <span>{{ r.task.due_at|due_in if r.task.due_at else 'No deadline' }}{% if r.task.due_at %} · {{ r.task.due_at|dt }}{% endif %}</span>
-                <span>{{ r.task.max_points }} pts</span>
-                {% if r.sub and r.sub.score is not none %}<span style="color:var(--lms-cyan)">Scored {{ r.sub.score }}/{{ r.task.max_points }}</span>{% endif %}
+                <span>{{ r.task.due_at|due_in if r.task.due_at else 'No deadline' }}{% if r.task.due_at %} · {{ r.task.due_at|dt }}{% endif %}</span> {% if domains|length > 1 and r.domain %}<span>{{ r.domain }}</span>{% endif %}
+                <span>{{ r.task.max_points }} pts</span> {% if r.sub and r.sub.score is not none %}<span style="color:var(--lms-cyan)">Scored {{ r.sub.score }}/{{ r.task.max_points }}</span>{% endif %}
             </div>
         </div>
         <div class="lms-task__side">{{ badge(r.state) }}<span class="lms-arrow" aria-hidden="true">→</span></div>
     </a>
-{% endfor %}
+    {% endfor %}
 </div>
 {% else %}
-<div class="lms-empty"><b>{{ 'Nothing to do right now' if view == 'todo' else 'No tasks here yet' }}</b>
-    {{ "You're all caught up. We'll email you when your mentor posts a new task." if view == 'todo' else 'Tasks will show up here.' }}</div>
-{% endif %}
-{% endblock %}
+<div class="lms-empty"><b>{{ 'Nothing to do right now' if view == 'todo' else 'No tasks here yet' }}</b> {{ "You're all caught up. We'll email you when your mentor posts a new task." if view == 'todo' else 'Tasks will show up here.' }}</div>
+{% endif %} {% endblock %}

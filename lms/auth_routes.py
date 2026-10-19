@@ -6,16 +6,17 @@ from werkzeug.security import check_password_hash
 
 from . import bp, supa
 from .auth import ADMIN_ROLES, check_csrf, csrf_token, current_user, login_required, safe_next
-from .utils import EMAIL_RE, hash_password, now_utc, parse_ts, password_error
+from .utils import EMAIL_RE, MAX_ZIP_BYTES, hash_password, now_utc, parse_ts, password_error
 
 MAX_FAILS = 5
 LOCK_MINUTES = 15
-_DUMMY_HASH = hash_password("not-a-real-password")  # keeps timing similar for unknown emails
+# precomputed (same 600k iterations) so cold starts stay fast; keeps timing similar for unknown emails
+_DUMMY_HASH = "pbkdf2:sha256:600000$GAC1TA7SM9xdVEKK$00c25e1325fb21276cf37efcda2e8f04cbf39718a7f3ab6f1d7a255b5449ce1b"
 
 
 @bp.context_processor
 def inject():
-    return {"csrf_token": csrf_token, "me": current_user}
+    return {"csrf_token": csrf_token, "me": current_user, "max_zip_mb": MAX_ZIP_BYTES // 1_000_000}
 
 
 @bp.before_request
@@ -113,6 +114,7 @@ def logout():
 @login_required
 def change_password():
     user = current_user()
+    forced = bool(user["must_change_password"])
     if request.method == "POST":
         current = request.form.get("current", "")
         new = request.form.get("new", "")
@@ -124,11 +126,12 @@ def change_password():
             error = "The new passwords don't match."
         else:
             error = password_error(new, current, user["email"])
-        if error:
+        if error:  # stay on this screen
             flash(error, "error")
-        else:
-            supa.update("users", {"password_hash": hash_password(new), "must_change_password": False},
-                        filters={"id": user["id"]})
-            flash("Password updated.", "success")
-            return redirect(url_for("lms.home"))
-    return render_template("lms/change_password.html", forced=user["must_change_password"])
+            return render_template("lms/change_password.html", forced=forced), 400
+        supa.update("users", {"password_hash": hash_password(new), "must_change_password": False},
+                    filters={"id": user["id"]})
+        flash("Password updated successfully.", "success")
+        # straight to the right dashboard (intern dashboard / admin overview)
+        return redirect(url_for("lms.admin_overview" if user["role"] in ADMIN_ROLES else "lms.dashboard"))
+    return render_template("lms/change_password.html", forced=forced)

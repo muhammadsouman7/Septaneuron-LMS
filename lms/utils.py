@@ -25,7 +25,7 @@ def default_password():
 
 
 def hash_password(password):
-    return generate_password_hash(password, method="pbkdf2:sha256")
+    return generate_password_hash(password, method="pbkdf2:sha256:600000")
 
 
 def now_utc():
@@ -72,24 +72,22 @@ def check_upload(storage):
         return None, None, None, "File is larger than 4 MB. Please share a link (GitHub / Drive) instead."
     return data, name, storage.mimetype or "application/octet-stream", None
 
-# ---- zip-only uploads for intern submissions
-MAX_ZIP_ENTRIES = 2000
-MAX_ZIP_UNCOMPRESSED = 200_000_000   # total size once extracted
+# ---- zip-only uploads for intern submissions (the browser uploads straight to Supabase Storage)
+MAX_ZIP_BYTES = 50_000_000           # per zip; Supabase's free plan caps a single file at 50 MB
+MAX_ZIP_ENTRIES = 5000
+MAX_ZIP_UNCOMPRESSED = 500_000_000   # total size once extracted
 MAX_ZIP_RATIO = 100                  # per-file compression ratio (zip-bomb guard)
 BLOCKED_IN_ZIP = {"exe", "dll", "msi", "scr", "com", "bat", "cmd", "vbs", "vbe", "wsf", "lnk",
                   "pif", "reg", "apk", "hta", "cpl", "ps1"}
 
 
-def check_zip_upload(storage):
+def check_zip_bytes(data, filename):
     """Return (data, filename, content_type, error). Accepts only a real, safe .zip."""
-    if not storage or not storage.filename:
-        return None, None, None, None
-    name = secure_filename(storage.filename)
+    name = secure_filename(filename or "")
     if not name or len(name) > 120 or not name.lower().endswith(".zip") or name.lower().count(".zip") != 1:
         return None, None, None, "Only .zip files are accepted."
-    data = storage.read(MAX_UPLOAD_BYTES + 1)
-    if len(data) > MAX_UPLOAD_BYTES:
-        return None, None, None, "The zip is larger than 4 MB."
+    if len(data) > MAX_ZIP_BYTES:
+        return None, None, None, f"The zip is larger than {MAX_ZIP_BYTES // 1_000_000} MB."
     if not data.startswith(b"PK\x03\x04"):  # magic bytes, so a renamed .exe/.pdf is rejected
         return None, None, None, "That file is not a valid zip archive."
     try:
@@ -120,8 +118,8 @@ def check_zip_upload(storage):
 
 def password_error(new, current="", email=""):
     """Password policy for the forced/voluntary change. Returns a message or None."""
-    if len(new) < 10 or len(new) > 128:
-        return "Use between 10 and 128 characters."
+    if len(new) < 8 or len(new) > 128:
+        return "Use between 8 and 128 characters."
     if not (re.search(r"[a-z]", new) and re.search(r"[A-Z]", new)
             and re.search(r"\d", new) and re.search(r"[^A-Za-z0-9]", new)):
         return "Use uppercase, lowercase, a number and a symbol."

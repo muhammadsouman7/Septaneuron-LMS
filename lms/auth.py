@@ -9,6 +9,10 @@ from . import supa
 
 ADMIN_ROLES = ("admin", "super_admin")
 
+def my_domain_ids(user):
+    """Every domain an intern belongs to (one person can be in several)."""
+    ids = [r["domain_id"] for r in supa.select("intern_domains", filters={"user_id": user["id"]}, columns="domain_id")]
+    return ids or ([user["domain_id"]] if user.get("domain_id") else [])
 
 def current_user():
     """The logged-in user row, re-read from the DB on every request so that

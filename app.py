@@ -129,6 +129,7 @@ def set_headers(response):
         "font-src 'self' https://fonts.gstatic.com; "
         "script-src 'self' 'unsafe-inline'; "
         "frame-src 'self' https://www.google.com; "
+        "connect-src 'self' " + os.environ.get('SUPABASE_URL', '').rstrip('/') + "; "
         "object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
     )
     response.headers['X-Content-Type-Options'] = 'nosniff'

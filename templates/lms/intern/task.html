@@ -42,10 +42,11 @@
             <h3>{{ 'Update your submission' if sub else 'Submit your work' }}</h3>
             {% if sub %}
             <p class="lms-muted lms-small" style="margin:0 0 16px">Last submitted {{ sub.submitted_at|dt }}{% if sub.is_late %} · late{% endif %}. Sending again replaces it.</p>{% endif %}
-            <form class="lms-form" method="post" action="{{ url_for('lms.submit', task_id=task.id) }}" enctype="multipart/form-data" data-once>
+            <form class="lms-form" method="post" action="{{ url_for('lms.submit', task_id=task.id) }}" data-direct-upload data-upload-url="{{ url_for('lms.upload_url', task_id=task.id) }}" data-max-bytes="{{ max_zip_mb * 1000000 }}">
                 {{ csrf() }}
+                <input type="hidden" name="upload_path" value="">
                 <label>Link <input type="url" name="link" value="{{ sub.link_url if sub and sub.link_url }}" placeholder="https://github.com/you/project"><small>GitHub, Drive, Figma, a live demo… anything we can open.</small></label>
-                <label>Zip file <input type="file" name="file" accept=".zip,application/zip,application/x-zip-compressed" data-zip-only><small>.zip only, up to 4 MB. Password-protected zips and executables are rejected.{% if sub and sub.file_name %} Current file: {{ sub.file_name }}{% endif %}</small></label>
+                <label>Zip file <input type="file" accept=".zip,application/zip,application/x-zip-compressed" data-zip-only><small>.zip only, up to {{ max_zip_mb }} MB. Password-protected zips and executables are rejected.{% if sub and sub.file_name %} Current file: {{ sub.file_name }}{% endif %}</small></label>
                 <label>Notes <textarea name="note" style="min-height:90px" placeholder="Anything your mentor should know?">{{ sub.note if sub and sub.note }}</textarea></label>
                 <button class="lms-btn lms-btn--block" type="submit" data-busy="Uploading…">{{ 'Resubmit' if sub else 'Submit task' }}</button>
             </form>

@@ -6,9 +6,11 @@ sent to the browser or committed to git.
 """
 import os
 import re
+from concurrent.futures import ThreadPoolExecutor
 from urllib.parse import quote
 
 import requests
+from requests.adapters import HTTPAdapter
 
 TIMEOUT = 12
 
@@ -46,9 +48,22 @@ def _headers(extra=None):
     return headers
 
 
+# One shared session = connections to Supabase are kept alive and reused (no new TLS handshake per query).
+_session = requests.Session()
+_session.mount("https://", HTTPAdapter(pool_connections=4, pool_maxsize=16))
+_pool = ThreadPoolExecutor(max_workers=8)
+
+
+def parallel(*fns):
+    """Run independent queries at the same time. Each fn takes no arguments; results keep their order."""
+    futures = [_pool.submit(fn) for fn in fns]
+    return [f.result() for f in futures]
+
+
 def _request(method, url, headers=None, **kwargs):
+    kwargs.setdefault("timeout", TIMEOUT)
     try:
-        resp = requests.request(method, url, headers=_headers(headers), timeout=TIMEOUT, **kwargs)
+        resp = _session.request(method, url, headers=_headers(headers), **kwargs)
     except requests.RequestException as exc:
         raise SupabaseError(f"Could not reach Supabase: {exc}") from exc
     if not resp.ok:
@@ -145,6 +160,24 @@ def upload(path, data, content_type="application/octet-stream"):
     _request("POST", f"{_url()}/storage/v1/object/{_bucket()}/{_object_path(path)}", data=data,
              headers={"Content-Type": content_type, "x-upsert": "true"})
 
+def create_signed_upload(path):
+    """URL the browser can PUT one file to (valid ~2 hours), so big files skip our server."""
+    resp = _request("POST", f"{_url()}/storage/v1/object/upload/sign/{_bucket()}/{_object_path(path)}")
+    rel = resp.json()["url"]
+    return f"{_url()}/storage/v1{rel}" if rel.startswith("/") else rel
+
+
+def download(path, limit):
+    """Read a stored object into memory; refuses anything larger than `limit` bytes."""
+    resp = _request("GET", f"{_url()}/storage/v1/object/authenticated/{_bucket()}/{_object_path(path)}",
+                    stream=True, timeout=45)
+    data = bytearray()
+    for chunk in resp.iter_content(1 << 20):
+        data += chunk
+        if len(data) > limit:
+            resp.close()
+            raise SupabaseError("Stored file is larger than the allowed size")
+    return bytes(data)
 
 def signed_url(path, download_as=None, expires=300):
     resp = _request("POST", f"{_url()}/storage/v1/object/sign/{_bucket()}/{_object_path(path)}",

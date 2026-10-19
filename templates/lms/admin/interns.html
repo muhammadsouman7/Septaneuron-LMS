@@ -50,15 +50,16 @@
             <tr>
                 <td class="lms-name">{{ i.full_name }}<small>{{ i.email }}</small></td>
                 {% if domains|length > 1 %}
-                <td class="lms-muted">{{ dnames.get(i.domain_id, '—') }}</td>{% endif %}
+                <td class="lms-muted">{{ i.domain_names|join(', ') }}</td>{% endif %}
                 <td>{{ i.n_ok }} / {{ i.n_sub }}</td>
                 <td>{% if not i.is_active %}<span class="lms-badge lms-badge--warn">Deactivated</span>{% elif i.must_change_password %}<span class="lms-badge">Not signed in yet</span>{% else %}<span class="lms-badge lms-badge--good">Active</span>{% endif
-                    %}</td>
+                    %}
+                </td>
                 <td>
                     <div class="actions">
                         <form class="inline" method="post" action="{{ url_for('lms.admin_intern_reset', user_id=i.id) }}" data-confirm="Reset {{ i.email }} to the temporary password?">{{ csrf() }}<button class="lms-btn lms-btn--ghost lms-btn--sm" type="submit">Reset password</button></form>
                         <form class="inline" method="post" action="{{ url_for('lms.admin_intern_toggle', user_id=i.id) }}" data-confirm="{{ 'Deactivate' if i.is_active else 'Reactivate' }} {{ i.email }}?">{{ csrf() }}<button class="lms-btn lms-btn--ghost lms-btn--sm" type="submit">{{ 'Deactivate' if i.is_active else 'Reactivate' }}</button></form>
-                        <form class="inline" method="post" action="{{ url_for('lms.admin_intern_delete', user_id=i.id) }}" data-confirm="Permanently delete {{ i.email }} and all their submissions? This cannot be undone.">{{ csrf() }}<button class="lms-btn lms-btn--danger lms-btn--sm" type="submit">Delete</button></form>
+                        <form class="inline" method="post" action="{{ url_for('lms.admin_intern_delete', user_id=i.id) }}" data-confirm="{% if me().role == 'super_admin' %}Permanently delete {{ i.email }} from every domain, with all their submissions?{% else %}Remove {{ i.email }} from this domain and delete their submissions here?{% endif %} This cannot be undone.">{{ csrf() }}<input type="hidden" name="domain_id" value="{{ domain_id or '' }}"><button class="lms-btn lms-btn--danger lms-btn--sm" type="submit">Delete</button></form>
                     </div>
                 </td>
             </tr>

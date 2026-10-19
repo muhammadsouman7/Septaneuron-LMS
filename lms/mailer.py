@@ -46,7 +46,7 @@ def _body(task, domain_name, link, updated):
     return text, html
 
 
-def send_task_email(task, domain_name, recipients, link, updated=False):
+def send_task_email(task, domain_name, recipients, link, updated=False, failed=None):
     """Email every address in `recipients` (BCC, so interns never see each other).
     Returns the number of recipients mailed. Raises MailError on failure."""
     cfg = _cfg()
@@ -68,8 +68,10 @@ def send_task_email(task, domain_name, recipients, link, updated=False):
                 msg["Bcc"] = ", ".join(chunk)
                 msg.set_content(text)
                 msg.add_alternative(html, subtype="html")
-                smtp.send_message(msg)
-                sent += len(chunk)
+                refused = smtp.send_message(msg) or {}  # only the addresses the server rejected
+                if refused and failed is not None:
+                    failed.extend(refused)
+                sent += len(chunk) - len(refused)
     except (smtplib.SMTPException, OSError) as exc:
         raise MailError(f"Email failed after {sent} recipient(s): {exc}") from exc
     return sent
