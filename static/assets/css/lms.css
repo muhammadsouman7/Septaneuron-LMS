@@ -32,6 +32,10 @@ body.lms {
     overflow-x: hidden;
 }
 
+.sn-nav__name {
+    color: var(--lms-cyan);
+}
+
 
 /* plain text links only; classed links/buttons set their own colour */
 

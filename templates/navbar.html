@@ -33,7 +33,7 @@
         <a class="sn-dock__item {% if request.endpoint == 'about' %}is-active{% endif %}" data-target="about" href="{{ url_for('about') }}"><span class="sn-dock__icon-slot"><svg viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.2"/><path d="M3.5 20c0-3.3 2.5-5.7 5.5-5.7s5.5 2.4 5.5 5.7"/><circle cx="17.5" cy="7.5" r="2.4"/><path d="M14.8 14.6c2.5.3 4.7 2.6 4.7 5.4"/></svg></span><span class="sn-dock__label">About</span></a>
         <a class="sn-dock__item {% if request.endpoint == 'contact' %}is-active{% endif %}" data-target="contact" href="{{ url_for('contact') }}"><span class="sn-dock__icon-slot"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.2"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg></span><span class="sn-dock__label">Contact</span></a>
     </div>
-    <a class="sn-nav__cta" href="{{ url_for('contact') }}">Start a Project</a>
+    <a class="sn-nav__cta" href="{{ url_for('lms.login') }}">Portal</a>
     <button class="sn-nav__toggle" type="button" aria-label="Open menu" aria-expanded="false">
         <span class="sn-menu-icon" aria-hidden="true">
             <span></span>
