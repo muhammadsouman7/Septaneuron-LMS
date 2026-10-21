@@ -153,15 +153,16 @@ def _notify(task, domain, updated=False):
             sent = mailer.send_task_email(info, domain["name"], emails, link, updated=updated, failed=failed)
         except mailer.MailError as exc:
             error = str(exc)
-    note = f"The mail server rejected {len(failed)} address(es): {', '.join(failed[:5])}." if failed else None
+    note = f"Not delivered to {len(failed)}: {'; '.join(failed[:3])}{'…' if len(failed) > 3 else ''}." if failed else None
     supa.update("tasks", {"emailed_count": sent, "emailed_at": now_utc().isoformat() if sent else None,
                           "email_error": error or note}, filters={"id": task["id"]})
+    who = ", ".join(emails[:6]) + (f" and {len(emails) - 6} more" if len(emails) > 6 else "")
     if error:
         flash(f"Task saved, but the email was not sent: {error}", "warn")
     elif note:
-        flash(f"Email sent to {sent} intern{'s' if sent != 1 else ''}. {note}", "warn")
+        flash(f"Email sent to {sent} of {len(emails)} {domain['name']} interns. {note}", "warn")
     else:
-        flash(f"Email sent to {sent} intern{'s' if sent != 1 else ''}.", "success")
+        flash(f"Email sent to {sent} {domain['name']} intern{'s' if sent != 1 else ''}: {who}.", "success")
 
 
 @bp.route("/admin/tasks/new", methods=["GET", "POST"])

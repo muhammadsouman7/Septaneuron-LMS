@@ -82,6 +82,7 @@
         var pw = form.querySelector('[data-pw-new]');
         var cf = form.querySelector('[data-pw-confirm]');
         var go = form.querySelector('[data-pw-submit]');
+        var rules = form.querySelector('.lms-rules');
         var items = {};
         form.querySelectorAll('[data-rule]').forEach(function(li) { items[li.getAttribute('data-rule')] = li; });
 
@@ -100,6 +101,7 @@
                 if (items[k]) items[k].classList.toggle('is-ok', ok[k]);
                 if (!ok[k]) all = false;
             });
+            if (rules) rules.classList.toggle('is-visible', v.length > 0); // hidden until they start typing
             if (!form.getAttribute('data-locked')) go.disabled = !all;
         }
         pw.addEventListener('input', check);
@@ -177,6 +179,17 @@
                     form.submit();
                 })
                 .catch(function(err) { fail(err.message || 'Upload failed.'); });
+        });
+    });
+
+    // ---- 6. Tables: copy each column title onto its cells so rows can become cards on phones --
+    document.querySelectorAll('.lms-table').forEach(function(table) {
+        var heads = Array.prototype.map.call(table.querySelectorAll('thead th'), function(th) { return th.textContent.trim(); });
+        table.querySelectorAll('tbody tr').forEach(function(tr) {
+            Array.prototype.forEach.call(tr.children, function(td, i) {
+                if (heads[i]) td.setAttribute('data-label', heads[i]);
+                if (td.querySelector('.actions')) td.classList.add('lms-td-actions');
+            });
         });
     });
 

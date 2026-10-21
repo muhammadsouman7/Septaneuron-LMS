@@ -857,11 +857,16 @@ details.lms-review[open] summary {
 
 .lms-rules {
     list-style: none;
-    margin: 0 0 20px;
+    margin: -4px 0 20px;
     padding: 0;
-    display: grid;
+    display: none;
     gap: 7px;
     font-size: 13.5px;
+}
+
+.lms-rules.is-visible {
+    display: grid;
+    animation: lmsUp .3s var(--lms-ease) both;
 }
 
 .lms-rules li {
@@ -917,4 +922,166 @@ details.lms-review[open] summary {
 
 .lms-flash.is-toast.is-leaving {
     opacity: 0;
+}
+
+
+/* ======================= responsive ======================= */
+
+.lms-grid--2 {
+    grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+}
+
+.lms-tabs {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.lms-tabs a {
+    white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+    /* tables turn into stacked cards: nothing is ever cut off or needs sideways scrolling */
+    .lms-table-wrap {
+        overflow: visible;
+        border: 0;
+        background: none;
+        border-radius: 0;
+    }
+    .lms-table,
+    .lms-table tbody {
+        display: block;
+    }
+    .lms-table thead {
+        display: none;
+    }
+    .lms-table tr {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 14px 18px;
+        margin-bottom: 12px;
+        padding: 18px;
+        border: 1px solid var(--lms-line);
+        border-radius: 16px;
+        background: var(--lms-card);
+    }
+    .lms-table td {
+        display: block;
+        min-width: 0;
+        padding: 0;
+        border: 0;
+        overflow-wrap: anywhere;
+    }
+    .lms-table td:first-child,
+    .lms-table td.lms-td-actions {
+        grid-column: 1 / -1;
+    }
+    .lms-table td[data-label]::before {
+        content: attr(data-label);
+        display: block;
+        margin-bottom: 4px;
+        font-size: 10.5px;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        color: var(--lms-faint);
+    }
+    .lms-table td.lms-td-actions {
+        padding-top: 14px;
+        border-top: 1px solid rgba(242, 246, 247, .08);
+    }
+    /* neat, equal-width action buttons */
+    .lms-table .actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 8px;
+        justify-content: stretch;
+    }
+    .lms-table .actions>* {
+        min-width: 0;
+    }
+    .lms-table .actions form.inline {
+        display: block;
+    }
+    .lms-table .actions .lms-btn {
+        width: 100%;
+        height: 40px;
+        white-space: nowrap;
+    }
+    .lms-table .actions> :last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+    }
+    .lms-table .actions>form.lms-row {
+        display: flex;
+        flex-wrap: nowrap;
+        grid-column: 1 / -1;
+    }
+    .lms-table .actions>form.lms-row~form {
+        grid-column: 1 / -1;
+    }
+    .lms-table .actions>form.lms-row input {
+        flex: 1;
+        min-width: 0;
+        width: auto !important;
+        height: 40px !important;
+    }
+    .lms-table .actions>form.lms-row .lms-btn {
+        width: auto;
+        flex: none;
+    }
+}
+
+@media (max-width: 720px) {
+    .lms-head {
+        margin-bottom: 24px;
+        gap: 14px;
+    }
+    .lms-head>.lms-row {
+        width: 100%;
+    }
+    .lms-card {
+        padding: 20px;
+    }
+    .lms-stat {
+        padding: 16px 18px;
+    }
+    .lms-stat b {
+        font-size: 28px;
+    }
+    .lms-section-title {
+        margin-top: 32px;
+    }
+    .lms-review-box {
+        min-width: 0;
+    }
+    .lms-btn {
+        height: 46px;
+    }
+    .lms-btn--sm {
+        height: 40px;
+    }
+    .lms-auth {
+        padding-top: 104px;
+    }
+    .lms-auth .lms-card {
+        padding: 26px 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .lms-two {
+        gap: 0;
+    }
+    .lms-form>.lms-btn,
+    .lms-form>button.lms-btn {
+        width: 100%;
+    }
+    /* full-width submit buttons on phones */
+    .lms-tabs {
+        display: flex;
+    }
+    .lms-tabs a {
+        flex: 1;
+        text-align: center;
+        padding: 8px 10px;
+    }
 }
