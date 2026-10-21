@@ -112,3 +112,31 @@ def send_task_email(task, domain_name, recipients, link, updated=False, failed=N
     if not sent:
         raise MailError(f"Email failed: {bad[0][1] if bad else 'unknown error'}")
     return sent
+
+def send_welcome_email(name, email, domain_name, login_url, temp_password=None):
+    """Welcome mail with login link (+ temporary password for brand-new accounts)."""
+    cfg = _cfg()
+    if temp_password:
+        pw_text = f"Temporary password: {temp_password}\nYou will be asked to choose your own password at first login."
+        pw_html = (f'<p style="margin:0 0 16px;font-size:14px;color:#c4d0d4">Temporary password: '
+                   f'<b style="color:#f2f6f7">{escape(temp_password)}</b><br>'
+                   f'You will be asked to choose your own password at first login.</p>')
+    else:
+        pw_text = "You already had an account, so use your existing password."
+        pw_html = f'<p style="margin:0 0 16px;font-size:14px;color:#c4d0d4">{pw_text}</p>'
+
+    subject = f"Welcome to Septaneuron Internships: {domain_name}"
+    text = (f"Hi {name},\n\nYour intern portal account for {domain_name} is ready.\n\n"
+            f"Login: {login_url}\nEmail: {email}\n{pw_text}\n\n— Septaneuron Internship Program")
+    html = f"""<div style="background:#05080a;padding:32px 12px;font-family:Inter,Segoe UI,Arial,sans-serif">
+<div style="max-width:560px;margin:0 auto;background:#0b1217;border:1px solid #1c2a31;border-radius:16px;padding:32px;color:#f2f6f7">
+<p style="margin:0 0 6px;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#07c0cd">{escape(domain_name)}</p>
+<h1 style="margin:0 0 18px;font-size:22px;font-weight:500">Welcome, {escape(name)}!</h1>
+<p style="margin:0 0 8px;font-size:14px;color:#c4d0d4">Email: {escape(email)}</p>
+{pw_html}
+<a href="{escape(login_url)}" style="display:inline-block;background:#07c0cd;color:#05080a;font-weight:600;font-size:14px;text-decoration:none;padding:12px 22px;border-radius:999px">Open portal</a>
+<p style="margin:28px 0 0;font-size:12px;color:#6d7f86">Septaneuron Internship Program</p>
+</div></div>"""
+    sent, bad = _send_group(cfg, subject, text, html, [email])
+    if not sent:
+        raise MailError(f"Email failed: {bad[0][1] if bad else 'unknown error'}")

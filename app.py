@@ -25,6 +25,9 @@ app.config.update(
 from lms import bp as lms_bp  # noqa: E402
 app.register_blueprint(lms_bp)
 
+from lms.api_routes import api_bp  # noqa: E402
+app.register_blueprint(api_bp)
+
 # Normal pages routes
 @app.route('/')
 def home():
