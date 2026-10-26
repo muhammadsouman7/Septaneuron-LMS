@@ -18,15 +18,17 @@ def _norm(text):
     return re.sub(r"[^a-z0-9]+", "-", (text or "").lower()).strip("-")
 
 
+ALIASES = {"web-dev": "web-development", "webdev": "web-development", "web": "web-development",
+           "ai": "ai-machine-learning", "ml": "ai-machine-learning",
+           "python": "python-programming", "automation": "ai-automation"}
+
+
 def _find_domain(value):
-    """Match the form's 'Domain' answer to a row in `domains` (by name or slug)."""
+    """Match the form's 'Domain' answer to a row in `domains` (by name, slug or alias)."""
     key = _norm(value)
+    key = ALIASES.get(key, key)
     if not key:
         return None
-    for d in supa.select("domains"):
-        if key in (d["slug"], _norm(d["name"])):
-            return d
-    return None
 
 
 @api_bp.route("/users/create", methods=["POST"])

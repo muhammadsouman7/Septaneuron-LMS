@@ -59,6 +59,53 @@ def valid_url(url):
     return bool(re.match(r"^https?://[^\s]+\.[^\s]+$", url or "", re.I)) and len(url) <= 500
 
 
+from urllib.parse import urlparse
+
+LINKEDIN_POST_RE = re.compile(
+    r"^/(posts/[A-Za-z0-9_\-%.]+|feed/update/urn:li:(activity|share|ugcPost):\d+/?|"
+    r"embed/feed/update/urn:li:(activity|share|ugcPost):\d+/?|video/event/urn:li:[A-Za-z]+:\d+/?)", re.I)
+GITHUB_REPO_RE = re.compile(r"^/[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})/[A-Za-z0-9._-]{1,100}/?$")
+CREATIVE_HOSTS = {
+    "drive.google.com", "docs.google.com", "youtube.com", "www.youtube.com", "youtu.be",
+    "behance.net", "www.behance.net", "dribbble.com", "www.dribbble.com", "canva.com", "www.canva.com",
+    "figma.com", "www.figma.com", "dropbox.com", "www.dropbox.com", "vimeo.com", "www.vimeo.com",
+    "notion.site", "medium.com", "loom.com", "www.loom.com",
+}
+
+
+def _parts(url):
+    if not valid_url(url):
+        return None
+    p = urlparse(url.strip())
+    if p.scheme != "https" or p.username or p.password or p.port:
+        return None
+    return p
+
+
+def valid_linkedin_post(url):
+    p = _parts(url)
+    return bool(p and (p.hostname or "").lower() in ("linkedin.com", "www.linkedin.com")
+                and LINKEDIN_POST_RE.match(p.path))
+
+
+def valid_github_repo(url):
+    p = _parts(url)
+    if not p or (p.hostname or "").lower() not in ("github.com", "www.github.com"):
+        return False
+    path = p.path[:-4] if p.path.endswith(".git") else p.path
+    if not GITHUB_REPO_RE.match(path):
+        return False
+    return path.strip("/").split("/")[0].lower() not in {"orgs", "settings", "login", "features", "topics", "sponsors", "marketplace"}
+
+
+def valid_creative_link(url):
+    p = _parts(url)
+    if not p:
+        return False
+    host = (p.hostname or "").lower()
+    return host in CREATIVE_HOSTS or host.endswith(".notion.site") or host.endswith(".canva.site")
+
+
 def check_upload(storage):
     """Return (data, filename, content_type, error). storage may be empty."""
     if not storage or not storage.filename:

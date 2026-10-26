@@ -7,7 +7,8 @@ from werkzeug.utils import secure_filename
 
 from . import bp, supa
 from .auth import ADMIN_ROLES, current_user, login_required, my_domain_ids, roles_required
-from .utils import MAX_ZIP_BYTES, check_zip_bytes, now_utc, parse_ts, storage_key, valid_url
+from .utils import (MAX_ZIP_BYTES, check_zip_bytes, now_utc, parse_ts, storage_key, valid_creative_link,
+                    valid_github_repo, valid_linkedin_post)
 
 
 def task_state(task, sub, now=None):
@@ -137,11 +138,15 @@ def submit(task_id):
 
     note = request.form.get("note", "").strip()[:4000]
     link = request.form.get("link", "").strip()
+    linkedin = request.form.get("linkedin_url", "").strip()
     new_path, filename, err = _verified_upload(task, user)
-    if not err and link and not valid_url(link):
-        err = "Please enter a valid link starting with http:// or https://"
-    if not err and not (note or link or new_path or (sub and sub.get("file_path"))):
-        err = "Add a link, a zip file or a note before submitting."
+    if not err and not valid_linkedin_post(linkedin):
+        err = "Enter a valid LinkedIn post URL (https://www.linkedin.com/posts/… or /feed/update/urn:li:activity:…)."
+    if not err and task.get("submission_type", "code") == "code":
+        if not valid_github_repo(link):
+            err = "Enter a valid GitHub repository URL, e.g. https://github.com/username/repository"
+    elif not err and not valid_creative_link(link):
+        err = "Enter a valid link to your work (Google Drive, YouTube, Behance, Canva, Figma, Google Docs, Dropbox, Vimeo, Notion or Medium)."
     if err:
         if new_path:
             _discard(new_path)
@@ -150,7 +155,7 @@ def submit(task_id):
 
     now = now_utc()
     due = parse_ts(task.get("due_at"))
-    values = {"note": note or None, "link_url": link or None, "status": "submitted",
+    values = {"note": note or None, "link_url": link, "linkedin_url": linkedin, "status": "submitted",
               "is_late": bool(due and now > due), "submitted_at": now.isoformat()}
     if new_path:
         values.update(file_path=new_path, file_name=filename)

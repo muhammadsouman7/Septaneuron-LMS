@@ -134,8 +134,11 @@ def _task_values(form):
         points = 0
     if not 1 <= points <= 1000:
         return None, "Max points must be between 1 and 1000."
+    stype = form.get("submission_type", "code")
+    if stype not in ("code", "creative"):
+        return None, "Choose a valid submission type."
     return {"title": title, "description": form.get("description", "").strip()[:8000],
-            "due_at": due, "max_points": points}, None
+            "due_at": due, "max_points": points, "submission_type": stype}, None
 
 
 def _notify(task, domain, updated=False):
