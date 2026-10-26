@@ -29,6 +29,10 @@ def _find_domain(value):
     key = ALIASES.get(key, key)
     if not key:
         return None
+    for d in supa.select("domains"):
+        if key in (d["slug"], _norm(d["name"])):
+            return d
+    return None
 
 
 @api_bp.route("/users/create", methods=["POST"])
