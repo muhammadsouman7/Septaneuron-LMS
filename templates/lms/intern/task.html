@@ -41,16 +41,15 @@
         <div class="lms-card">
             <h3>{{ 'Update your submission' if sub else 'Submit your work' }}</h3>
             {% if sub %}
-            <p class="lms-muted lms-small" style="margin:0 0 16px">Last submitted {{ sub.submitted_at|dt }}{% if sub.is_late %} · late{% endif %}. Sending again replaces it.</p>{% endif %}
-            <form class="lms-form" method="post" action="{{ url_for('lms.submit', task_id=task.id) }}" data-direct-upload data-upload-url="{{ url_for('lms.upload_url', task_id=task.id) }}" data-max-bytes="{{ max_zip_mb * 1000000 }}">
-                {{ csrf() }}
-                <input type="hidden" name="upload_path" value="">
-                <label>LinkedIn post URL <input type="url" name="linkedin_url" required pattern="https://(www\.)?linkedin\.com/.+" value="{{ sub.linkedin_url if sub and sub.linkedin_url }}" placeholder="https://www.linkedin.com/posts/…"><small>Post a demo video of your work on LinkedIn, tag Septaneuron, then paste the post link here.</small></label>                {% if task.submission_type == 'creative' %}
-                <label>Link to your work <input type="url" name="link" required value="{{ sub.link_url if sub and sub.link_url }}" placeholder="https://drive.google.com/…"><small>Google Drive, YouTube (unlisted), Behance, Canva, Figma, Google Docs, Dropbox, Vimeo, Notion or Medium. Make sure anyone with the link can view it.</small></label>                {% else %}
-                <label>GitHub repository <input type="url" name="link" required pattern="https://(www\.)?github\.com/[A-Za-z0-9-]+/[A-Za-z0-9._-]+/?" value="{{ sub.link_url if sub and sub.link_url }}" placeholder="https://github.com/username/repository"><small>Public repo (or add us as a collaborator) with a README.</small></label>                {% endif %}
-                <label>Zip file <input type="file" accept=".zip,application/zip,application/x-zip-compressed" data-zip-only><small>.zip only, up to {{ max_zip_mb }} MB. Password-protected zips and executables are rejected.{% if sub and sub.file_name %} Current file: {{ sub.file_name }}{% endif %}</small></label>
+            <p class="lms-muted lms-small" style="margin:0 0 16px">Last submitted {{ sub.submitted_at|dt }}{% if sub.is_late %} · late{% endif %}. Sending again replaces it.</p>{% endif %} {% set is_creative = task.submission_type == 'creative' %}
+            <form class="lms-form" method="post" action="{{ url_for('lms.submit', task_id=task.id) }}" {% if is_creative %}data-direct-upload data-upload-url="{{ url_for('lms.upload_url', task_id=task.id) }}" data-max-bytes="{{ max_zip_mb * 1000000 }}" {% endif %}>
+                {{ csrf() }} {% if is_creative %}<input type="hidden" name="upload_path" value="">{% endif %}
+                <label>LinkedIn post URL <input type="url" name="linkedin_url" required pattern="https://((www\.)?linkedin\.com|lnkd\.in)/.+" value="{{ sub.linkedin_url if sub and sub.linkedin_url }}" placeholder="https://lnkd.in/p/… or https://www.linkedin.com/posts/…"><small>Post a demo video of your work on LinkedIn, tag Septaneuron, then paste the post link here (the Share → Copy link URL works).</small></label>                {% if is_creative %}
+                <label>Link to your work <input type="url" name="link" required value="{{ sub.link_url if sub and sub.link_url }}" placeholder="https://drive.google.com/…"><small>Google Drive, YouTube (unlisted), Behance, Canva, Figma, Google Docs, Dropbox, Vimeo, Notion or Medium. Make sure anyone with the link can view it.</small></label>
+                <label>Zip file <input type="file" accept=".zip,application/zip,application/x-zip-compressed" data-zip-only><small>.zip only, up to {{ max_zip_mb }} MB. Password-protected zips and executables are rejected.{% if sub and sub.file_name %} Current file: {{ sub.file_name }}{% endif %}</small></label>                {% else %}
+                <label>GitHub repository <input type="url" name="link" required pattern="https://(www\.)?github\.com/[A-Za-z0-9\-]+/[A-Za-z0-9._\-]+/?" value="{{ sub.link_url if sub and sub.link_url }}" placeholder="https://github.com/username/repository"><small>Public repo (or add us as a collaborator) with a README.</small></label>                {% endif %}
                 <label>Notes <textarea name="note" style="min-height:90px" placeholder="Anything your mentor should know?">{{ sub.note if sub and sub.note }}</textarea></label>
-                <button class="lms-btn lms-btn--block" type="submit" data-busy="Uploading…">{{ 'Resubmit' if sub else 'Submit task' }}</button>
+                <button class="lms-btn lms-btn--block" type="submit" data-busy="Submitting…">{{ 'Resubmit' if sub else 'Submit task' }}</button>
             </form>
         </div>
         {% endif %} {% if sub and sub.file_path %}

@@ -5,8 +5,9 @@
     function lock(form, clicked) {
         form.setAttribute('data-locked', '1');
         form.querySelectorAll('button[type=submit], input[type=submit]').forEach(function(b) {
-            if (!b.hasAttribute('data-label')) b.setAttribute('data-label', b.tagName === 'BUTTON' ? b.textContent : b.value);
-            if (b === clicked || (!clicked && b === form.querySelector('button[type=submit], input[type=submit]'))) {
+            var iconOnly = b.hasAttribute('data-icon');
+            if (!iconOnly && !b.hasAttribute('data-label')) b.setAttribute('data-label', b.tagName === 'BUTTON' ? b.textContent : b.value);
+            if (!iconOnly && (b === clicked || (!clicked && b === form.querySelector('button[type=submit], input[type=submit]')))) {
                 var busy = b.getAttribute('data-busy') || 'Working…';
                 if (b.tagName === 'BUTTON') b.textContent = busy;
                 else b.value = busy;
@@ -114,6 +115,7 @@
         var file = form.querySelector('input[type=file]');
         var path = form.querySelector('input[name=upload_path]');
         var max = parseInt(form.getAttribute('data-max-bytes'), 10) || 50000000;
+        if (!file || !path) return;
 
         function problem(f) {
             if (!/\.zip$/i.test(f.name)) return 'Only .zip files can be submitted.';
@@ -201,5 +203,17 @@
             el.classList.add('is-leaving');
             setTimeout(function() { el.remove(); }, 500);
         }, 6000);
+    });
+
+    // ---- 7. Required fields get a * after their label text ------------------------------------
+    document.querySelectorAll('.lms-form label:not(.check)').forEach(function(label) {
+        if (!label.querySelector('input[required], select[required], textarea[required]')) return;
+        var first = label.firstChild;
+        if (!first || first.nodeType !== 3) return;
+        var star = document.createElement('span');
+        star.className = 'lms-req';
+        star.setAttribute('aria-hidden', 'true');
+        star.textContent = ' *';
+        first.parentNode.insertBefore(star, first.nextSibling);
     });
 })();

@@ -72,6 +72,7 @@ CREATIVE_HOSTS = {
     "notion.site", "medium.com", "loom.com", "www.loom.com",
 }
 
+LINKEDIN_SHORT_RE = re.compile(r"^/p/[A-Za-z0-9_\-]{4,40}/?$")
 
 def _parts(url):
     if not valid_url(url):
@@ -84,8 +85,14 @@ def _parts(url):
 
 def valid_linkedin_post(url):
     p = _parts(url)
-    return bool(p and (p.hostname or "").lower() in ("linkedin.com", "www.linkedin.com")
-                and LINKEDIN_POST_RE.match(p.path))
+    if not p:
+        return False
+    host = (p.hostname or "").lower()
+    if host in ("linkedin.com", "www.linkedin.com"):
+        return bool(LINKEDIN_POST_RE.match(p.path))
+    if host == "lnkd.in":  # short link from Share > Copy link
+        return bool(LINKEDIN_SHORT_RE.match(p.path))
+    return False
 
 
 def valid_github_repo(url):

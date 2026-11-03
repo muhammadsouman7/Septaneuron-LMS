@@ -124,6 +124,8 @@ def _task_values(form):
     title = form.get("title", "").strip()
     if not title or len(title) > 150:
         return None, "Give the task a title (up to 150 characters)."
+    if not form.get("description", "").strip():
+        return None, "Add the task instructions."
     due_raw = form.get("due_at", "").strip()
     due = local_input_to_utc(due_raw)
     if due_raw and not due:

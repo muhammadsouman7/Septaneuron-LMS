@@ -17,7 +17,7 @@
         </label> {% elif not editing %}
         <p class="lms-kicker" style="margin-bottom:18px">{{ domains[0].name }}</p>{% endif %}
         <label>Title <input name="title" maxlength="150" value="{{ task.title or '' }}" placeholder="Build a REST API with Flask" required></label>
-        <label>Instructions <textarea name="description" style="min-height:220px" placeholder="What should interns build or learn? Add requirements, resources and how it will be graded.">{{ task.description or '' }}</textarea></label>
+        <label>Instructions <textarea name="description" required style="min-height:220px" placeholder="What should interns build or learn? Add requirements, resources and how it will be graded.">{{ task.description or '' }}</textarea></label>
         <label>Submission type
             <select name="submission_type">
                 <option value="code" {{ 'selected' if (task.submission_type or 'code') == 'code' }}>Code (GitHub repo + LinkedIn post)</option>

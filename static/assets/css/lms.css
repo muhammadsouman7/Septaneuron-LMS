@@ -1089,3 +1089,53 @@ details.lms-review[open] summary {
         padding: 8px 10px;
     }
 }
+
+
+/* required asterisk (added by lms.js) */
+
+.lms-req {
+    color: var(--lms-bad);
+    margin-left: 2px;
+}
+
+
+/* icon-only buttons (tasks list) */
+
+.lms-btn--icon {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    flex: none;
+}
+
+.lms-table .actions--icons {
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+@media (max-width: 900px) {
+    .lms-table .actions.actions--icons {
+        display: flex;
+        justify-content: flex-end;
+    }
+    .lms-table .actions.actions--icons .lms-btn {
+        width: 44px;
+        height: 44px;
+    }
+    /* interns table: Reset / Deactivate / Delete stay on one line */
+    .lms-table .actions.actions--row {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .lms-table .actions.actions--row> :last-child:nth-child(odd) {
+        grid-column: auto;
+    }
+    .lms-table .actions.actions--row .lms-btn {
+        padding: 6px;
+        font-size: 12.5px;
+        line-height: 1.15;
+        height: auto;
+        min-height: 40px;
+        white-space: normal;
+        text-align: center;
+    }
+}

@@ -1,29 +1,48 @@
-{% extends 'lms/base.html' %}
-{% from 'lms/_macros.html' import domain_picker with context %}
-{% block title %}Tasks{% endblock %}
-{% block content %}
-<div class="lms-head"><div>
-    <p class="lms-kicker">Tasks</p>
-    <h1 class="lms-h1">Published tasks</h1>
+{% extends 'lms/base.html' %} {% from 'lms/_macros.html' import csrf, domain_picker with context %} {% block title %}Tasks{% endblock %} {% block content %}
+<div class="lms-head">
+    <div>
+        <p class="lms-kicker">Tasks</p>
+        <h1 class="lms-h1">Published tasks</h1>
+    </div>
+    <div class="lms-row">{{ domain_picker(domains, domain_id, url_for('lms.admin_tasks')) }}
+        <a class="lms-btn" href="{{ url_for('lms.admin_task_new', domain=domain_id) }}">+ New task</a></div>
 </div>
-<div class="lms-row">{{ domain_picker(domains, domain_id, url_for('lms.admin_tasks')) }}
-<a class="lms-btn" href="{{ url_for('lms.admin_task_new', domain=domain_id) }}">+ New task</a></div></div>
 {% if rows %}
-<div class="lms-table-wrap"><table class="lms-table">
-    <thead><tr><th>Task</th>{% if domains|length > 1 %}<th>Domain</th>{% endif %}<th>Deadline</th><th>Submitted</th><th>To review</th><th>Email</th></tr></thead>
-    <tbody>
-    {% for r in rows %}
-    <tr>
-        <td><a class="lms-link" href="{{ url_for('lms.admin_task', task_id=r.task.id) }}">{{ r.task.title }}</a></td>
-        {% if domains|length > 1 %}<td class="lms-muted">{{ r.domain }}</td>{% endif %}
-        <td class="lms-muted">{{ r.task.due_at|dt if r.task.due_at else '—' }}</td>
-        <td>{{ r.submitted }} / {{ r.interns }}</td>
-        <td>{% if r.review %}<span class="lms-badge lms-badge--cyan">{{ r.review }}</span>{% else %}<span class="lms-muted">0</span>{% endif %}</td>
-        <td>{% if r.task.email_error %}<span class="lms-badge lms-badge--warn" title="{{ r.task.email_error }}">Failed</span>{% elif r.task.emailed_count %}<span class="lms-muted">{{ r.task.emailed_count }} sent</span>{% else %}<span class="lms-muted">—</span>{% endif %}</td>
-    </tr>
-    {% endfor %}
-    </tbody></table></div>
+<div class="lms-table-wrap">
+    <table class="lms-table">
+        <thead>
+            <tr>
+                <th>Task</th>{% if domains|length > 1 %}
+                <th>Domain</th>{% endif %}
+                <th>Deadline</th>
+                <th>Submitted</th>
+                <th>To review</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in rows %}
+            <tr>
+                <td><a class="lms-link" href="{{ url_for('lms.admin_task', task_id=r.task.id) }}">{{ r.task.title }}</a></td>
+                {% if domains|length > 1 %}
+                <td class="lms-muted">{{ r.domain }}</td>{% endif %}
+                <td class="lms-muted">{{ r.task.due_at|dt if r.task.due_at else '—' }}</td>
+                <td>{{ r.submitted }} / {{ r.interns }}</td>
+                <td>{% if r.review %}<span class="lms-badge lms-badge--cyan">{{ r.review }}</span>{% else %}<span class="lms-muted">0</span>{% endif %}</td>
+                <td>{% if r.task.email_error %}<span class="lms-badge lms-badge--warn" title="{{ r.task.email_error }}">Failed</span>{% elif r.task.emailed_count %}<span class="lms-muted">{{ r.task.emailed_count }} sent</span>{% else %}<span class="lms-muted">—</span>{%
+                    endif %}</td>
+                <td>
+                    <div class="actions actions--icons">
+                        <a class="lms-btn lms-btn--ghost lms-btn--icon" href="{{ url_for('lms.admin_task_edit', task_id=r.task.id) }}" title="Edit task" aria-label="Edit task"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9a2.1 2.1 0 0 0-3-3L5 17z"/><path d="M14 7l3 3"/></svg></a>
+                        <form class="inline" method="post" action="{{ url_for('lms.admin_task_delete', task_id=r.task.id) }}" data-confirm="Delete this task and all its submissions? This cannot be undone.">{{ csrf() }}<button class="lms-btn lms-btn--danger lms-btn--icon" type="submit" data-icon title="Delete task" aria-label="Delete task"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"/><path d="M9 7V4.5h6V7"/><path d="M6.5 7l1 13h9l1-13"/><path d="M10 11v5M14 11v5"/></svg></button></form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% else %}
 <div class="lms-empty"><b>No tasks yet</b>Create the first task and your interns will be emailed.</div>
-{% endif %}
-{% endblock %}
+{% endif %} {% endblock %}

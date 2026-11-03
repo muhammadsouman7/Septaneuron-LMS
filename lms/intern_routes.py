@@ -26,7 +26,7 @@ def dashboard():
     ids = my_domain_ids(user)
     domains, tasks, subs = supa.parallel(
         lambda: supa.select("domains", filters=[("id", "in", ids)], order="name.asc"),
-        lambda: supa.select("tasks", filters=[("domain_id", "in", ids)], order="due_at.asc.nullslast"),
+        lambda: supa.select("tasks", filters=[("domain_id", "in", ids)], order="created_at.desc"),
         lambda: supa.select("submissions", filters={"intern_id": user["id"]}))
     subs = {s["task_id"]: s for s in subs}
     dnames = {d["id"]: d["name"] for d in domains}
@@ -81,6 +81,8 @@ def upload_url(task_id):
     goes straight to storage and never has to fit through our server's request-size limit."""
     user = current_user()
     task = _task_for_intern(task_id)
+    if task.get("submission_type", "code") == "code":
+        return jsonify(error="Zip upload is not available for this task."), 400
     name = secure_filename(request.form.get("filename", ""))
     try:
         size = int(request.form.get("size", "0"))
@@ -139,9 +141,10 @@ def submit(task_id):
     note = request.form.get("note", "").strip()[:4000]
     link = request.form.get("link", "").strip()
     linkedin = request.form.get("linkedin_url", "").strip()
-    new_path, filename, err = _verified_upload(task, user)
+    is_code = task.get("submission_type", "code") == "code"
+    new_path, filename, err = (None, None, None) if is_code else _verified_upload(task, user)
     if not err and not valid_linkedin_post(linkedin):
-        err = "Enter a valid LinkedIn post URL (https://www.linkedin.com/posts/… or /feed/update/urn:li:activity:…)."
+        err = "Enter a valid LinkedIn post URL (https://www.linkedin.com/posts/…, /feed/update/urn:li:activity:… or the short link https://lnkd.in/p/…)."
     if not err and task.get("submission_type", "code") == "code":
         if not valid_github_repo(link):
             err = "Enter a valid GitHub repository URL, e.g. https://github.com/username/repository"
