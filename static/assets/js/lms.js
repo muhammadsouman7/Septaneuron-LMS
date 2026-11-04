@@ -217,3 +217,60 @@
         first.parentNode.insertBefore(star, first.nextSibling);
     });
 })();
+
+// ---- 5. Session timeout: 15 min idle -> sign out + "Session expired" popup ----------------------
+(function() {
+    'use strict';
+    var body = document.body;
+    var limit = parseInt(body.getAttribute('data-session-timeout'), 10);
+    if (!limit) return; // login page / signed out
+    var pingUrl = body.getAttribute('data-ping-url');
+    var expiredUrl = body.getAttribute('data-expired-url');
+    var idleMs = limit * 1000;
+    var pingEvery = 4 * 60 * 1000;
+    var lastActivity = Date.now(),
+        lastPing = Date.now(),
+        dirty = false,
+        done = false;
+
+    function activity() { lastActivity = Date.now();
+        dirty = true; }
+    ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(function(ev) {
+        document.addEventListener(ev, activity, { passive: true });
+    });
+
+    function popup() {
+        var o = document.createElement('div');
+        o.className = 'lms-modal';
+        o.setAttribute('role', 'alertdialog');
+        o.setAttribute('aria-modal', 'true');
+        o.innerHTML = '<div class="lms-modal__box"><h2>Session expired</h2>' +
+            '<p>For your security you were signed out after 15 minutes of inactivity. Please log in again to continue.</p>' +
+            '<a class="lms-btn lms-btn--block" href="' + expiredUrl + '?go=1">Log in again</a></div>';
+        document.body.appendChild(o);
+    }
+
+    function expire() {
+        if (done) return;
+        done = true;
+        try { fetch(expiredUrl, { credentials: 'same-origin', cache: 'no-store', redirect: 'manual' }); } catch (e) {}
+        popup();
+    }
+
+    function ping() {
+        lastPing = Date.now();
+        dirty = false;
+        fetch(pingUrl, { credentials: 'same-origin', cache: 'no-store', redirect: 'manual' })
+            .then(function(r) { if (r.status === 401) expire(); })
+            .catch(function() {});
+    }
+
+    function tick() {
+        if (done) return;
+        var now = Date.now();
+        if (now - lastActivity >= idleMs) { expire(); return; }
+        if (dirty && now - lastPing >= pingEvery) ping();
+    }
+    setInterval(tick, 15000);
+    document.addEventListener('visibilitychange', function() { if (!document.hidden) tick(); });
+})();

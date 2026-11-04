@@ -6,7 +6,7 @@ from flask import abort, flash, jsonify, redirect, render_template, request, url
 from werkzeug.utils import secure_filename
 
 from . import bp, supa
-from .auth import ADMIN_ROLES, current_user, login_required, my_domain_ids, roles_required
+from .auth import ADMIN_ROLES, admin_domain_ids, current_user, login_required, my_domain_ids, roles_required
 from .utils import (MAX_ZIP_BYTES, check_zip_bytes, now_utc, parse_ts, storage_key, valid_creative_link,
                     valid_github_repo, valid_linkedin_post)
 
@@ -182,7 +182,7 @@ def task_file(task_id):
     task = supa.one("tasks", id=task_id)
     if not task or not task.get("attachment_path"):
         abort(404)
-    if user["role"] == "admin" and task["domain_id"] != user["domain_id"]:
+    if user["role"] == "admin" and task["domain_id"] not in admin_domain_ids(user):
         abort(404)
     if user["role"] == "intern" and task["domain_id"] not in my_domain_ids(user):
         abort(404)
@@ -196,9 +196,8 @@ def submission_file(sub_id):
     sub = supa.one("submissions", id=sub_id)
     if not sub or not sub.get("file_path"):
         abort(404)
-    allowed = {"intern": sub["intern_id"] == user["id"],
-               "admin": sub["domain_id"] == user["domain_id"],
-               "super_admin": True}[user["role"]]
+    ids = admin_domain_ids(user) if user["role"] in ADMIN_ROLES else []
+    allowed = (sub["intern_id"] == user["id"]) if user["role"] == "intern" else (ids is None or sub["domain_id"] in ids)
     if not allowed:
         abort(404)
     return redirect(supa.signed_url(sub["file_path"], download_as=sub["file_name"]))

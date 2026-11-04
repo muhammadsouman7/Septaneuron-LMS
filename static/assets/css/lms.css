@@ -1139,3 +1139,36 @@ details.lms-review[open] summary {
         text-align: center;
     }
 }
+
+.lms-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: rgba(5, 8, 10, .82);
+    backdrop-filter: blur(6px);
+}
+
+.lms-modal__box {
+    width: 100%;
+    max-width: 420px;
+    padding: 30px;
+    border: 1px solid var(--lms-line);
+    border-radius: 20px;
+    background: #0b1217;
+    text-align: center;
+}
+
+.lms-modal__box h2 {
+    margin: 0 0 10px;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.lms-modal__box p {
+    margin: 0 0 22px;
+    color: var(--lms-dim);
+    line-height: 1.6;
+}

@@ -18,7 +18,7 @@ app.config.update(
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE='Lax',
     SESSION_COOKIE_SECURE=bool(os.environ.get('VERCEL')),
-    PERMANENT_SESSION_LIFETIME=timedelta(hours=8),
+    PERMANENT_SESSION_LIFETIME=timedelta(minutes=15),  # idle timeout: every request/ping extends it
 )
 
 # Intern LMS (login, dashboards, admin) lives under /portal

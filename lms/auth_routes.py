@@ -1,15 +1,16 @@
 import os
 from datetime import timedelta
 
-from flask import abort, current_app, flash, redirect, render_template, request, session, url_for
+from .utils import EMAIL_RE, MAX_ZIP_BYTES, attempt_key, hash_password, now_utc, parse_ts, password_error
 from werkzeug.security import check_password_hash
 
 from . import bp, supa
 from .auth import ADMIN_ROLES, check_csrf, csrf_token, current_user, login_required, safe_next
-from .utils import EMAIL_RE, MAX_ZIP_BYTES, hash_password, now_utc, parse_ts, password_error
+from flask import abort, current_app, flash, jsonify, redirect, render_template, request, session, url_for
 
-MAX_FAILS = 5
-LOCK_MINUTES = 15
+EMAIL_MAX_FAILS = 5   # wrong passwords per email before the lock (change to 6 if you prefer)
+IP_MAX_FAILS = 20     # wrong passwords per IP address, across any emails (stops email-guessing sprays)
+LOCK_MINUTES = 15     # cool-down
 # precomputed (same 600k iterations) so cold starts stay fast; keeps timing similar for unknown emails
 _DUMMY_HASH = "pbkdf2:sha256:600000$GAC1TA7SM9xdVEKK$00c25e1325fb21276cf37efcda2e8f04cbf39718a7f3ab6f1d7a255b5449ce1b"
 
@@ -27,7 +28,7 @@ def guard():
         check_csrf()
     user = current_user()
     if (user and user["must_change_password"]
-            and request.endpoint not in ("lms.change_password", "lms.logout")):
+            and request.endpoint not in ("lms.change_password", "lms.logout", "lms.ping", "lms.session_expired")):
         return redirect(url_for("lms.change_password"))
 
 
@@ -64,6 +65,37 @@ def home():
     return redirect(url_for("lms.admin_overview" if user["role"] in ADMIN_ROLES else "lms.dashboard"))
 
 
+def _fails(row, now):
+    """Failures still counted: they expire after the cool-down window."""
+    if not row:
+        return 0
+    seen = parse_ts(row.get("updated_at"))
+    return row["fails"] if seen and seen > now - timedelta(minutes=LOCK_MINUTES) else 0
+
+
+def _locked_minutes(rows, now):
+    mins = 0
+    for r in rows:
+        until = parse_ts(r.get("locked_until"))
+        if until and until > now:
+            mins = max(mins, int((until - now).total_seconds() // 60) + 1)
+    return mins
+
+
+def _record_failure(email_key, ip_key, rows, now):
+    """Count one failure against the email AND the IP. Returns attempts left for this email."""
+    left = 0
+    for key, limit in ((email_key, EMAIL_MAX_FAILS), (ip_key, IP_MAX_FAILS)):
+        fails, locked = _fails(rows.get(key), now) + 1, None
+        if fails >= limit:
+            fails, locked = 0, (now + timedelta(minutes=LOCK_MINUTES)).isoformat()
+        supa.upsert("login_attempts", {"key": key, "fails": fails, "locked_until": locked,
+                                       "updated_at": now.isoformat()}, "key")
+        if key == email_key:
+            left = 0 if locked else limit - fails
+    return left
+
+
 @bp.route("/login", methods=["GET", "POST"])
 def login():
     if current_user():
@@ -74,27 +106,29 @@ def login():
     email = request.form.get("email", "").strip().lower()
     password = request.form.get("password", "")
     nxt = safe_next(request.form.get("next"))
-    row = supa.one("users", email=email) if EMAIL_RE.match(email) else None
+    now = now_utc()
+    ekey, ikey = attempt_key("email", email), attempt_key("ip", request.remote_addr or "?")
+    rows = {r["key"]: r for r in supa.select("login_attempts", filters=[("key", "in", [ekey, ikey])])}
 
-    locked = parse_ts(row.get("locked_until")) if row else None
-    if locked and locked > now_utc():
-        flash("Too many failed attempts. Please wait a few minutes and try again.", "error")
+    # Locked? Same message whether or not the email exists, so nothing leaks.
+    wait = _locked_minutes(rows.values(), now)
+    if wait:
+        flash(f"Too many failed attempts. Please try again in {wait} minute{'s' if wait != 1 else ''}.", "error")
         return render_template("lms/login.html", email=email, next=nxt or ""), 429
 
+    row = supa.one("users", email=email) if EMAIL_RE.match(email) else None
     ok = check_password_hash(row["password_hash"] if row else _DUMMY_HASH, password)
     if not (row and ok and row["is_active"]):
-        if row:
-            fails = row["failed_attempts"] + 1
-            values = {"failed_attempts": fails}
-            if fails >= MAX_FAILS:
-                values = {"failed_attempts": 0,
-                          "locked_until": (now_utc() + timedelta(minutes=LOCK_MINUTES)).isoformat()}
-            supa.update("users", values, filters={"id": row["id"]})
-        flash("Invalid email or password.", "error")
+        left = _record_failure(ekey, ikey, rows, now)   # unknown emails are counted too
+        if left:
+            flash(f"Incorrect email or password. {left} attempt{'s' if left != 1 else ''} left "
+                  f"before a {LOCK_MINUTES}-minute lock.", "error")
+        else:
+            flash(f"Too many failed attempts. Please try again in {LOCK_MINUTES} minutes.", "error")
         return render_template("lms/login.html", email=email, next=nxt or ""), 401
 
-    supa.update("users", {"failed_attempts": 0, "locked_until": None,
-                          "last_login_at": now_utc().isoformat()}, filters={"id": row["id"]})
+    supa.delete("login_attempts", filters=[("key", "eq", ekey)])
+    supa.update("users", {"last_login_at": now.isoformat()}, filters={"id": row["id"]})
     session.clear()
     session.permanent = True
     session["uid"] = row["id"]
@@ -102,6 +136,24 @@ def login():
     if row["must_change_password"]:
         return redirect(url_for("lms.change_password"))
     return redirect(nxt or url_for("lms.home"))
+
+
+@bp.route("/ping")
+def ping():
+    """Called by lms.js while the user is active; refreshes the 15-minute session."""
+    if not current_user():
+        return jsonify(ok=False), 401
+    return jsonify(ok=True)
+
+
+@bp.route("/session-expired")
+def session_expired():
+    """Used by lms.js when the 15 minutes run out: ends the session. ?go=1 then shows the login page."""
+    session.clear()
+    if request.args.get("go"):
+        flash("Your session expired. Please sign in again.", "error")
+        return redirect(url_for("lms.login"))
+    return "", 204
 
 
 @bp.route("/logout", methods=["POST"])

@@ -3,7 +3,7 @@
     <div>
         <p class="lms-kicker">Interns</p>
         <h1 class="lms-h1">Manage interns</h1>
-        <p class="lms-sub">New accounts start with the temporary password <b style="color:var(--lms-ink)">{{ default_pw }}</b> and must choose their own on first sign-in.</p>
+        <p class="lms-sub">Every new account gets its own unique temporary password, emailed to the intern. They must choose their own on first sign-in.</p>
     </div>{{ domain_picker(domains, domain_id, url_for('lms.admin_interns')) }}</div>
 
 <div class="lms-grid lms-grid--2" style="margin-bottom:34px">
@@ -11,13 +11,13 @@
         <h2>Add one intern</h2>
         <p class="lms-muted">Use the Gmail address they gave you.</p>
         <form class="lms-form" method="post" action="{{ url_for('lms.admin_intern_add') }}" data-once>
-            {{ csrf() }} {% if me().role == 'super_admin' %}<label>Domain<select name="domain_id" required>{% for d in domains %}<option value="{{ d.id }}" {{ 'selected' if d.id == domain_id }}>{{ d.name }}</option>{% endfor %}</select></label>{% endif
-            %}
+            {{ csrf() }} {% if me().role == 'super_admin' or domains|length > 1 %}<label>Domain<select name="domain_id" required>{% for d in domains %}<option value="{{ d.id }}" {{ 'selected' if d.id == domain_id }}>{{ d.name }}</option>{% endfor %}</select></label>{%
+            endif %}
             <div class="lms-two">
                 <label>Full name<input name="full_name" required></label>
                 <label>Email<input type="email" name="email" placeholder="name@gmail.com" required></label>
             </div>
-            <label>Password override <input name="password" autocomplete="off" placeholder="Leave blank for {{ default_pw }}"></label>
+            <label>Password override (optional) <input name="password" autocomplete="off" placeholder="Leave blank: a unique password is emailed"></label>
             <button class="lms-btn" type="submit" data-busy="Creating…">Create account</button>
         </form>
     </div>
@@ -25,8 +25,8 @@
         <h2>Add many at once</h2>
         <p class="lms-muted">One per line: <code>email, Full Name</code> (name optional). Up to 200.</p>
         <form class="lms-form" method="post" action="{{ url_for('lms.admin_intern_bulk') }}" data-once>
-            {{ csrf() }} {% if me().role == 'super_admin' %}<label>Domain<select name="domain_id" required>{% for d in domains %}<option value="{{ d.id }}" {{ 'selected' if d.id == domain_id }}>{{ d.name }}</option>{% endfor %}</select></label>{% endif
-            %}
+            {{ csrf() }} {% if me().role == 'super_admin' or domains|length > 1 %}<label>Domain<select name="domain_id" required>{% for d in domains %}<option value="{{ d.id }}" {{ 'selected' if d.id == domain_id }}>{{ d.name }}</option>{% endfor %}</select></label>{%
+            endif %}
             <label>Emails<textarea name="lines" required style="min-height:96px" placeholder="ali.khan@gmail.com, Ali Khan&#10;sara@gmail.com"></textarea></label>
             <button class="lms-btn" type="submit" data-busy="Creating…">Create accounts</button>
         </form>
@@ -57,7 +57,7 @@
                 </td>
                 <td>
                     <div class="actions actions--row">
-                        <form class="inline" method="post" action="{{ url_for('lms.admin_intern_reset', user_id=i.id) }}" data-confirm="Reset {{ i.email }} to the temporary password?">{{ csrf() }}<button class="lms-btn lms-btn--ghost lms-btn--sm" type="submit">Reset password</button></form>
+                        <form class="inline" method="post" action="{{ url_for('lms.admin_intern_reset', user_id=i.id) }}" data-confirm="Send {{ i.email }} a new temporary password by email?">{{ csrf() }}<button class="lms-btn lms-btn--ghost lms-btn--sm" type="submit">Reset password</button></form>
                         <form class="inline" method="post" action="{{ url_for('lms.admin_intern_toggle', user_id=i.id) }}" data-confirm="{{ 'Deactivate' if i.is_active else 'Reactivate' }} {{ i.email }}?">{{ csrf() }}<button class="lms-btn lms-btn--ghost lms-btn--sm" type="submit">{{ 'Deactivate' if i.is_active else 'Reactivate' }}</button></form>
                         <form class="inline" method="post" action="{{ url_for('lms.admin_intern_delete', user_id=i.id) }}" data-confirm="{% if me().role == 'super_admin' %}Permanently delete {{ i.email }} from every domain, with all their submissions?{% else %}Remove {{ i.email }} from this domain and delete their submissions here?{% endif %} This cannot be undone.">{{ csrf() }}<input type="hidden" name="domain_id" value="{{ domain_id or '' }}"><button class="lms-btn lms-btn--danger lms-btn--sm" type="submit">Delete</button></form>
                     </div>

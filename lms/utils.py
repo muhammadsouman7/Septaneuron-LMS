@@ -4,6 +4,8 @@ import re
 import stat
 import uuid
 import zipfile
+import hashlib
+import secrets
 from datetime import datetime, timedelta, timezone
 
 from werkzeug.security import generate_password_hash
@@ -27,6 +29,19 @@ def default_password():
 def hash_password(password):
     return generate_password_hash(password, method="pbkdf2:sha256:600000")
 
+def temp_password():
+    """Unique random temporary password (12 random chars + a fixed suffix for the complexity rules)."""
+    return secrets.token_urlsafe(9) + "aA1!"
+
+
+def hash_temp_password(pw):
+    # Random 72-bit passwords + forced change at first login, so a lighter hash is fine and keeps bulk creation fast.
+    return generate_password_hash(pw, method="pbkdf2:sha256:100000")
+
+
+def attempt_key(kind, value):
+    """Stable key for the login_attempts table (the raw email/IP is never stored)."""
+    return kind + ":" + hashlib.sha256(f"{kind}|{value}".encode()).hexdigest()[:40]
 
 def now_utc():
     return datetime.now(timezone.utc)

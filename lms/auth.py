@@ -14,6 +14,15 @@ def my_domain_ids(user):
     ids = [r["domain_id"] for r in supa.select("intern_domains", filters={"user_id": user["id"]}, columns="domain_id")]
     return ids or ([user["domain_id"]] if user.get("domain_id") else [])
 
+def admin_domain_ids(user):
+    """Domain ids an admin manages. None means 'every domain' (super admin). Cached per request."""
+    if user["role"] == "super_admin":
+        return None
+    if "_admin_dids" not in g:
+        g._admin_dids = [r["domain_id"] for r in
+                         supa.select("domain_admins", filters={"user_id": user["id"]}, columns="domain_id")]
+    return g._admin_dids
+
 def current_user():
     """The logged-in user row, re-read from the DB on every request so that
     deactivating an account takes effect immediately."""

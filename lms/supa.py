@@ -142,6 +142,10 @@ def update(table, values, *, filters):
                     headers={"Prefer": "return=representation"})
     return resp.json()
 
+def upsert(table, row, on_conflict):
+    resp = _request("POST", f"{_url()}/rest/v1/{table}", params={"on_conflict": on_conflict}, json=row,
+                    headers={"Prefer": "resolution=merge-duplicates,return=representation"})
+    return resp.json()
 
 def delete(table, *, filters):
     if not _norm(filters):

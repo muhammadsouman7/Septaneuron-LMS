@@ -85,3 +85,41 @@ insert into public.domains (slug, name) values
     ('ai-machine-learning', 'AI & Machine Learning'),
     ('ai-automation',       'AI Automation')
 on conflict (slug) do nothing;
+
+-- intern <-> domain membership (was missing from schema.sql)
+create table if not exists public.intern_domains (
+    user_id   uuid not null references public.users(id)   on delete cascade,
+    domain_id uuid not null references public.domains(id) on delete cascade,
+    primary key (user_id, domain_id)
+);
+insert into public.intern_domains (user_id, domain_id)
+select id, domain_id from public.users where role = 'intern' and domain_id is not null
+on conflict do nothing;
+
+-- admin <-> domain assignment (many admins per domain, many domains per admin)
+create table if not exists public.domain_admins (
+    domain_id uuid not null references public.domains(id) on delete cascade,
+    user_id   uuid not null references public.users(id)   on delete cascade,
+    primary key (domain_id, user_id)
+);
+insert into public.domain_admins (domain_id, user_id)
+select domain_id, id from public.users where role = 'admin' and domain_id is not null
+on conflict do nothing;
+
+-- admins no longer need users.domain_id
+alter table public.users drop constraint if exists users_domain_required;
+alter table public.users add constraint users_domain_required
+    check (role in ('super_admin', 'admin') or domain_id is not null);
+update public.users set domain_id = null where role = 'admin';
+
+-- login rate limiting
+create table if not exists public.login_attempts (
+    key           text primary key,
+    fails         int not null default 0,
+    locked_until  timestamptz,
+    updated_at    timestamptz not null default now()
+);
+
+alter table public.intern_domains enable row level security;
+alter table public.domain_admins  enable row level security;
+alter table public.login_attempts enable row level security;

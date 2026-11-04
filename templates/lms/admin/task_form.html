@@ -8,7 +8,7 @@
 </div>
 <div class="lms-card" style="max-width:760px">
     <form class="lms-form" method="post" enctype="multipart/form-data" data-once>
-        {{ csrf() }} {% if me().role == 'super_admin' and not editing %}
+        {{ csrf() }} {% if (me().role == 'super_admin' or domains|length > 1) and not editing %}
         <label>Domain
             <select name="domain_id" required>
                 <option value="">Choose a domain…</option>
