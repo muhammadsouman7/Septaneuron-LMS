@@ -17,15 +17,14 @@
     <div class="lms-ambient" aria-hidden="true"></div>
 
     <header class="sn-nav sn-nav--portal" id="snNav">
+        <a class="sn-nav__brand" href="{{ url_for('lms.home') }}">
+            <span class="sn-nav__name">Septaneuron</span><span class="sn-nav__tag">Interns</span>
+        </a>
         {% if not user %}
         <a class="lms-back" href="{{ url_for('home') }}" aria-label="Back to website">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
         </a>
-        {% endif %}
-        <a class="sn-nav__brand" href="{{ url_for('lms.home') }}">
-            <span class="sn-nav__name">Septaneuron</span><span class="sn-nav__tag">Interns</span>
-        </a>
-        {% if user %}
+        {% endif %} {% if user %}
         <nav class="sn-dock" aria-label="Portal">
             {% if user.role == 'intern' %}
             <a class="sn-dock__item {{ 'is-active' if ep in ('lms.dashboard', 'lms.task_view') }}" href="{{ url_for('lms.dashboard') }}"><span class="sn-dock__icon-slot"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></span><span class="sn-dock__label">Dashboard</span></a>            {% else %}
