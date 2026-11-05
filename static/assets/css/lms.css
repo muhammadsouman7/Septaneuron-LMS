@@ -72,6 +72,45 @@ a.lms-task {
     display: contents;
 }
 
+.lms-back {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 38px;
+    height: 38px;
+    margin-right: 10px;
+    border: 1px solid var(--lms-line);
+    border-radius: 999px;
+    color: var(--lms-ink);
+    text-decoration: none;
+    transition: border-color .2s ease, color .2s ease;
+}
+
+.lms-back:hover {
+    border-color: var(--lms-cyan);
+    color: var(--lms-cyan);
+}
+
+.lms-back svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+@media (max-width: 720px) {
+    .lms-back {
+        display: inline-flex;
+    }
+    .lms-back-text {
+        display: none !important;
+    }
+}
+
 @media (min-width: 721px) {
     .sn-nav--portal {
         width: min(880px, calc(100% - 32px));

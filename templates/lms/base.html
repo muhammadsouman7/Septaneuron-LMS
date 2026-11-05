@@ -17,6 +17,11 @@
     <div class="lms-ambient" aria-hidden="true"></div>
 
     <header class="sn-nav sn-nav--portal" id="snNav">
+        {% if not user %}
+        <a class="lms-back" href="{{ url_for('home') }}" aria-label="Back to website">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </a>
+        {% endif %}
         <a class="sn-nav__brand" href="{{ url_for('lms.home') }}">
             <span class="sn-nav__name">Septaneuron</span><span class="sn-nav__tag">Interns</span>
         </a>
@@ -32,7 +37,7 @@
         </nav>
         <form class="lms-signout" method="post" action="{{ url_for('lms.logout') }}">{{ csrf() }}<button class="sn-nav__cta" type="submit">Sign out</button></form>
         <button class="sn-nav__toggle" type="button" aria-label="Open menu" aria-expanded="false"><span class="sn-menu-icon" aria-hidden="true"><span></span><span></span><span></span></span></button> {% else %}
-        <a class="sn-nav__cta" href="{{ url_for('home') }}" style="margin-left:auto">Back to website</a> {% endif %}
+        <a class="sn-nav__cta lms-back-text" href="{{ url_for('home') }}" style="margin-left:auto">Back to website</a> {% endif %}
     </header>
 
     {% block body %}

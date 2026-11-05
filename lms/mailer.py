@@ -66,6 +66,7 @@ def _message(cfg, subject, text, html, to):
     msg["To"] = to
     msg["Date"] = formatdate(localtime=True)
     msg["Message-ID"] = make_msgid(domain=cfg["from"].rsplit("@", 1)[-1])
+    msg["Reply-To"] = cfg["from"]
     msg.set_content(text)
     msg.add_alternative(html, subtype="html")
     return msg
@@ -125,7 +126,7 @@ def send_welcome_email(name, email, domain_name, login_url, temp_password=None):
         pw_text = "You already had an account, so use your existing password."
         pw_html = f'<p style="margin:0 0 16px;font-size:14px;color:#c4d0d4">{pw_text}</p>'
 
-    subject = f"Welcome to Septaneuron Internships: {domain_name}"
+    subject = f"Your Septaneuron internship portal account ({domain_name})"
     text = (f"Hi {name},\n\nYour intern portal account for {domain_name} is ready.\n\n"
             f"Login: {login_url}\nEmail: {email}\n{pw_text}\n\n— Septaneuron Internship Program")
     html = f"""<div style="background:#05080a;padding:32px 12px;font-family:Inter,Segoe UI,Arial,sans-serif">
