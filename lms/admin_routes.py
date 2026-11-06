@@ -685,3 +685,16 @@ def admin_admin_password(user_id):
                               "failed_attempts": 0, "locked_until": None}, filters={"id": row["id"]})
         flash(f"Password reset for {row['email']}.", "success")
     return redirect(url_for("lms.admin_team"))
+
+
+@bp.route("/admin/team/<user_id>/delete", methods=["POST"])
+@super_required
+def admin_admin_delete(user_id):
+    """Super admin only: permanently deletes a domain admin (never a super admin, never yourself)."""
+    row = _get_admin(user_id)
+    if row["id"] == current_user()["id"]:
+        abort(400, "You cannot delete your own account.")
+    supa.delete("users", filters={"id": row["id"]})  # domain_admins rows cascade; tasks/reviews keep their data
+    supa.delete("login_attempts", filters=[("key", "eq", attempt_key("email", row["email"]))])
+    flash(f"Admin {row['email']} was deleted.", "success")
+    return redirect(url_for("lms.admin_team"))

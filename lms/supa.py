@@ -4,6 +4,7 @@ Server-side only. It uses the project's *secret* key (sb_secret_...) or the lega
 service_role key. Those keys bypass Row Level Security, so they must never be
 sent to the browser or committed to git.
 """
+import contextvars
 import os
 import re
 from concurrent.futures import ThreadPoolExecutor
@@ -56,7 +57,9 @@ _pool = ThreadPoolExecutor(max_workers=8)
 
 def parallel(*fns):
     """Run independent queries at the same time. Each fn takes no arguments; results keep their order."""
-    futures = [_pool.submit(fn) for fn in fns]
+    # Each worker thread runs inside a copy of the caller's context, so Flask's `g`, `request`
+    # and `session` still work there (needed by admin_domain_ids() for non-super admins).
+    futures = [_pool.submit(contextvars.copy_context().run, fn) for fn in fns]
     return [f.result() for f in futures]
 
 

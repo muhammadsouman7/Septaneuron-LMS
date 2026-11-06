@@ -79,6 +79,7 @@
                             <input name="password" minlength="10" placeholder="New password" aria-label="New password for {{ a.email }}" style="height:34px;padding:0 12px;border:1px solid var(--lms-line);border-radius:999px;background:#080d10;color:var(--lms-ink);font:inherit;font-size:13px;width:150px">
                             <button class="lms-btn lms-btn--ghost lms-btn--sm" type="submit">Reset</button></form>
                         <form class="inline" method="post" action="{{ url_for('lms.admin_admin_toggle', user_id=a.id) }}" data-confirm="{{ 'Deactivate' if a.is_active else 'Reactivate' }} {{ a.email }}?">{{ csrf() }}<button class="lms-btn lms-btn--ghost lms-btn--sm" type="submit">{{ 'Deactivate' if a.is_active else 'Reactivate' }}</button></form>
+                        <form class="inline" method="post" action="{{ url_for('lms.admin_admin_delete', user_id=a.id) }}" data-confirm="Permanently delete the admin {{ a.email }}? This cannot be undone.">{{ csrf() }}<button class="lms-btn lms-btn--danger lms-btn--sm" type="submit">Delete</button></form>
                     </div>{% endif %}</td>
             </tr>{% endfor %}</tbody>
     </table>
